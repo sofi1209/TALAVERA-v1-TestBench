@@ -46,10 +46,16 @@ Reference: *Manual de operaciones: WIRIKUTA 1.1 Banco de Pruebas*, August 2025
 | D-027 | **No GitHub remote created and nothing pushed.** Local repository only. | Publishing is the user's call, not the assistant's | 2026-11-06 | superseded by D-033 |
 | D-028 | Logger processor is the **ESP32-DevKitC V4 (ESP32-WROOM-32D)**, replacing the Arduino UNO | User decision. 3.3 V is native for SD and I²C, so level shifting disappears. Logger remains a zero-authority passenger. | 2026-11-06 | Sofia Pacheco Leon |
 | D-029 | **Wi-Fi and Bluetooth stopped as the first action at boot, never enabled** | A +20 dBm 2.4 GHz transmitter centimetres from the AD620 front end and a 20 m pyro cable is an EMI source next to the two most sensitive things on the bench. Measurement integrity and pickup, not command injection. | 2026-11-06 | pending |
-| D-030 | **ADS1115 retained. ESP32 internal SAR ADC not used.** | The internal ADC is nonlinear and noisy. The load-cell chain is already noise-limited to the point a 1-grain motor is uncharacterisable (manual p. 28); using a worse converter moves the design backwards on its core measurement. | 2026-11-06 | pending |
+| D-030 | ~~ADS1115 retained.~~ **ESP32 internal SAR ADC not used** — this half stands. | The internal ADC is nonlinear and noisy. The load-cell chain is already noise-limited to the point a 1-grain motor is uncharacterisable (manual p. 28); using a worse converter moves the design backwards on its core measurement. **ADS1115 retention reopened by D-036.** | 2026-11-06 | partly superseded |
 | D-031 | Logger pin map avoids GPIO6–11 (SPI flash) and all strapping pins (0, 2, 5, 12, 15). RECORD on GPIO34. | GPIO34–39 are input-only, so RECORD is physically incapable of becoming an output through a coding mistake. A cable left connected cannot block boot. | 2026-11-06 | pending |
 | D-032 | Logger gains a **RECORD input** (active low, external pull-up) rather than being started and stopped by cutting its power | Opening RECORD closes the data file cleanly before the operator presses E-STOP, which is the post-test sequence. Avoids corrupting a non-repeatable test record. | 2026-11-06 | pending |
 | D-033 | GitHub repository **created and pushed** at the user's explicit instruction | User instruction, 2026-11-06. Supersedes D-027. | 2026-11-06 | Sofia Pacheco Leon |
+| D-034 | Repository made **public** | User instruction. Created private first because public cannot be un-published; changed on explicit request. | 2026-11-06 | Sofia Pacheco Leon |
+| D-035 | Credits: Author Sofia Pacheco Leon; Co-author Claude; Team Leader Maximiliano Funoy; Division Leader & VP Emilio Guadarrama; Faculty Advisor Dr. José Luis Henríquez Mercado | User instruction, formatted as in IGNIS-v5 | 2026-11-06 | Sofia Pacheco Leon |
+| D-036 | **D-030 reopened.** ADS1115 is a candidate for replacement; selection deferred to Gate 3. Primary criterion is **moving off I²C**. | Reported field problems, corroborated by IGNIS-v5's own `DataLogger.h` comment on "documented I²C solder-joint issues" and its deliberate choice to keep the data path on SPI. A second board in the same lab reached the same conclusion. See [ADC-TRADE-STUDY.md](ADC-TRADE-STUDY.md). | 2026-11-06 | pending |
+| D-037 | **Embedded microSD card slot on the bench board**, porting the IGNIS-v5 `Storage.SchDoc` topology, replacing a breakout module | Parts and a known-good reference design are already in the lab. Removes a module and its headers, which is one fewer thing to vibrate loose. Confirmed from the IGNIS-v5 schematic: microSD socket, 10 k pull-ups, 100 nF and 22 µF decoupling, plus an `SD_DETECT` card-present line worth carrying over. | 2026-11-06 | pending |
+| D-038 | **Direct USB down the umbilical rejected.** Secondary telemetry path to be isolated RS-485 over cable B, with the USB-C connector on the **station** board. | USB 2.0 is specified to 5 m; the umbilical is 20 m. Active repeaters would add four powered devices and four connectors to the data path. RS-485 is rated to ~1200 m, is differential, and extends to 40 m at no cost. Isolation is required because a laptop would otherwise be tied to bench ground during a firing. See [UMBILICAL-AND-TELEMETRY.md](UMBILICAL-AND-TELEMETRY.md). | 2026-11-06 | pending |
+| D-039 | Reuse IGNIS-v5 parts already stocked: `TYPE-C-31-M-12` USB-C, `ESD9B5.0ST5G`, `TLP521`/`PC817` optoisolator, `AMS1117-3.3`/`-5.0`, `SS24`, `NCE6005AR` | Known parts, known footprints, already on the shelf; shortens Gate 3 sourcing | 2026-11-06 | pending |
 
 ---
 
@@ -59,6 +65,10 @@ Reference: *Manual de operaciones: WIRIKUTA 1.1 Banco de Pruebas*, August 2025
 |---|---|---|
 | Logger power domain | Upstream of master relay (recommended) / downstream shared rail / own battery | Gate 1 completion |
 | Logger mounting | Socketed DevKitC V4 (field-replaceable, header vibration risk) / soldered WROOM-32D module (robust, adds USB-UART and regulator to our board) | Gate 2 and Gate 4 |
+| **ADC selection** | AD7190 (recommended, replaces AD620 too) / ADS1256 (second source) / MCP3561 behind the existing AD620 (minimum change) | Gate 2 analog chain, Gate 3 sourcing |
+| **What actually failed on the ADS1115** | Bus lockup / noise / drift / clipping / too slow — see [ADC-TRADE-STUDY.md](ADC-TRADE-STUDY.md) §5 | Confirms or redirects the ADC choice |
+| Secondary telemetry in rev A | Build RS-485 + USB now / leave depopulated footprints | Gate 2 scope |
+| microSD socket part number | Needed from IGNIS-v5 `Storage.SchDoc` — not recoverable from the Altium binary | Gate 2 schematic |
 | Review owner | — | Gate 2 |
 | Largest motor class | — | Standoff and connector sizing |
 | Fabrication house, layers, size | — | Gates 4 and 6 |

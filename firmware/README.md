@@ -21,8 +21,8 @@ changing anything here.
 | | |
 |---|---|
 | Logic level | 3.3 V |
-| ADC | **External ADS1115.** The ESP32 internal SAR ADC is not used — see below. |
-| Storage | microSD over VSPI. 3.3 V native, so no level shifter. |
+| ADC | **Selection reopened.** ADS1115 under review; the ESP32 internal SAR ADC remains excluded. See [../docs/ADC-TRADE-STUDY.md](../docs/ADC-TRADE-STUDY.md). |
+| Storage | **On-board microSD socket** over VSPI, with a card-detect line. 3.3 V native, so no level shifter. |
 | Radios | **Stopped in firmware and not to be enabled.** See below. |
 | Mounting | **TBD** — socketed DevKitC vs. soldered WROOM-32D. Open item. |
 

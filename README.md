@@ -86,10 +86,12 @@ Every row is labelled **V** (verified from a datasheet or the Wirikuta manual, w
 | Instrumentation amp | AD620 (carried over) | **V** — manual p. 19 |
 | Regulation | Linear, LM78xx family | **A** — kept deliberately; a switcher injects noise into the strain front end |
 | Logger processor | **ESP32-DevKitC V4 (ESP32-WROOM-32D)**, 3.3 V | Decision D-028 |
-| Logger ADC | ADS1115, external. **ESP32 internal ADC not used** — too nonlinear for a noise-limited strain measurement | D-030 |
+| Logger ADC | **Under review.** ADS1115 reopened — the goal is to get off I²C. See [ADC trade study](docs/ADC-TRADE-STUDY.md). | D-036 |
+| | *ESP32 internal SAR ADC remains excluded* — too nonlinear for a noise-limited strain measurement | D-030 |
 | Logger radios | **Wi-Fi and Bluetooth stopped at boot, never enabled** | D-029 |
 | Logger mounting | Socketed DevKitC vs. soldered WROOM-32D | **TBD** — vibration decision, open item |
-| Max sample rate | 860 SPS, set by the ADS1115 and not by the processor | **V** — ADS1115 limit |
+| Storage | **Embedded microSD socket on-board**, porting the IGNIS-v5 `Storage.SchDoc` topology with an `SD_DETECT` line | D-037 |
+| Secondary telemetry | Isolated **RS-485** over the umbilical, **USB-C on the station board**. Direct USB rejected — 5 m spec vs. 20 m run. | D-038 |
 | Igniter drive | 1 channel, low-side, with NC shunt | **A** — pending e-match spec |
 | E-match no-fire / all-fire current | — | **TBD** — blocks every margin claim |
 | Firing pair | 2 × 16 AWG shielded, own cable | **V** — computed, see below |
@@ -219,6 +221,8 @@ TALAVERA-v1-TestBench/
 │   ├── OPERATIONS-MANUAL.md      Preliminary field manual
 │   ├── SAFETY.md                 Safe states, hazard table, prohibited actions
 │   ├── REQUIREMENTS.md           Gate 0 output: functions, scope, open items
+│   ├── ADC-TRADE-STUDY.md        Replacing the ADS1115: options and recommendation
+│   ├── UMBILICAL-AND-TELEMETRY.md  Three data paths; why direct USB fails at 20 m
 │   └── DECISION-LOG.md           Every decision, reason, date, approver
 ├── hardware/
 │   ├── talavera-bench/           KiCad 10 project — bench board
@@ -262,12 +266,15 @@ Ignitia Rocket Lab · Avionics & Electronics
 
 **Co-Author:** Claude (Anthropic) — architecture review, documentation, KiCad project scaffolding
 
-**Team Leader:** *TBD*  
-**Division Leader:** *TBD*  
-**Faculty Advisor:** *TBD*
+**Team Leader:** Maximiliano Funoy  
+**Division Leader & Vice President:** [Emilio Guadarrama](https://github.com/Emilio-Guadarrama)  
+**Faculty Advisor:** Dr. José Luis Henríquez Mercado
 
 **Design Review Owner:** *TBD — must be named before Gate 2*  
 Signs off pyrotechnic, actuator, battery and high-current circuits.
+
+Reference design for the storage and USB subsystems:
+[IGNIS-v5 Flight Computer](https://github.com/Emilio-Guadarrama/IGNIS-v5-FlightComputer).
 
 ## Team
 

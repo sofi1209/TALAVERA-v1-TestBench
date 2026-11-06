@@ -47,6 +47,14 @@
  * ---------------------------------------------------------------------------
  * STATUS: PRELIMINARY SKELETON. NOT VERIFIED AGAINST HARDWARE.
  *
+ * THE ADC IS UNDER REVIEW. The ADS1115 code below is a placeholder. Its
+ * selection has been reopened (D-036) because the reported field problems
+ * point at I2C rather than at conversion quality, and IGNIS-v5 documented
+ * the same I2C trouble independently. If an SPI part is chosen - AD7190,
+ * ADS1256 or MCP3561 are the candidates - this file's acquisition calls and
+ * the I2C pin definitions are replaced wholesale. See
+ * docs/ADC-TRADE-STUDY.md before investing effort here.
+ *
  * The calibration constants below are placeholders. They cannot be filled in
  * until the load cell datasheet is available - see open item 4 in
  * docs/REQUIREMENTS.md. Do not trust any thrust figure this produces until

@@ -67,15 +67,51 @@ The logger is an **ESP32-WROOM-32D at 3.3 V** (D-028). That has knock-on effects
 |---|---|---|
 | 12 V | Input protection, relay coils, beacon | Battery rail |
 | 5 V | — | May not be needed at all now; confirm at Gate 2 |
-| 3.3 V | ESP32, ADS1115, microSD | Run the ADS1115 at 3.3 V so I²C is native and needs no level translation |
+| 3.3 V | ESP32, converter, microSD | Keep the converter in the same domain so its digital bus needs no level translation |
 
 Two consequences to carry into the schematic:
 
-1. **The AD620 gain must keep its output inside the ADS1115 input range at a 3.3 V supply** — that is
-   V<sub>DD</sub> + 0.3 V, not the ±4.096 V the PGA setting might suggest. This constrains the gain
-   chain and is open item 11.
+1. **The amplifier gain must keep its output inside the converter's input range at 3.3 V** — that is
+   V<sub>DD</sub> + 0.3 V, not whatever the PGA setting might suggest. Open item 11. Note this
+   constraint **disappears** if an integrated-PGA converter is chosen, since the converter then takes
+   the bridge output directly.
 2. **microSD is 3.3 V native**, so the level shifters a 5 V Arduino needed are gone. Do not carry over a
    5 V SD breakout module with an onboard regulator and shifters.
+
+---
+
+## Storage — embedded microSD socket
+
+Decision D-037: an **on-board microSD socket**, not a breakout module. One fewer module and one fewer
+set of pin headers to vibrate loose, and the lab already has both the parts and a known-good reference.
+
+Porting the topology from IGNIS-v5 `PCB_Project_IGNIS-v5/Storage.SchDoc`. Confirmed present in that
+sheet by inspection of the file:
+
+| Element | Note |
+|---|---|
+| microSD socket | Part number **TBD** — not recoverable from the Altium binary, open item 14 |
+| Pull-up resistors | Sheet is labelled "Pull UP Resistances"; 10 k values appear in the parameter set |
+| Decoupling | 100 nF and 22 µF appear in the sheet's parameters |
+| `SD_CS` | Chip select |
+| `SD_DETECT` | **Card-present line — carry this over.** It lets the station confirm a card is seated before the test instead of discovering it afterwards. |
+
+> The IGNIS-v5 pin assignment (`SD_MOSI` IO11, `SD_MISO` IO13, `SD_SCK` IO12, `SD_CS` IO42,
+> `SD_DETECT` IO41) is for an **ESP32-S3**. TALAVERA uses the original ESP32-WROOM-32D, which numbers
+> its pins differently — reuse the circuit, not the pin numbers. See `firmware/README.md` for the
+> TALAVERA pin map.
+
+---
+
+## ADC — selection reopened
+
+The ADS1115 is no longer assumed. The primary criterion is **moving off I²C**, corroborated by
+IGNIS-v5's own documented I²C solder-joint problems and its deliberate choice to keep its data path on
+SPI. Candidates, trade-offs and a recommendation are in
+[../docs/ADC-TRADE-STUDY.md](../docs/ADC-TRADE-STUDY.md).
+
+This matters for layout as well as parts: if an integrated-PGA converter is chosen, the AD620 stage
+disappears from the board entirely.
 
 ---
 

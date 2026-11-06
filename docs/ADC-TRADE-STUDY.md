@@ -1,0 +1,122 @@
+# Trade study — replacing the ADS1115
+
+**Status: proposal. No part selected. Decision belongs to Gate 3.**
+
+> ### Every figure in this document is UNVERIFIED
+>
+> The numbers below are nominal values from recollection, written to frame the comparison. **None has
+> been read from a datasheet in this document's preparation.** Before any part is selected, each
+> candidate's figures must be confirmed against its datasheet and recorded with the page, per the
+> project evidence rule. Do not order parts from this table.
+
+---
+
+## 1. Why this is being reopened
+
+The ADS1115 was carried over from Wirikuta 1.1 (manual p. 19) on the reasoning that an external 16-bit
+converter beats the ESP32's internal SAR ADC. That reasoning still holds — the internal ADC is not a
+candidate. But "better than the worst option" is not the same as "the right part", and the reported
+field problems deserve a real answer.
+
+### Corroborating evidence from IGNIS-v5
+
+While reviewing the IGNIS-v5 flight computer for its storage circuit, this comment turned up in
+`DataLogger.h`:
+
+> *"...board's documented I²C solder-joint issues, and the SD bus is on the..."*
+
+IGNIS-v5 independently documented I²C reliability problems and **deliberately kept its data path on
+SPI**. That is a second, unrelated board in the same lab reaching the same conclusion.
+
+This reframes the question. The likely problem is not the ADS1115's conversion quality — it is that
+**the ADS1115 is only available with an I²C interface**, and I²C is the fragile part:
+
+| I²C weakness | Effect on a test bench |
+|---|---|
+| Two open-drain lines held up by external pull-ups | A marginal solder joint or a corroded header reads as a stuck bus |
+| No framing, no reset, bus-wide lockup | One stuck device hangs the whole bus until power-cycled |
+| Shared addresses, no chip select | Any added sensor can conflict |
+| Not designed for length or noise | A firing transient nearby can corrupt a transfer |
+
+SPI has an explicit clock, separate data directions and a per-device chip select. It does not lock up
+in the same way.
+
+**Therefore the primary selection criterion is: get off I²C.**
+
+---
+
+## 2. Selection criteria
+
+| # | Criterion | Why |
+|---|---|---|
+| 1 | **SPI interface, not I²C** | The corroborated failure mode, in two separate boards |
+| 2 | **≥ 1 kSPS** | A solid-motor ignition rise is on the order of 10–30 ms. The ADS1115's 860 SPS ceiling gives only ~10–25 samples across the rise. More headroom is wanted. |
+| 3 | **Integrated bridge PGA** | If the converter can take the load cell's millivolt-level differential output directly, **the AD620 is deleted** — one fewer part, one fewer offset and drift source |
+| 4 | 3.3 V operation | Matches the ESP32 domain; removes the ADS1115's 3.3 V input-range squeeze (open item 11) |
+| 5 | Availability and a named second source | Gate 3 requirement |
+
+Criterion 3 is the interesting one. It is the difference between swapping a chip and **removing a stage
+from the signal chain** — which is what "simpler" was supposed to mean in this project.
+
+---
+
+## 3. Candidates
+
+| Part | Bits | Interface | Max rate | Integrated PGA | Replaces AD620? | Verdict |
+|---|---|---|---|---|---|---|
+| **ADS1115** (incumbent) | 16 | **I²C** | 860 SPS | ×16 max, not bridge-grade | No | **Fails criterion 1.** The interface is the problem and it cannot be changed. |
+| **HX711** | 24 | SPI-like | **10 / 80 SPS** | Yes, load-cell specific | Yes | **Rejected.** 80 SPS cannot resolve an ignition transient. Common in kitchen scales for a reason. |
+| **ADS1232 / ADS1234** | 24 | SPI | **80 SPS** | Yes, bridge-oriented | Yes | **Rejected.** Same speed problem. |
+| **AD7190 / AD7192** | 24 | **SPI** | ~4.8 kSPS | **Yes, to ×128, bridge-oriented** | **Yes** | **Recommended.** Purpose-built for strain-gauge bridges. |
+| **ADS1256** | 24 | **SPI** | ~30 kSPS | Yes, to ×64 | Yes | **Strong second source.** Widely stocked, cheap modules exist. |
+| **MCP3561 / MCP3564** | 24 | **SPI** | ~150 kSPS | Yes, to ×64 | Yes | **Modern alternative.** Good availability. Faster than needed. |
+| **ADS8681 / ADS8685** | 16 | **SPI** | ~1 MSPS | Yes, ±10 V inputs | No — needs the AD620 | Industrial-robust input protection, but keeps the two-stage chain. |
+
+---
+
+## 4. Recommendation
+
+**Primary: AD7190.** It is a 24-bit sigma-delta converter built for bridge sensors, with an on-chip
+instrumentation amplifier. It talks SPI, it is fast enough with margin, and it **replaces both the
+ADS1115 and the AD620** with a single device. That removes the I²C bus, removes an amplifier stage, and
+removes the 3.3 V input-range constraint in one move.
+
+**Second source: ADS1256.** Technically more than adequate and much easier to buy, which matters for a
+student team. If AD7190 lead times are bad, this is the fallback, not a compromise.
+
+**If minimum change is preferred:** keep the AD620 and put an **MCP3561** behind it on SPI. This fixes
+the interface problem alone and leaves the analog front end exactly as Wirikuta had it. Lower risk,
+smaller reward.
+
+### What this does not fix by itself
+
+Moving to SPI will not cure a noise floor caused by layout or cabling. The noise work is separate and
+already in the architecture: differential signalling off the bench, a dedicated shielded analog pair,
+and the firing current moved into a physically separate cable (D-010, D-016). **Measure the noise floor
+in Stage 4 of the bring-up plan against the Wirikuta baseline** rather than assuming the converter
+change was responsible either way.
+
+---
+
+## 5. Open question for Sofia
+
+The recommendation above assumes the ADS1115 problems were **interface and reliability** problems. If
+the actual symptom was different, the answer changes:
+
+| Reported symptom | What it points at | Likely fix |
+|---|---|---|
+| Readings freeze, bus hangs, needs a power cycle | I²C lockup / solder joints | **Any SPI part above** |
+| Readings noisy or jumpy but never stop | Layout, grounding, cabling, excitation | Fix the layout; the converter may be innocent |
+| Readings drift with temperature | AD620 offset drift, or excitation instability | Integrated-PGA part with ratiometric reference |
+| Saturates or clips | Gain chain mis-set for the 3.3 V range | Recompute the gain — open item 11 |
+| Too slow / burn transient looks blocky | 860 SPS ceiling | Any ≥1 kSPS part above |
+
+**Which of these matches what you saw?** More than one may apply.
+
+---
+
+## 6. Decision record
+
+Nothing decided. When a part is chosen, record it as a new decision in
+[DECISION-LOG.md](DECISION-LOG.md) with the datasheet page for every quoted figure, and supersede
+D-030 (which retained the ADS1115).

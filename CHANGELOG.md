@@ -61,6 +61,38 @@
 - Credits restructured to the IGNIS-v5 README style, with team leader, division leader and faculty
   advisor rows pending names.
 
+### Storage, telemetry, and ADC review
+
+**Added**
+- `docs/ADC-TRADE-STUDY.md` — seven candidates assessed against the ADS1115. Recommendation: **AD7190**
+  (SPI, integrated bridge PGA, replaces the AD620 as well), with **ADS1256** as second source. Every
+  figure is flagged unverified pending datasheet confirmation.
+- `docs/UMBILICAL-AND-TELEMETRY.md` — the three data paths, and why a direct USB umbilical fails.
+
+**Changed**
+- **D-030 reopened as D-036.** The ADS1115 is no longer assumed. Primary criterion is moving off I²C,
+  corroborated by IGNIS-v5's own `DataLogger.h` comment on "documented I²C solder-joint issues" and its
+  deliberate choice to keep its data path on SPI. The exclusion of the ESP32 internal SAR ADC stands.
+- **Storage is now an on-board microSD socket** with an `SD_DETECT` card-present line, porting the
+  IGNIS-v5 `Storage.SchDoc` topology instead of using a breakout module. (D-037)
+- Repository made **public**. (D-034)
+- Credits completed: Team Leader Maximiliano Funoy, Division Leader & VP
+  [Emilio Guadarrama](https://github.com/Emilio-Guadarrama), Faculty Advisor Dr. José Luis Henríquez
+  Mercado. (D-035)
+
+**Rejected**
+- **Direct USB down the umbilical.** USB 2.0 is specified to 5 m; the run is 20 m. Active repeaters
+  would add four powered devices and four connectors to the data path. Replaced by isolated **RS-485**
+  over cable B with the **USB-C connector on the station board**, which is rated far beyond 20 m and
+  extends to 40 m at no cost. Isolation is mandatory so a laptop is never tied to bench ground during a
+  firing. (D-038)
+
+**Noted**
+- Parts already stocked from the IGNIS-v5 BOM are reusable: `TYPE-C-31-M-12` USB-C,
+  `ESD9B5.0ST5G` ESD diode, `TLP521`/`PC817` optoisolator, `AMS1117-3.3`/`-5.0`, `SS24`, `NCE6005AR`.
+  (D-039)
+- The IGNIS-v5 Python ground-station app may cover most of the live-readout work for the secondary path.
+
 ### Outstanding before Gate 2
 
 - Review owner must be named.

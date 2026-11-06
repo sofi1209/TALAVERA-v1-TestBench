@@ -34,6 +34,8 @@ from every function the test's safety depends on. Keep only the functions the te
 | ESD / surge protection on every umbilical conductor | 20–40 m of exposed field cable. |
 | Test points on every rail and every safety signal | Gate 2 requirement. |
 | Thrust logger | Local record of the test. **ESP32-DevKitC V4 (ESP32-WROOM-32D)**, constrained to zero authority with its radios stopped — see [SAFETY.md](SAFETY.md) §4. |
+| On-board microSD socket | Primary data record. Embedded socket with card-detect, not a breakout module — one fewer set of headers to vibrate loose. Ports the IGNIS-v5 `Storage.SchDoc` topology. |
+| Isolated RS-485 driver *(secondary, optional)* | Live numeric data to a laptop at the station. Galvanically isolated so a laptop is never tied to bench ground during a firing. **Outward data only, never a command path.** |
 
 ### 2.2 Control station board
 
@@ -143,7 +145,11 @@ Ordered by what they block.
 | 8 | Fab house, layer count, assembly yes/no, board size target | Gate 4 and Gate 6 |
 | ~~9~~ | ~~GitHub organisation / username~~ — resolved: `sofi1209` | closed |
 | 10 | **Logger mounting: socketed DevKitC vs. soldered WROOM-32D module** | Gate 2 and Gate 4; vibration robustness |
-| 11 | AD620 gain must keep its output inside the ADS1115 input range at a 3.3 V supply | Gate 2 analog chain |
+| 11 | Amplifier gain must keep its output inside the chosen converter's input range at 3.3 V | Gate 2 analog chain. **Disappears if an integrated-PGA converter is chosen** — see item 12. |
+| 12 | **ADC selection** — ADS1115 reopened, primary criterion is moving off I²C | Gate 2 and Gate 3. See [ADC-TRADE-STUDY.md](ADC-TRADE-STUDY.md). |
+| 13 | **Which ADS1115 symptom was actually seen** — lockup, noise, drift, clipping or speed | Confirms or redirects item 12 |
+| 14 | microSD socket part number from IGNIS-v5 `Storage.SchDoc` | Gate 2 schematic. Not recoverable from the Altium binary. |
+| 15 | Whether the RS-485/USB secondary path is built in rev A or left as footprints | Gate 2 scope |
 
 ---
 
