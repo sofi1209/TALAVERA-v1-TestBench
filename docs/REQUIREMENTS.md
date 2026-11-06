@@ -155,13 +155,14 @@ Both are data only Ignitia can supply. Neither will be guessed.
 
 | # | Item | Note |
 |---|---|---|
-| O-3 | Relay selection — 4 relays, 12 V coil; **K3 must be normally-closed** | Contact rating depends on O-1. Must be LCSC-stocked (D-049). |
+| O-3 | Relay **contact rating** confirmation for `SRD-12VDC-SL-C` | Part chosen (D-055); only the rating against the e-match current is open. Depends on O-1. |
 | O-4 | ARM key switch, E-STOP mushroom, FIRE panel button | All three panel-mount, not PCB parts, so exempt from the LCSC constraint. |
 | O-5 | Arming plug / removable shorting link part | Must be keyed and obviously absent at a glance. |
-| O-6 | Isolated RS-485 transceiver and USB-UART bridge parts | Path confirmed (D-048); parts still to pick. Must be LCSC-stocked. |
+| O-6 | **Isolator part** for the station ground barrier, plus the USB-UART bridge | RS-485 transceiver chosen (`SP3485EN`, D-056). Candidates for the barrier: 6N137 high-speed optocoupler, or a digital isolator. **Not yet verified for price or stock** — the slow TLP521/PC817 already in stock may not carry 115200 baud reliably. |
 | O-7 | **ADS1220 input common-mode range with PGA enabled at 3.3 V**, checked against the real load cell | Narrowed from the old gain-range item. The PGA can be bypassed for rail-to-rail input at the cost of gain. Depends on O-2. |
-| O-8 | Board size target for each board | Outlines are placeholders (D-023). Fab house and layer count are settled. |
+| O-8 | Board size target for each board | Outlines are placeholders (D-023). Layer count settled at 2; rev A is a bare board, hand-assembled (D-051). |
 | O-9 | Copper weight | The `PYRO` 2.00 mm track width assumes 1 oz. Confirm before trusting it. |
+| O-15 | **ADS1220 TSSOP-16 is the hardest part to hand-solder** on the board (0.65 mm pitch) | Manageable with flux and a fine tip, but it is the one part where a breakout module is a fallback if hand assembly proves painful. Decide at Gate 4. |
 | O-10 | Which ADS1115 symptom was actually seen — lockup, noise, drift, clipping or speed | Informational now that D-046 is decided, but it would confirm the diagnosis or point at a layout problem the new part will not fix. |
 | O-11 | Largest motor class intended (total impulse) | Standoff planning and connector sizing. |
 | O-12 | Environment figures confirmed or overridden | §4 is still entirely assumed. Gate 3 part selection. |
@@ -180,6 +181,45 @@ Both are data only Ignitia can supply. Neither will be guessed.
 | Logger mounting | Socketed DevKitC on `PPTC191LFBN-RC` plus a hold-down, per MAGNIS v1 | D-042 |
 | microSD socket | **THD2528-11SD-GF** (LCSC C283232) | D-041 |
 | GitHub organisation | `sofi1209` | D-033 |
+
+---
+
+## 9. Component selection policy (D-052)
+
+> **Cheap, with reliable sourcing, in hand-solderable packages.**
+>
+> This ranks **above** elegance and above marginal performance gains. A part that is 10 % better and
+> three times the price, or that has 40 units in stock at one distributor, loses.
+
+Applied in order:
+
+1. **Buyable from LCSC or UNIT Electronics**, preferably both. Deep stock, not a handful of units, and
+   not a "pre-order" listing.
+2. **Cheap.** Where two parts both do the job, the cheaper one wins unless the difference is a safety
+   margin.
+3. **Hand-solderable.** Rev A is a bare board, hand-assembled (D-051). Through-hole is welcome;
+   0805 beats 0603; fine-pitch QFN is avoided.
+4. **One part number serving several positions** beats several similar parts — fewer BOM lines, and
+   spares are interchangeable.
+
+### What the policy has already changed
+
+| Was | Now | Saving |
+|---|---|---|
+| ADM2582E isolated RS-485, ~$10 | `SP3485EN-L/TR`, ~$0.14–0.27, isolation moved to the station and powered from USB | ~$10 and an isolated DC-DC |
+| Four separately specified relays | One `SRD-12VDC-SL-C` SPDT part ×4, ~$0.23 each | Three BOM lines |
+| AD620 populated, ~$6–8 | Depopulated by default in a DIP-8 socket; ADS1220's PGA does the job | ~$7 per board |
+| Keystone 5015 test points | Bare pads | Small, but free |
+
+**Resistors stay 0603** (D-058). An earlier draft moved them to 0805 for hand-solderability, which was
+wrong: Ignitia already owns 0603 reels from the IGNIS builds, and buying new 0805 reels would have added
+cost for marginal benefit — the opposite of what this policy says. Capacitors were already 0805.
+
+### Where the policy does *not* apply
+
+Safety-critical ratings are not negotiable on price. Specifically: the relay contact rating, the fuse
+rating, the shunt relay being genuinely normally-closed, and the continuity-sense resistor holding
+current below the e-match no-fire figure. If the cheap part cannot meet the rating, it loses.
 
 ---
 

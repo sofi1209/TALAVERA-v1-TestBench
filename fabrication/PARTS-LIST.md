@@ -25,8 +25,8 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 
 | | Lines |
 |---|---|
-| Confirmed in lab | **35** |
-| Still TBD or pending | **18** |
+| Confirmed in lab | **32** |
+| Still TBD or pending | **14** |
 
 ---
 
@@ -50,18 +50,16 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|
 | New (approved) | 24-bit ADC, SPI, 2 kSPS, integrated PGA x1-128, TSSOP-16 | ADS1220IPWR | U_ADC | 1 | C48263 | UNIT | Mouser | DigiKey | SELECTED. Replaces the ADS1115 and its I2C bus. Stocked at BOTH UNIT and LCSC (C48263, ~15.9k, ~$1.71 @100) - stock checked 6 Nov 2026, re-verify before ordering. Internal PGA is the PRIMARY front end. Verify input common-mode range with PGA enabled at 3.3 V against the load cell (open item 4). |
-| Optional / bypassable | Instrumentation amplifier (hand-populated) | AD620ARZ (SOIC) or AD620AN (DIP, UNIT) | U_AMP | 0 | C578332 | UNIT | Mouser | DigiKey | Footprint laid out with 0 ohm BYPASS LINKS, NOT populated at assembly. AD620ARZ is listed under LCSC 'Pre-ordered Products' so JLCPCB very likely cannot place it. Hand-populate to A/B the two front ends in bring-up Stage 4. |
-| New (approved) | Resistor 0 ohm 0805 - AD620 bypass links | Generic 0 R jumper | R_BYP1, R_BYP2 | 2 | -- | UNIT | Mouser | DigiKey | Fitted = PGA-only chain. Removed + AD620 populated = two-stage chain. Lets both be measured on identical hardware. |
+| Optional / socketed | Instrumentation amplifier, DIP-8 (optional) | AD620AN | U_AMP | 0 (socket fitted) | -- | UNIT | Mouser | DigiKey | DIP-8 in a SOCKET, not populated by default (D-054). UNIT stocks the through-hole part at ~111 MXN. A socket makes the A/B comparison a chip pull, not a rework. Left out by default: at ~$6-8 it is the most expensive part on the board and the ADS1220 PGA makes it redundant. |
+| New (approved) | IC socket DIP-8 | Generic DIP-8 socket | XU_AMP | 1 | -- | UNIT | Mouser | DigiKey | Always fitted, so the AD620 can be added or removed without soldering. |
+| New (approved) | Resistor 0 ohm 0805 - AD620 bypass links | Generic 0 R jumper | R_BYP1, R_BYP2 | 2 | -- | UNIT | Mouser | DigiKey | Fitted = PGA-only chain (default). Removed + AD620 in its socket = two-stage chain. Lets both be measured on identical hardware in bring-up Stage 4. |
 | TBD | Load cell excitation reference | TBD | U_REF | 1 | -- | -- | -- | -- | Cannot be specified until the load cell datasheet is available (open item 4). Check whether the excitation can serve as the ADS1220 external reference for a ratiometric measurement, which would cancel excitation drift. |
 
 ### SAFETY CHAIN  (hardware only - no MCU)
 
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| TBD | Relay, 12 V coil, contact NORMALLY OPEN - ARM | TBD | K1 | 1 | -- | -- | Mouser | DigiKey | Energised by the station ARM key. Must be NO so DISARMED is the de-energised state. |
-| TBD | Relay, 12 V coil, contact NORMALLY OPEN - FIRE | TBD | K2 | 1 | -- | -- | Mouser | DigiKey | Energised only while the station FIRE button is held. |
-| TBD | Relay, 12 V coil, contact NORMALLY CLOSED - SHUNT | TBD | K3 | 1 | -- | -- | Mouser | DigiKey | MANDATORY NC. Shorts the e-match pair whenever disarmed (D-008). Releases only when K1 pulls in. |
-| TBD | Relay, 12 V coil, NO - MASTER / E-STOP | TBD | K4 | 1 | -- | -- | Mouser | DigiKey | Held in by its coil. E-STOP breaks the coil circuit so it drops out. |
+| New (approved) | Relay SPDT, 12 V coil, 10 A contacts, through-hole | SRD-12VDC-SL-C | K1, K2, K3, K4 | 4 | C30431 | -- | Mouser | DigiKey | ONE part for all four positions (D-055). SPDT gives both NO and NC: K1/K2/K4 wired NO, K3 wired NC for the shunt. ~$0.23, ~131,800 in LCSC stock, also at Mexican retailers. Coil ~30 mA / 400 ohm. CONTACT RATING still to confirm against e-match current (O-1, O-3). |
 | TBD | Arming plug / removable shorting link | TBD | J_ARM | 1 | -- | -- | -- | -- | Withdrawn by hand at the bench, inserted last. Must be keyed and obviously absent at a glance. |
 | In lab | Switching diode - relay coil flyback | 1N4148W | D_K1..D_K4 | 4 | C81598 | UNIT | Mouser | DigiKey | One per relay coil. |
 
@@ -86,8 +84,7 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| Pending part | Isolated RS-485 transceiver | ADM2582E / ADM2587E  [CANDIDATE] | U_485 | 1 | -- | -- | Mouser | DigiKey | Path confirmed for rev A (D-048); exact part still to choose. Integrated isolation plus isolated supply. Must be LCSC-stocked for JLCPCB assembly (D-049). Alternative: MAX13487 + ADuM1201 + isolated DC-DC. |
-| In lab | Optocoupler SMD-4 (discrete isolation alternative) | TLP521GB-S (UMW) | U_ISO | 2 | C364143 | UNIT | Mouser | DigiKey | Cheaper discrete isolation if a bidirectional link is not needed. |
+| New (approved) | RS-485 transceiver, 3.3 V, half-duplex | SP3485EN-L/TR | U_485 | 1 | C8963 | -- | Mouser | DigiKey | Native to the ESP32 3.3 V domain. ~$0.14-0.27, ~190,700 in LCSC stock. Replaces the ~$10 ADM2582E (D-056): isolation moves to the STATION board where USB powers the isolated side, so no isolated DC-DC is needed anywhere. |
 
 ### POWER & PROTECTION
 
@@ -105,13 +102,13 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 |---|---|---|---|---|---|---|---|---|---|
 | In lab | JST-SH 4-pin right-angle (debug UART) | SM04B-SRSS-TB(LF)(SN) | J_DBG | 1 | C160404 | UNIT | Mouser | DigiKey | Logger debug only. Not a safety interface. |
 | TBD | Umbilical connector, keyed + strain relief | TBD | J_UMB | 1 | -- | -- | Mouser | DigiKey | Cable B, 8-10 conductors. Keyed, strain-relieved, pin 1 marked (Gate 1 requirement). |
-| In lab | SMT test point, miniature | Keystone 5015 | TP1..TP14 | ~14 | -- | -- | Mouser | DigiKey | Test points on EVERY rail and EVERY safety signal (Gate 2 requirement). Bare pads also acceptable. |
+| New (approved) | Test point - bare pad / via | Bare pad (no part) | TP1..TP14 | ~14 | -- | -- | -- | -- | Test points on EVERY rail and EVERY safety signal (Gate 2 requirement). Bare pads replace Keystone 5015 (D-057): free, and they work with probe hooks. |
 
-### PASSIVES  (existing 0603 / 0805 library)
+### PASSIVES  (existing IGNIS library - 0603 R, 0805 C, D-058)
 
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| In lab | Resistor 10 kOhm 0603 1 % | 0603WAF1002T5E | R* | ~12 | C25804 | UNIT | Mouser | DigiKey | Pull-ups, dividers, SD_DETECT |
+| In lab | Resistor 10 kOhm 0603 1 % | 0603WAF1002T5E | R* | ~12 | C25804 | UNIT | Mouser | DigiKey | Pull-ups, dividers, SD_DETECT. 0603 retained (D-058): reels already owned, and hand-solderable. |
 | In lab | Resistor 4.7 kOhm 0603 1 % | 0603WAF4701T5E | R* | ~4 | C23162 | UNIT | Mouser | DigiKey |  |
 | In lab | Resistor 1 kOhm 0603 1 % | 0603WAF1001T5E | R* | ~8 | C21190 | UNIT | Mouser | DigiKey | LED series, opto drive |
 | In lab | Resistor 100 Ohm 0603 1 % | 0603WAF1000T5E | R* | ~4 | C22775 | UNIT | Mouser | DigiKey |  |
@@ -139,7 +136,8 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 | In lab | USB-C 16-pin (USB 2.0) | TYPE-C-31-M-12 | J_USB | 1 | C165948 | UNIT | Mouser | DigiKey | On the STATION board, not the bench. Direct USB down a 20 m umbilical is out of spec (D-038). |
 | In lab | USB ESD diode, 5 V bidirectional | ESD9B5.0ST5G | D_ESD1, D_ESD2 | 2 | C111566 | UNIT | Mouser | DigiKey | SOD-923, one per data line. Alt: USBLC6-2SC6 (C7519). |
 | Pending part | USB-UART bridge | CH340C / FT232RL  [CANDIDATE] | U_USB | 1 | -- | UNIT | Mouser | DigiKey | No MCU needed on the station for safety. A bridge is sufficient. CH340C is LCSC-stocked and cheap. |
-| Pending part | Isolated RS-485 transceiver | ADM2582E  [CANDIDATE] | U_485 | 1 | -- | -- | Mouser | DigiKey | Station end of the isolated link. Isolation is MANDATORY so the laptop is never tied to bench ground during a firing. Must be LCSC-stocked for JLCPCB assembly. |
+| New (approved) | RS-485 transceiver, 3.3 V, half-duplex | SP3485EN-L/TR | U_485 | 1 | C8963 | -- | Mouser | DigiKey | Station end, on the BENCH-REFERENCED side of the ground barrier, powered from the umbilical. |
+| Pending part | Digital isolator / high-speed optocoupler - ground barrier | 6N137 or digital isolator  [CANDIDATE] | U_ISO | 2 | -- | -- | Mouser | DigiKey | Sits between the bench-referenced side and the USB side. NOT YET VERIFIED for price or stock. The TLP521/PC817 already in stock are too slow to be relied on at 115200 baud - do not substitute them without measuring. |
 
 ### MEASUREMENT OUTPUT
 
@@ -164,9 +162,9 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 |---|---|---|---|---|---|---|---|---|---|
 | TBD | Umbilical connector, keyed + strain relief | TBD | J_UMB | 1 | -- | -- | Mouser | DigiKey | Mates cable B. |
 | In lab | Screw terminal 6-pin 5.08 mm | 1729160 | P1 | 1 | C457192 | -- | Mouser | DigiKey | Pyro pair, cable A. |
-| In lab | SMT test point, miniature | Keystone 5015 | TP1..TP8 | ~8 | -- | -- | Mouser | DigiKey |  |
+| New (approved) | Test point - bare pad / via | Bare pad (no part) | TP1..TP8 | ~8 | -- | -- | -- | -- | Bare pads, per D-057. |
 
-### PASSIVES  (existing library)
+### PASSIVES  (existing IGNIS library - 0603 R, 0805 C, D-058)
 
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|

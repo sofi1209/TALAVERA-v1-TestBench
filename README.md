@@ -44,7 +44,8 @@ path is wire and discretes.
 | Thrust measurement | Improve on current noise floor (1-grain motors unresolvable today) | Manual p. 28 |
 | Max motor class | **TBD** — total impulse, not peak thrust | Open item |
 | Operating temperature | 0 to +55 °C ambient *(assumed)* | Open item |
-| Fabrication | **JLCPCB, 2-layer, assembled.** Every populated part must therefore be LCSC-stocked. | D-049 |
+| Fabrication | **Bare PCB, 2-layer, hand-assembled** for rev A. Parts must be cheap, reliably sourced from LCSC or UNIT, and hand-solderable. | D-051, D-052 |
+| Safety relays | **One part ×4:** `SRD-12VDC-SL-C` SPDT, 12 V coil. K3 wired NC for the shunt, the rest NO. ~$0.23, ~131,800 in LCSC stock. | D-055 |
 
 > **Standoff deviation, logged:** a 20 m umbilical yields roughly 15–17 m of real standoff after cable
 > routing. NAR/TRA minimum personnel distance for even an H-class motor is 30 m, or 22.5 m with the
@@ -93,7 +94,7 @@ Every row is labelled **V** (verified from a datasheet or the Wirikuta manual, w
 | Logger radios | **Wi-Fi and Bluetooth stopped at boot, never enabled** | D-029 |
 | Logger mounting | Socketed DevKitC vs. soldered WROOM-32D | **TBD** — vibration decision, open item |
 | Storage | **Embedded microSD socket on-board**, porting the IGNIS-v5 `Storage.SchDoc` topology with an `SD_DETECT` line | D-037 |
-| Secondary telemetry | Isolated **RS-485** over the umbilical, **USB-C on the station board**, **built in rev A**. Direct USB rejected — 5 m spec vs. 20 m run. | D-038, D-048 |
+| Secondary telemetry | **RS-485** (`SP3485EN`, ~$0.20) over the umbilical, **USB-C on the station board**, built in rev A. Isolation sits at the station and is powered by the laptop's USB, so no isolated DC-DC is needed. Direct USB rejected — 5 m spec vs. 20 m run. | D-038, D-048, D-056 |
 | Igniter drive | 1 channel, low-side, with NC shunt | **A** — pending e-match spec |
 | E-match no-fire / all-fire current | — | **TBD** — blocks every margin claim |
 | Firing pair | 2 × 16 AWG shielded, own cable | **V** — computed, see below |

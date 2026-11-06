@@ -9,14 +9,12 @@ STORAGE
 In lab,MicroSD socket push-push,THD2528-11SD-GF,CARD1,1,C283232,UNIT,Mouser,DigiKey,Pin 9 CD -> SD_DETECT with a 10 k pull-UP (as IGNIS v5 R28). Locating pegs drilled 1.3 mm (MAGNIS v1). Shell pads MP1-4 to GND.
 ANALOG FRONT END  (D-046)
 New (approved),"24-bit ADC, SPI, 2 kSPS, integrated PGA x1-128, TSSOP-16",ADS1220IPWR,U_ADC,1,C48263,UNIT,Mouser,DigiKey,"SELECTED. Replaces the ADS1115 and its I2C bus. Stocked at BOTH UNIT and LCSC (C48263, ~15.9k, ~$1.71 @100) - stock checked 6 Nov 2026, re-verify before ordering. Internal PGA is the PRIMARY front end. Verify input common-mode range with PGA enabled at 3.3 V against the load cell (open item 4)."
-Optional / bypassable,Instrumentation amplifier (hand-populated),"AD620ARZ (SOIC) or AD620AN (DIP, UNIT)",U_AMP,0,C578332,UNIT,Mouser,DigiKey,"Footprint laid out with 0 ohm BYPASS LINKS, NOT populated at assembly. AD620ARZ is listed under LCSC 'Pre-ordered Products' so JLCPCB very likely cannot place it. Hand-populate to A/B the two front ends in bring-up Stage 4."
-New (approved),Resistor 0 ohm 0805 - AD620 bypass links,Generic 0 R jumper,"R_BYP1, R_BYP2",2,--,UNIT,Mouser,DigiKey,Fitted = PGA-only chain. Removed + AD620 populated = two-stage chain. Lets both be measured on identical hardware.
+Optional / socketed,"Instrumentation amplifier, DIP-8 (optional)",AD620AN,U_AMP,0 (socket fitted),--,UNIT,Mouser,DigiKey,"DIP-8 in a SOCKET, not populated by default (D-054). UNIT stocks the through-hole part at ~111 MXN. A socket makes the A/B comparison a chip pull, not a rework. Left out by default: at ~$6-8 it is the most expensive part on the board and the ADS1220 PGA makes it redundant."
+New (approved),IC socket DIP-8,Generic DIP-8 socket,XU_AMP,1,--,UNIT,Mouser,DigiKey,"Always fitted, so the AD620 can be added or removed without soldering."
+New (approved),Resistor 0 ohm 0805 - AD620 bypass links,Generic 0 R jumper,"R_BYP1, R_BYP2",2,--,UNIT,Mouser,DigiKey,Fitted = PGA-only chain (default). Removed + AD620 in its socket = two-stage chain. Lets both be measured on identical hardware in bring-up Stage 4.
 TBD,Load cell excitation reference,TBD,U_REF,1,--,--,--,--,"Cannot be specified until the load cell datasheet is available (open item 4). Check whether the excitation can serve as the ADS1220 external reference for a ratiometric measurement, which would cancel excitation drift."
 SAFETY CHAIN  (hardware only - no MCU)
-TBD,"Relay, 12 V coil, contact NORMALLY OPEN - ARM",TBD,K1,1,--,--,Mouser,DigiKey,Energised by the station ARM key. Must be NO so DISARMED is the de-energised state.
-TBD,"Relay, 12 V coil, contact NORMALLY OPEN - FIRE",TBD,K2,1,--,--,Mouser,DigiKey,Energised only while the station FIRE button is held.
-TBD,"Relay, 12 V coil, contact NORMALLY CLOSED - SHUNT",TBD,K3,1,--,--,Mouser,DigiKey,MANDATORY NC. Shorts the e-match pair whenever disarmed (D-008). Releases only when K1 pulls in.
-TBD,"Relay, 12 V coil, NO - MASTER / E-STOP",TBD,K4,1,--,--,Mouser,DigiKey,Held in by its coil. E-STOP breaks the coil circuit so it drops out.
+New (approved),"Relay SPDT, 12 V coil, 10 A contacts, through-hole",SRD-12VDC-SL-C,"K1, K2, K3, K4",4,C30431,--,Mouser,DigiKey,"ONE part for all four positions (D-055). SPDT gives both NO and NC: K1/K2/K4 wired NO, K3 wired NC for the shunt. ~$0.23, ~131,800 in LCSC stock, also at Mexican retailers. Coil ~30 mA / 400 ohm. CONTACT RATING still to confirm against e-match current (O-1, O-3)."
 TBD,Arming plug / removable shorting link,TBD,J_ARM,1,--,--,--,--,"Withdrawn by hand at the bench, inserted last. Must be keyed and obviously absent at a glance."
 In lab,Switching diode - relay coil flyback,1N4148W,D_K1..D_K4,4,C81598,UNIT,Mouser,DigiKey,One per relay coil.
 PYRO INTERFACE  (one channel - D-015)
@@ -29,8 +27,7 @@ In lab,Red LED 0805,NCD0805R1,D_IND1..6,6,C84256,UNIT,Mouser,DigiKey,Hardware-dr
 TBD,"High-brightness beacon LEDs, long-range",TBD,D_BEACON,TBD,--,--,Mouser,DigiKey,"Must be visible at 20-40 m (manual p. 24). DRIVEN FROM THE REAL ARM/FIRE LINES (D-017), not from the MCU."
 Logger status only,Addressable RGB LED 5050,WS2812B-B/T,LED1,1,C2761795,UNIT,Mouser,DigiKey,"CAUTION: addressable LEDs need an MCU data signal, so they CANNOT serve the safety beacon (D-017). Logger-local status only."
 "TELEMETRY  (secondary path - BUILT IN REV A, D-048)"
-Pending part,Isolated RS-485 transceiver,ADM2582E / ADM2587E  [CANDIDATE],U_485,1,--,--,Mouser,DigiKey,Path confirmed for rev A (D-048); exact part still to choose. Integrated isolation plus isolated supply. Must be LCSC-stocked for JLCPCB assembly (D-049). Alternative: MAX13487 + ADuM1201 + isolated DC-DC.
-In lab,Optocoupler SMD-4 (discrete isolation alternative),TLP521GB-S (UMW),U_ISO,2,C364143,UNIT,Mouser,DigiKey,Cheaper discrete isolation if a bidirectional link is not needed.
+New (approved),"RS-485 transceiver, 3.3 V, half-duplex",SP3485EN-L/TR,U_485,1,C8963,--,Mouser,DigiKey,"Native to the ESP32 3.3 V domain. ~$0.14-0.27, ~190,700 in LCSC stock. Replaces the ~$10 ADM2582E (D-056): isolation moves to the STATION board where USB powers the isolated side, so no isolated DC-DC is needed anywhere."
 POWER & PROTECTION
 In lab,Schottky 40 V / 2 A SMA - reverse polarity,SS24,D_RP,1,C50645,UNIT,Mouser,DigiKey,SMA footprint. Series or blocking configuration per Gate 2.
 In lab,LDO 3.3 V,AMS1117-3.3,U_3V3,1,C6186,UNIT,Mouser,DigiKey,"Logger domain. Own fused rail, separate from relay coils (SAFETY.md section 4, constraint 3)."
@@ -40,9 +37,9 @@ TBD,TVS / ESD array - one per umbilical conductor,TBD,D_TVS,10-12,--,--,Mouser,D
 CONNECTORS & TEST
 In lab,JST-SH 4-pin right-angle (debug UART),SM04B-SRSS-TB(LF)(SN),J_DBG,1,C160404,UNIT,Mouser,DigiKey,Logger debug only. Not a safety interface.
 TBD,"Umbilical connector, keyed + strain relief",TBD,J_UMB,1,--,--,Mouser,DigiKey,"Cable B, 8-10 conductors. Keyed, strain-relieved, pin 1 marked (Gate 1 requirement)."
-In lab,"SMT test point, miniature",Keystone 5015,TP1..TP14,~14,--,--,Mouser,DigiKey,Test points on EVERY rail and EVERY safety signal (Gate 2 requirement). Bare pads also acceptable.
-PASSIVES  (existing 0603 / 0805 library)
-In lab,Resistor 10 kOhm 0603 1 %,0603WAF1002T5E,R*,~12,C25804,UNIT,Mouser,DigiKey,"Pull-ups, dividers, SD_DETECT"
+New (approved),Test point - bare pad / via,Bare pad (no part),TP1..TP14,~14,--,--,--,--,"Test points on EVERY rail and EVERY safety signal (Gate 2 requirement). Bare pads replace Keystone 5015 (D-057): free, and they work with probe hooks."
+"PASSIVES  (existing IGNIS library - 0603 R, 0805 C, D-058)"
+In lab,Resistor 10 kOhm 0603 1 %,0603WAF1002T5E,R*,~12,C25804,UNIT,Mouser,DigiKey,"Pull-ups, dividers, SD_DETECT. 0603 retained (D-058): reels already owned, and hand-solderable."
 In lab,Resistor 4.7 kOhm 0603 1 %,0603WAF4701T5E,R*,~4,C23162,UNIT,Mouser,DigiKey,
 In lab,Resistor 1 kOhm 0603 1 %,0603WAF1001T5E,R*,~8,C21190,UNIT,Mouser,DigiKey,"LED series, opto drive"
 In lab,Resistor 100 Ohm 0603 1 %,0603WAF1000T5E,R*,~4,C22775,UNIT,Mouser,DigiKey,
@@ -50,5 +47,5 @@ In lab,Capacitor 100 nF 50 V X7R 0805,CC0805KRX7R9BB104,C*,~15,C49678,UNIT,Mouse
 In lab,Capacitor 10 uF 25 V X5R 0805,CL21A106KAYNNNE,C*,~6,C15850,UNIT,Mouser,DigiKey,
 In lab,Capacitor 22 uF 25 V X5R 0805,CL21A226MAQNNNE,C*,~3,C45783,UNIT,Mouser,DigiKey,Bulk on the logger rail
 
-,Lines confirmed in lab (IGNIS v5 / MAGNIS v1 lists),,,20
-,Lines still TBD or pending a decision,,,11
+,Lines confirmed in lab (IGNIS v5 / MAGNIS v1 lists),,,18
+,Lines still TBD or pending a decision,,,7

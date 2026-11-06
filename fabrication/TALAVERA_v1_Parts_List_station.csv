@@ -11,7 +11,8 @@ TELEMETRY & USB
 In lab,USB-C 16-pin (USB 2.0),TYPE-C-31-M-12,J_USB,1,C165948,UNIT,Mouser,DigiKey,"On the STATION board, not the bench. Direct USB down a 20 m umbilical is out of spec (D-038)."
 In lab,"USB ESD diode, 5 V bidirectional",ESD9B5.0ST5G,"D_ESD1, D_ESD2",2,C111566,UNIT,Mouser,DigiKey,"SOD-923, one per data line. Alt: USBLC6-2SC6 (C7519)."
 Pending part,USB-UART bridge,CH340C / FT232RL  [CANDIDATE],U_USB,1,--,UNIT,Mouser,DigiKey,No MCU needed on the station for safety. A bridge is sufficient. CH340C is LCSC-stocked and cheap.
-Pending part,Isolated RS-485 transceiver,ADM2582E  [CANDIDATE],U_485,1,--,--,Mouser,DigiKey,Station end of the isolated link. Isolation is MANDATORY so the laptop is never tied to bench ground during a firing. Must be LCSC-stocked for JLCPCB assembly.
+New (approved),"RS-485 transceiver, 3.3 V, half-duplex",SP3485EN-L/TR,U_485,1,C8963,--,Mouser,DigiKey,"Station end, on the BENCH-REFERENCED side of the ground barrier, powered from the umbilical."
+Pending part,Digital isolator / high-speed optocoupler - ground barrier,6N137 or digital isolator  [CANDIDATE],U_ISO,2,--,--,Mouser,DigiKey,Sits between the bench-referenced side and the USB side. NOT YET VERIFIED for price or stock. The TLP521/PC817 already in stock are too slow to be relied on at 115200 baud - do not substitute them without measuring.
 MEASUREMENT OUTPUT
 TBD,Differential receiver for the thrust pair,TBD,U_RX,1,--,--,Mouser,DigiKey,Recovers the thrust signal and presents 0-5 V to a DAQ.
 TBD,DAQ output connector (BNC or terminal),TBD,J_DAQ,1,--,--,Mouser,DigiKey,Path 2 must work with no software at all.
@@ -24,8 +25,8 @@ In lab,Switching diode (buzzer flyback),1N4148W,D_BUZZ,1,C81598,UNIT,Mouser,Digi
 CONNECTORS & TEST
 TBD,"Umbilical connector, keyed + strain relief",TBD,J_UMB,1,--,--,Mouser,DigiKey,Mates cable B.
 In lab,Screw terminal 6-pin 5.08 mm,1729160,P1,1,C457192,--,Mouser,DigiKey,"Pyro pair, cable A."
-In lab,"SMT test point, miniature",Keystone 5015,TP1..TP8,~8,--,--,Mouser,DigiKey,
-PASSIVES  (existing library)
+New (approved),Test point - bare pad / via,Bare pad (no part),TP1..TP8,~8,--,--,--,--,"Bare pads, per D-057."
+"PASSIVES  (existing IGNIS library - 0603 R, 0805 C, D-058)"
 In lab,Resistor 10 kOhm 0603 1 %,0603WAF1002T5E,R*,~8,C25804,UNIT,Mouser,DigiKey,
 In lab,Resistor 1 kOhm 0603 1 %,0603WAF1001T5E,R*,~6,C21190,UNIT,Mouser,DigiKey,LED series
 In lab,Resistor 5.1 kOhm 0603 1 %,0603WAF5101T5E,R*,2,C23186,UNIT,Mouser,DigiKey,USB-C CC pull-downs
@@ -33,5 +34,5 @@ In lab,Resistor 22 Ohm 0603 1 %,0603WAF220JT5E,R*,2,C23345,UNIT,Mouser,DigiKey,U
 In lab,Capacitor 100 nF 50 V X7R 0805,CC0805KRX7R9BB104,C*,~8,C49678,UNIT,Mouser,DigiKey,
 In lab,Capacitor 10 uF 25 V X5R 0805,CL21A106KAYNNNE,C*,~4,C15850,UNIT,Mouser,DigiKey,
 
-,Lines confirmed in lab (IGNIS v5 / MAGNIS v1 lists),,,15
+,Lines confirmed in lab (IGNIS v5 / MAGNIS v1 lists),,,14
 ,Lines still TBD or pending a decision,,,7
