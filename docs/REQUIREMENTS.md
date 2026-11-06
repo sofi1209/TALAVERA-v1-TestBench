@@ -140,28 +140,46 @@ the ordinary cost of putting safety logic in software.
 
 Ordered by what they block.
 
-| # | Item | Blocks |
+Renumbered 6 November 2026. Closed items are listed separately below rather than struck through in place.
+
+### Blocking Gate 2 — the schematic cannot be drawn without these
+
+| # | Item | Why it blocks |
 |---|---|---|
-| ~~1~~ | ~~Review owner's name~~ — resolved: **Emilio Guadarrama** (D-050) | closed |
-| ~~2~~ | ~~Logger power domain~~ — resolved: **upstream of the master kill relay**, own fuse and switch (D-047) | closed |
-| 3 | E-match make and part, **no-fire current**, all-fire current, resistance | Every safety margin claim, Gate 3 |
-| 4 | Load cell make and model, bridge resistance, mV/V, rated excitation | Analog chain design, Gate 2 |
-| 5 | Largest motor class intended (total impulse) | Standoff planning, connector sizing |
-| 6 | KiCad sources for the two Wirikuta reference boards | Reuse and comparison |
-| 7 | Environment figures confirmed or overridden | Gate 3 part selection |
-| 8 | Fab house, layer count, assembly yes/no, board size target | Gate 4 and Gate 6 |
-| ~~9~~ | ~~GitHub organisation / username~~ — resolved: `sofi1209` | closed |
-| 10 | **Logger mounting: socketed DevKitC vs. soldered WROOM-32D module** | Gate 2 and Gate 4; vibration robustness |
-| 11 | Amplifier gain must keep its output inside the chosen converter's input range at 3.3 V | Gate 2 analog chain. **Disappears if an integrated-PGA converter is chosen** — see item 12. |
-| 12 | **ADC selection** — ADS1115 reopened, primary criterion is moving off I²C | Gate 2 and Gate 3. See [ADC-TRADE-STUDY.md](ADC-TRADE-STUDY.md). |
-| 13 | **Which ADS1115 symptom was actually seen** — lockup, noise, drift, clipping or speed | Confirms or redirects item 12 |
-| ~~14~~ | ~~microSD socket part number~~ — resolved: **THD2528-11SD-GF** (C283232) | closed |
-| ~~10~~ | ~~Logger mounting~~ — resolved: socketed DevKitC on PPTC191LFBN-RC + hold-down, per MAGNIS v1 (D-042) | closed |
-| 16 | **Relay selection** — 4 relays, 12 V coil; K3 must be normally-closed | Gate 2 and Gate 3. No candidate chosen; contact rating depends on the e-match current. |
-| 17 | **ARM key switch, E-STOP, and FIRE panel button** part selection | Gate 2. All three are panel-mount, not PCB parts. |
-| 18 | Arming plug / removable shorting link part | Gate 2. Must be keyed and obviously absent at a glance. |
-| 19 | Enclosure and panel for the station board | Gate 4. Drives the panel-control footprints. |
-| 15 | Whether the RS-485/USB secondary path is built in rev A or left as footprints | Gate 2 scope |
+| **O-1** | **E-match make and part, no-fire current, all-fire current, resistance** | Sets `R_CONT`, the fuse rating, all four relay contact ratings and the `PYRO` trace width. The entire pyro section stays `TBD` without it, and no safety margin can be claimed. |
+| **O-2** | **Load cell make and model, bridge resistance, mV/V, rated excitation** | Sets the ADS1220 PGA gain, decides whether the PGA common-mode restriction bites, and decides whether a ratiometric reference is possible. The whole analog chain depends on it. |
+
+Both are data only Ignitia can supply. Neither will be guessed.
+
+### Needed during Gate 2 and 3, derivable or minor
+
+| # | Item | Note |
+|---|---|---|
+| O-3 | Relay selection — 4 relays, 12 V coil; **K3 must be normally-closed** | Contact rating depends on O-1. Must be LCSC-stocked (D-049). |
+| O-4 | ARM key switch, E-STOP mushroom, FIRE panel button | All three panel-mount, not PCB parts, so exempt from the LCSC constraint. |
+| O-5 | Arming plug / removable shorting link part | Must be keyed and obviously absent at a glance. |
+| O-6 | Isolated RS-485 transceiver and USB-UART bridge parts | Path confirmed (D-048); parts still to pick. Must be LCSC-stocked. |
+| O-7 | **ADS1220 input common-mode range with PGA enabled at 3.3 V**, checked against the real load cell | Narrowed from the old gain-range item. The PGA can be bypassed for rail-to-rail input at the cost of gain. Depends on O-2. |
+| O-8 | Board size target for each board | Outlines are placeholders (D-023). Fab house and layer count are settled. |
+| O-9 | Copper weight | The `PYRO` 2.00 mm track width assumes 1 oz. Confirm before trusting it. |
+| O-10 | Which ADS1115 symptom was actually seen — lockup, noise, drift, clipping or speed | Informational now that D-046 is decided, but it would confirm the diagnosis or point at a layout problem the new part will not fix. |
+| O-11 | Largest motor class intended (total impulse) | Standoff planning and connector sizing. |
+| O-12 | Environment figures confirmed or overridden | §4 is still entirely assumed. Gate 3 part selection. |
+| O-13 | KiCad sources for the two Wirikuta reference boards | Comparison only. Not blocking. |
+| O-14 | Enclosure and panel for the station board | Gate 4. Drives the panel-control footprints. |
+
+### Closed
+
+| Item | Resolution | Decision |
+|---|---|---|
+| Review owner | **Emilio Guadarrama** | D-050 |
+| Logger power domain | Upstream of the master kill relay, own fuse and switch | D-047 |
+| ADC selection | **ADS1220IPWR**, SPI, integrated PGA; AD620 laid out bypassable | D-046 |
+| Secondary telemetry scope | Built into rev A | D-048 |
+| Fab house, layers, assembly | JLCPCB, 2-layer, assembled | D-049 |
+| Logger mounting | Socketed DevKitC on `PPTC191LFBN-RC` plus a hold-down, per MAGNIS v1 | D-042 |
+| microSD socket | **THD2528-11SD-GF** (LCSC C283232) | D-041 |
+| GitHub organisation | `sofi1209` | D-033 |
 
 ---
 
