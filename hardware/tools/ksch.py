@@ -42,8 +42,14 @@ def ser(node, indent=0):
     simple = all(isinstance(c, tuple) for c in node)
     if simple:
         return "(" + " ".join(ser(c) for c in node) + ")"
-    out = ["(" + (ser(head) if isinstance(head, tuple) else ser(head, indent + 1))]
-    for c in node[1:]:
+    # canonical KiCad style: head plus any leading atoms stay on one line,
+    # e.g.  (symbol "Device:R"  /  (property "Reference" "R1"
+    out = ["(" + ser(head)]
+    i = 1
+    while i < len(node) and isinstance(node[i], tuple):
+        out.append(" " + ser(node[i]))
+        i += 1
+    for c in node[i:]:
         out.append("\n" + pad + "\t" + ser(c, indent + 1))
     out.append("\n" + pad + ")")
     return "".join(out)
