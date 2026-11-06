@@ -230,6 +230,7 @@ TALAVERA-v1-TestBench/
 │   └── DECISION-LOG.md           Every decision, reason, date, approver
 ├── hardware/
 │   ├── talavera-bench/           KiCad 10 project — bench board
+│   ├── tools/                    Schematic generators (ksch.py + per-board scripts)
 │   ├── talavera-station/         KiCad 10 project — control station board
 │   └── libraries/                Project symbols, footprints, 3D models
 ├── firmware/
@@ -257,7 +258,7 @@ Work proceeds one gate at a time. No gate starts before the previous one is appr
 |---|---|---|
 | 0 | Requirements and reference | ✅ Complete |
 | 1 | Architecture | ⬜ Awaiting approval |
-| 2 | Schematic | ⬜ Not started — schematics are empty skeletons |
+| 2 | Schematic | 🟨 **Drawn** — both boards, 96 components. Values on the pyro and analog blocks await O-1/O-2. |
 | 3 | Components, sourcing, second sources | ⬜ Not started |
 | 4 | Layout | ⬜ Not started |
 | 5 | ERC / DRC clean | ⬜ Not started |

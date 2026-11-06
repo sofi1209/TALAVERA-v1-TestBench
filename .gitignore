@@ -56,3 +56,4 @@ desktop.ini
 !fabrication/*.csv
 !fabrication/PARTS-LIST.md
 !fabrication/*.py
+!hardware/tools/*.py

@@ -10,19 +10,46 @@ KiCad projects for the two TALAVERA boards.
 
 ---
 
-## Status: skeletons only
+## Status: schematics drawn, values incomplete
 
-> **The schematics are intentionally empty.** Gate 2 has not started and no circuit has been designed.
+> Both boards now carry a full schematic. **96 components across the two sheets**, zero structural
+> errors. Nothing is approved and no board has been fabricated.
 >
-> Each schematic carries a single text block listing the non-negotiable design rules, so that the rules
-> are visible in the tool where the work will happen rather than only in a document.
+> The pyro and analog blocks are complete in **topology** but carry `TBD` values, because `R_CONT`,
+> the fuse and relay ratings need the e-match no-fire current (O-1), and the PGA gain, excitation
+> and reference choice need the load cell datasheet (O-2).
 >
-> Each PCB carries a rectangular `Edge.Cuts` outline at a placeholder size, the layer stack, and the
-> design rules. No footprints are placed.
+> One block is deliberately **not drawn**: the path-2 monitor buffer (O-19). No part is chosen, so
+> no circuit was invented for it.
 
-Opening either project and seeing an empty sheet is the expected result.
+| Board | Components | Nets | Sheet |
+|---|---|---|---|
+| `talavera-bench` | 54 | 47 | A2, nine labelled blocks |
+| `talavera-station` | 42 | 31 | A2, six labelled blocks |
 
----
+Both are **flat single sheets** with net-label connectivity rather than hierarchical sheets. At this
+size that is easier to review than nine sub-sheets, and every block is boxed and titled.
+
+### Generated, not hand-drawn
+
+The `.kicad_sch` files are produced by `tools/gen_bench.py` and `tools/gen_station.py` on top of
+`tools/ksch.py`, which reads symbol definitions straight out of the installed KiCad libraries and
+flattens `extends` inheritance. Regenerate with:
+
+```bash
+cd hardware/tools && python gen_bench.py && python gen_station.py
+```
+
+`tools/validate_sch.py` checks structure independently of KiCad — paren balance, that every `lib_id`
+resolves, that every instance pin exists in its symbol, duplicate references, off-sheet placement,
+orphaned labels and single-use nets:
+
+```bash
+python hardware/tools/validate_sch.py hardware/talavera-bench/talavera-bench.kicad_sch hardware/talavera-station/talavera-station.kicad_sch
+```
+
+They are ordinary KiCad files and can be edited by hand afterwards; just be aware a regeneration
+would overwrite manual edits.
 
 ## KiCad version
 
