@@ -6,6 +6,26 @@ SYMDIR = r"C:/Program Files/KiCad/10.0/share/kicad/symbols"
 # ---------------------------------------------------------------- sexp parser
 TOK = re.compile(r'\s*(?:(\()|(\))|"((?:[^"\\]|\\.)*)"|([^\s()"]+))')
 
+_ESCMAP = {"n": "\n", "t": "\t", "r": "\r", "\\": "\\", '"': '"'}
+
+def unesc(s):
+    """Decode a KiCad quoted-string body into its real characters."""
+    out, i = [], 0
+    while i < len(s):
+        c = s[i]
+        if c == "\\" and i + 1 < len(s):
+            out.append(_ESCMAP.get(s[i + 1], s[i + 1]))
+            i += 2
+        else:
+            out.append(c)
+            i += 1
+    return "".join(out)
+
+def esc(s):
+    """Encode a real string for a KiCad quoted string. Raw newlines are illegal."""
+    return (s.replace("\\", "\\\\").replace('"', '\\"')
+             .replace("\n", "\\n").replace("\t", "\\t").replace("\r", "\\r"))
+
 def parse(text):
     pos, stack, cur = 0, [], []
     n = len(text)
@@ -25,7 +45,7 @@ def parse(text):
                 break
             cur = stack.pop()
         elif s is not None:
-            cur.append(('str', s))
+            cur.append(('str', unesc(s)))
         else:
             cur.append(('sym', at))
     return cur
@@ -34,7 +54,7 @@ def ser(node, indent=0):
     pad = "\t" * indent
     if isinstance(node, tuple):
         kind, v = node
-        return '"%s"' % v if kind == 'str' else v
+        return '"%s"' % esc(v) if kind == 'str' else v
     if not node:
         return "()"
     head = node[0]
@@ -178,16 +198,16 @@ class Sch:
             h = "\n\t\t\t\t(hide yes)" if hide else ""
             pstr.append(
                 '\t\t(property "%s" "%s"\n\t\t\t(at %.4f %.4f 0)\n\t\t\t(effects\n\t\t\t\t(font\n\t\t\t\t\t(size 1.27 1.27)\n\t\t\t\t)%s\n\t\t\t)\n\t\t)'
-                % (name, v, x + dx, y + dy, h))
-        pinstr = "".join('\t\t(pin "%s"\n\t\t\t(uuid "%s")\n\t\t)\n' % (pn, U()) for pn in pins)
+                % (name, esc(v), x + dx, y + dy, h))
+        pinstr = "".join('\t\t(pin "%s"\n\t\t\t(uuid "%s")\n\t\t)\n' % (esc(pn), U()) for pn in pins)
         mir = '\n\t\t(mirror %s)' % mirror if mirror else ""
         self.items.append(
             '\t(symbol\n\t\t(lib_id "%s")\n\t\t(at %.4f %.4f %d)%s\n\t\t(unit 1)\n'
             '\t\t(exclude_from_sim no)\n\t\t(in_bom yes)\n\t\t(on_board yes)\n\t\t(dnp %s)\n'
             '\t\t(uuid "%s")\n%s\n%s'
             '\t\t(instances\n\t\t\t(project "%s"\n\t\t\t\t(path "/%s"\n\t\t\t\t\t(reference "%s")\n\t\t\t\t\t(unit 1)\n\t\t\t\t)\n\t\t\t)\n\t\t)\n\t)'
-            % (libid, x, y, angle, mir, "yes" if dnp else "no", U(),
-               "\n".join(pstr), pinstr, self.project, self.uuid, ref))
+            % (esc(libid), x, y, angle, mir, "yes" if dnp else "no", U(),
+               "\n".join(pstr), pinstr, esc(self.project), self.uuid, esc(ref)))
         out = {}
         for pn, (px, py, pa) in pins.items():
             gx, gy = x + px, y - py           # library is Y-up, schematic Y-down
@@ -203,7 +223,7 @@ class Sch:
     def label(self, name, x, y, angle=0, justify="left"):
         self.items.append(
             '\t(label "%s"\n\t\t(at %.4f %.4f %d)\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size 1.27 1.27)\n\t\t\t)\n'
-            '\t\t\t(justify %s bottom)\n\t\t)\n\t\t(uuid "%s")\n\t)' % (name, x, y, angle, justify, U()))
+            '\t\t\t(justify %s bottom)\n\t\t)\n\t\t(uuid "%s")\n\t)' % (esc(name), x, y, angle, justify, U()))
 
     def stub(self, pin, name, length=5.08):
         """Draw a wire outward from a pin and attach a net label."""
@@ -246,7 +266,7 @@ class Sch:
     def text(self, s, x, y, size=2.0, bold=True):
         self.items.append(
             '\t(text "%s"\n\t\t(exclude_from_sim no)\n\t\t(at %.4f %.4f 0)\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size %.2f %.2f)\n\t\t\t\t(thickness %.2f)\n\t\t\t\t(bold %s)\n\t\t\t)\n\t\t\t(justify left top)\n\t\t)\n\t\t(uuid "%s")\n\t)'
-            % (s, x, y, size, size, size * 0.15, "yes" if bold else "no", U()))
+            % (esc(s), x, y, size, size, size * 0.15, "yes" if bold else "no", U()))
 
     def box(self, x, y, w, h):
         self.items.append(
@@ -256,7 +276,7 @@ class Sch:
 
     def render(self):
         libs = "\n".join(ser(d, 2) for d in self.libs.values())
-        com = "".join('\n\t\t(comment %d "%s")' % (i + 1, c) for i, c in enumerate(self.comments))
+        com = "".join('\n\t\t(comment %d "%s")' % (i + 1, esc(c)) for i, c in enumerate(self.comments))
         return (
             '(kicad_sch\n\t(version 20250610)\n\t(generator "eeschema")\n\t(generator_version "9.99")\n'
             '\t(uuid "%s")\n\t(paper "%s")\n'
@@ -264,7 +284,7 @@ class Sch:
             '\t(lib_symbols\n%s\n\t)\n%s\n'
             '\t(sheet_instances\n\t\t(path "/"\n\t\t\t(page "1")\n\t\t)\n\t)\n'
             '\t(embedded_fonts no)\n)\n'
-            % (self.uuid, self.paper, self.title, self.rev, self.company, com,
+            % (self.uuid, self.paper, esc(self.title), esc(self.rev), esc(self.company), com,
                libs, "\n".join(self.items)))
 
     def write(self, path):

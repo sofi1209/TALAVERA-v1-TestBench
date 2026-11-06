@@ -7,13 +7,19 @@ def check(path):
     txt = open(path, encoding="utf-8").read()
     errs, warns = [], []
 
-    # 1. paren balance outside strings
-    d = 0; instr = False; i = 0
+    # 1. paren balance, and RAW NEWLINES INSIDE STRINGS.
+    #    KiCad rejects a literal line break inside a quoted string with
+    #    "Unterminated delimited string" - it requires a \n escape. An earlier
+    #    version of this checker silently accepted them, so the schematic
+    #    validated clean here and still failed to load. Treat it as an error.
+    d = 0; instr = False; i = 0; line = 1; rawnl = []
     while i < len(txt):
         c = txt[i]
+        if c == "\n": line += 1
         if instr:
             if c == chr(92): i += 2; continue
             if c == '"': instr = False
+            elif c == "\n": rawnl.append(line - 1)
         else:
             if c == '"': instr = True
             elif c == '(': d += 1
@@ -22,6 +28,10 @@ def check(path):
                 if d < 0: errs.append("unbalanced ) at %d" % i); break
         i += 1
     if d != 0: errs.append("paren depth ends at %d" % d)
+    if rawnl:
+        errs.append("RAW NEWLINE inside a quoted string at line(s) %s - KiCad will refuse to load "
+                    "the file ('Unterminated delimited string'). Escape as \\\\n."
+                    % ", ".join(str(n) for n in rawnl[:10]))
 
     tree = ksch.parse(txt)
     if not tree or ksch.head(tree[0]) != "kicad_sch":
