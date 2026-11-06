@@ -1,6 +1,7 @@
 # TALAVERA v1 — Requirements (Gate 0 output)
 
-Status: **Gate 0 complete.** Gate 1 awaiting approval.
+Status: **Gate 0 complete.** Gates 2–5 proceed continuously without per-gate sign-off (D-053);
+**Gate 6 and bring-up Stage 5 keep mandatory written sign-off** from the review owner.
 
 Reference design: *Manual de operaciones: WIRIKUTA 1.1 Banco de Pruebas*, Ignitia Rocket Lab, August 2025.
 
@@ -80,7 +81,10 @@ from every function the test's safety depends on. Keep only the functions the te
 | Storage | On-board microSD socket `THD2528-11SD-GF`, with `SD_DETECT` | D-037, D-041 |
 | Logger power | Upstream of the master kill relay, own fuse and switch | D-047 |
 | Secondary telemetry | Isolated RS-485 over cable B, USB-C on the station board, built in rev A | D-038, D-048 |
-| Fabrication | JLCPCB, 2-layer, assembled. Every populated part must be LCSC-stocked. | D-049 |
+| Fabrication | **Bare PCB, 2-layer, hand-assembled** for rev A. Parts must be cheap, reliably sourced from LCSC or UNIT, and hand-solderable. | D-051, D-052 |
+| Safety relays | One part ×4: `SRD-12VDC-SL-C` SPDT, 12 V coil. K3 wired NC for the shunt. | D-055 |
+| RS-485 | `SP3485EN-L/TR`, 3.3 V. Isolation at the station, powered from USB — no isolated DC-DC. | D-056 |
+| Selection policy | Cheap, reliably sourced, hand-solderable. Safety ratings exempt from the price rule. | D-052 |
 | Review owner | **Emilio Guadarrama** | D-050 |
 
 ---
