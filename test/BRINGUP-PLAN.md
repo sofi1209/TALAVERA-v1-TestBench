@@ -101,6 +101,9 @@ Every row in this table must pass before the board is allowed near a load of any
 | Logger: file created, parses cleanly, no diagnostic rows | Yes | | |
 | Logger stopped by its own switch: file closes cleanly | Yes | | |
 | Logger: confirm no logger net reaches any safety net | Verified by measurement and by layout review | | |
+| Logger: **confirm Wi-Fi and Bluetooth are off** — scan for the module's SSID and BT address with the logger running | Not present on either band | | |
+| Logger: noise floor on the thrust channel with the logger running vs. powered down | No measurable degradation attributable to the logger | | |
+| Logger: RECORD opened — file closes cleanly, then E-STOP pressed | File intact and parseable after the E-STOP | | |
 
 **The inert load must match the e-match resistance and must be rated for the energy.**
 A resistor that cannot take the pulse is not an inert load, it is a fuse.

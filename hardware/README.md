@@ -59,6 +59,26 @@ automatically.
 
 ---
 
+## Voltage domains
+
+The logger is an **ESP32-WROOM-32D at 3.3 V** (D-028). That has knock-on effects for Gate 2:
+
+| Domain | Parts | Note |
+|---|---|---|
+| 12 V | Input protection, relay coils, beacon | Battery rail |
+| 5 V | — | May not be needed at all now; confirm at Gate 2 |
+| 3.3 V | ESP32, ADS1115, microSD | Run the ADS1115 at 3.3 V so I²C is native and needs no level translation |
+
+Two consequences to carry into the schematic:
+
+1. **The AD620 gain must keep its output inside the ADS1115 input range at a 3.3 V supply** — that is
+   V<sub>DD</sub> + 0.3 V, not the ±4.096 V the PGA setting might suggest. This constrains the gain
+   chain and is open item 11.
+2. **microSD is 3.3 V native**, so the level shifters a 5 V Arduino needed are gone. Do not carry over a
+   5 V SD breakout module with an onboard regulator and shifters.
+
+---
+
 ## Design rules that layout must satisfy (Gate 4)
 
 1. Keep-out between the logger zone and the entire firing chain.

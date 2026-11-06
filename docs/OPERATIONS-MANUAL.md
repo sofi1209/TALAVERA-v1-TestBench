@@ -32,6 +32,11 @@
 | Document | Operations Manual — TALAVERA Static Test Bench |
 | Revision | A (preliminary) |
 | Date | 6 November 2026 |
+| Author | Sofia Pacheco Leon — Ignitia Rocket Lab, Avionics & Electronics |
+| Co-author | Claude (Anthropic) |
+| Team leader | TBD |
+| Division leader | TBD |
+| Faculty advisor | TBD |
 | Repository | **https://github.com/&lt;your-github-user&gt;/TALAVERA-v1-TestBench** |
 | Supersedes | Nothing. Wirikuta 1.1 remains the operational bench until TALAVERA is accepted. |
 | Predecessor document | *Manual de operaciones: WIRIKUTA 1.1 Banco de Pruebas*, August 2025 |
@@ -327,4 +332,4 @@ reverts to shorted.
 
 | Rev | Date | Author | Change |
 |---|---|---|---|
-| A | 2026-11-06 | — | Preliminary issue. Written from the Gate 0 requirements, before any hardware exists. |
+| A | 2026-11-06 | Sofia Pacheco Leon | Preliminary issue. Written from the Gate 0 requirements, before any hardware exists. |

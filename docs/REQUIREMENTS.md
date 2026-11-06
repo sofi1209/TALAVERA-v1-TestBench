@@ -33,7 +33,7 @@ from every function the test's safety depends on. Keep only the functions the te
 | Battery voltage sense to the station | The pre-test check requires at least 12 V (**V** p. 12), read remotely rather than by walking up. |
 | ESD / surge protection on every umbilical conductor | 20–40 m of exposed field cable. |
 | Test points on every rail and every safety signal | Gate 2 requirement. |
-| Thrust logger | Local record of the test. Constrained to zero authority — see [SAFETY.md](SAFETY.md) §4. |
+| Thrust logger | Local record of the test. **ESP32-DevKitC V4 (ESP32-WROOM-32D)**, constrained to zero authority with its radios stopped — see [SAFETY.md](SAFETY.md) §4. |
 
 ### 2.2 Control station board
 
@@ -142,6 +142,8 @@ Ordered by what they block.
 | 7 | Environment figures confirmed or overridden | Gate 3 part selection |
 | 8 | Fab house, layer count, assembly yes/no, board size target | Gate 4 and Gate 6 |
 | 9 | GitHub organisation / username for the repository URL | Manual cross-references |
+| 10 | **Logger mounting: socketed DevKitC vs. soldered WROOM-32D module** | Gate 2 and Gate 4; vibration robustness |
+| 11 | AD620 gain must keep its output inside the ADS1115 input range at a 3.3 V supply | Gate 2 analog chain |
 
 ---
 

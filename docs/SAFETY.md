@@ -63,8 +63,9 @@ Plus the shunt: while `DISARMED`, the match is shorted. The shunt releases only 
 
 ## 4. The logger is a passenger
 
-Logging stays on the bench board. That is a deliberate decision (D-012) and it only stays safe under four
-constraints, which are **design rules, not suggestions**:
+Logging stays on the bench board, on an **ESP32-DevKitC V4 (ESP32-WROOM-32D)** (D-028). That is a
+deliberate decision and it only stays safe under five constraints, which are **design rules, not
+suggestions**:
 
 1. **No electrical connection to any safety net.** The logger sees the buffered output of the
    instrumentation amplifier and nothing else. No net it owns may reach the arm line, fire line, shunt
@@ -74,9 +75,24 @@ constraints, which are **design rules, not suggestions**:
    transient cannot reach it.
 4. **A layout keep-out** between the logger zone and the firing chain, enforced at Gate 4 and checked at
    Gate 5.
+5. **Radios stopped.** The WROOM-32D carries Wi-Fi and Bluetooth. Both are switched off as the first
+   action at boot and must never be enabled (D-029).
 
-If these four hold, the requirement "no controller on anything safety depends on" is satisfied even though
+If these five hold, the requirement "no controller on anything safety depends on" is satisfied even though
 a microcontroller is physically present on the board.
+
+### Why the radio matters here, and why it is not a firing risk
+
+The logger has no outputs and no connection to any safety net, so a radio on it cannot issue a command
+that reaches the igniter. The safety argument is unchanged by the ESP32.
+
+The concern is different: a 2.4 GHz transmitter at up to +20 dBm would sit centimetres from the AD620
+front end and from a 20 m pyrotechnic cable — the two most EMI-sensitive things on the bench. One is the
+measurement the bench exists to make, already noise-limited (manual p. 28). The other is a long
+conductor pair running to a bridgewire. Neither wants a transmitter next to it.
+
+This is a **measurement-integrity and pickup** concern, not a command-injection one. It is listed as a
+safety constraint because the pyro cable is involved.
 
 ### Open question — logger power domain
 

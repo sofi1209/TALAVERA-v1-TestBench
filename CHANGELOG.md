@@ -36,6 +36,31 @@
 - No circuit designed. Gate 2 not started.
 - No board fabricated. Nothing energized. Nothing approved.
 
+### Logger processor change
+
+**Changed**
+- Logger processor is now the **ESP32-DevKitC V4 (ESP32-WROOM-32D)**, replacing the Arduino UNO. (D-028)
+- Logger gains a **RECORD input** (GPIO34, input-only, external pull-up) so the data file closes cleanly
+  before the operator presses E-STOP. Previously the logger recorded whenever powered. (D-032)
+- Pin map avoids GPIO6–11 (SPI flash) and all strapping pins (0, 2, 5, 12, 15). (D-031)
+
+**Added**
+- **Wi-Fi and Bluetooth stopped as the first action at boot**, with a fifth logger constraint in
+  `docs/SAFETY.md` explaining that this is an EMI concern, not a command-injection one. (D-029)
+- Bring-up checks for radio silence, logger noise contribution, and clean file close across an E-STOP.
+- Voltage-domain section in `hardware/README.md`: the AD620 gain must keep its output inside the
+  ADS1115 input range at a 3.3 V supply.
+
+**Kept deliberately**
+- **ADS1115 retained; the ESP32 internal SAR ADC is not used.** It is nonlinear and noisy, and the
+  load-cell chain is already noise-limited (manual p. 28). (D-030)
+
+### Authorship
+
+- Author: Sofia Pacheco Leon. Co-author: Claude (Anthropic).
+- Credits restructured to the IGNIS-v5 README style, with team leader, division leader and faculty
+  advisor rows pending names.
+
 ### Outstanding before Gate 2
 
 - Review owner must be named.
