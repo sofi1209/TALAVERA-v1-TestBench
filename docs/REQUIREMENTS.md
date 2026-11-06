@@ -141,7 +141,7 @@ Ordered by what they block.
 | 6 | KiCad sources for the two Wirikuta reference boards | Reuse and comparison |
 | 7 | Environment figures confirmed or overridden | Gate 3 part selection |
 | 8 | Fab house, layer count, assembly yes/no, board size target | Gate 4 and Gate 6 |
-| 9 | GitHub organisation / username for the repository URL | Manual cross-references |
+| ~~9~~ | ~~GitHub organisation / username~~ — resolved: `sofi1209` | closed |
 | 10 | **Logger mounting: socketed DevKitC vs. soldered WROOM-32D module** | Gate 2 and Gate 4; vibration robustness |
 | 11 | AD620 gain must keep its output inside the ADS1115 input range at a 3.3 V supply | Gate 2 analog chain |
 

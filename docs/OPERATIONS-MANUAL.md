@@ -37,13 +37,10 @@
 | Team leader | TBD |
 | Division leader | TBD |
 | Faculty advisor | TBD |
-| Repository | **https://github.com/&lt;your-github-user&gt;/TALAVERA-v1-TestBench** |
+| Repository | **https://github.com/sofi1209/TALAVERA-v1-TestBench** |
 | Supersedes | Nothing. Wirikuta 1.1 remains the operational bench until TALAVERA is accepted. |
 | Predecessor document | *Manual de operaciones: WIRIKUTA 1.1 Banco de Pruebas*, August 2025 |
 | Review owner | **TBD** |
-
-> The repository URL above is a **placeholder**. Replace `<your-github-user>` with the actual
-> GitHub organisation or username once the repository is published.
 
 The authoritative version of this manual is the copy in the repository. Printed copies are
 uncontrolled and must carry the revision letter and date.
