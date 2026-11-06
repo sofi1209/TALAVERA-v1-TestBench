@@ -1,0 +1,23 @@
+# Normalise line endings
+* text=auto eol=lf
+
+# KiCad source files are text. Diff them, never treat as binary.
+*.kicad_pro   text diff
+*.kicad_sch   text diff
+*.kicad_pcb   text diff
+*.kicad_sym   text diff
+*.kicad_mod   text diff
+*.kicad_dru   text diff
+
+# Generated / binary artefacts
+*.step        binary
+*.stp         binary
+*.wrl         binary
+*.xlsx        binary
+*.pdf         binary
+*.png         binary
+*.jpg         binary
+*.zip         binary
+
+# Collapse noisy generated files in PR review
+fabrication/** linguist-generated=true

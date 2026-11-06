@@ -1,0 +1,54 @@
+(kicad_sch
+	(version 20250610)
+	(generator "eeschema")
+	(generator_version "9.99")
+	(uuid "5a654147-f58b-4670-9634-98e5fd45355a")
+	(paper "A3")
+	(title_block
+		(title "TALAVERA v1 - Control Station Board")
+		(date "2026-11-06")
+		(rev "A")
+		(company "Ignitia Rocket Lab - Tecnologico de Monterrey, Campus Guadalajara")
+		(comment 1 "TALAVERA bench test board - PRELIMINARY, NOT APPROVED")
+		(comment 2 "Successor to Wirikuta 1.1. No MCU on the safety path.")
+	)
+	(lib_symbols)
+	(text "TALAVERA v1 - SCHEMATIC SKELETON
+
+This sheet is intentionally EMPTY.
+Gate 2 (schematic) is NOT approved. No circuit has been designed.
+
+NON-NEGOTIABLE RULES FOR THIS SHEET:
+  1. No microcontroller on the arm, fire, or e-stop path. Ever.
+  2. Igniter safe state is SHORTED, via a normally-closed contact.
+  3. Every safe state must be the DE-ENERGIZED state.
+  4. Three series elements to fire: station ARM key, station FIRE
+     button, and the bench ARMING PLUG inserted by hand.
+  5. The LED beacon is driven from the real ARM/FIRE signals,
+     never from a software report of them.
+  6. The logger is a passenger: no outputs, no connection to any
+     safety net, its own fused and separately regulated rail.
+  7. Function-based net names. Test points on every rail and every
+     safety signal. ESD protection on all external connectors.
+
+NO CIRCUIT IN THIS PROJECT IS APPROVED.
+Pyrotechnic, actuator, battery and high-current circuits require
+written sign-off from the named review owner before bring-up."
+		(exclude_from_sim no)
+		(at 20 25 0)
+		(effects
+			(font
+				(size 2 2)
+				(thickness 0.3)
+			)
+			(justify left top)
+		)
+		(uuid "7ff0a0a2-988e-40c8-82c2-013da48cbad1")
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

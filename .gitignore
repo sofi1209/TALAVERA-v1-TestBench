@@ -1,0 +1,53 @@
+# ---- KiCad ----
+# Backups and autosaves
+*-backups/
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*.kicad_prl
+_autosave-*
+*.000
+*.bak
+fp-info-cache
+~*.lck
+*.lck
+
+# Netlists and generated intermediates (regenerate from source)
+*.net
+*.xml
+*.cmp
+*.dsn
+*.ses
+
+# Simulation output
+*.raw
+spice*
+
+# ---- Fabrication output ----
+# Generated at Gate 6 only, from an approved, tagged commit.
+# Release archives are attached to the GitHub Release, not committed.
+fabrication/**/*.zip
+fabrication/**/*.gbr
+fabrication/**/*.gbrjob
+fabrication/**/*.drl
+!fabrication/**/.gitkeep
+
+# ---- Firmware ----
+.pio/
+build/
+*.elf
+*.hex
+*.bin
+
+# ---- Analysis ----
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# ---- OS / editor ----
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
