@@ -2,7 +2,7 @@
 	(version 20250610)
 	(generator "eeschema")
 	(generator_version "9.99")
-	(uuid "982eb379-eda3-47ea-88c9-28a2261b30bf")
+	(uuid "61c69782-613f-44b9-9120-10d99eb9b3db")
 	(paper "A2")
 	(title_block
 		(title "TALAVERA v1 - Bench Board")
@@ -615,6 +615,126 @@
 								(size 1.27 1.27)
 							)
 						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+(symbol "power:PWR_FLAG"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#FLG"
+				(at 0 1.905 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PWR_FLAG"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Special symbol for telling ERC where power comes from"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "flag power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_0"
+				(pin power_out line
+					(at 0 0 90)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_1"
+				(polyline
+					(pts
+						(xy 0 0)
+						(xy 0 1.27)
+						(xy -1.016 1.905)
+						(xy 0 2.54)
+						(xy 1.016 1.905)
+						(xy 0 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
 					)
 				)
 			)
@@ -5479,7 +5599,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "e90d22fe-841d-474d-be52-0793387a151b")
+		(uuid "858c0041-7dd1-47eb-be53-b6051752d586")
 	)
 	(rectangle
 		(start 12.0000 22.0000)
@@ -5491,7 +5611,7 @@
 		(fill
 			(type none)
 		)
-		(uuid "fa90cfb2-1ee5-4381-b6ca-3021adec0f31")
+		(uuid "8df36683-b609-46e5-ada6-5c0b2a5cac4d")
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
@@ -5501,8 +5621,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "d00d07e9-8bdb-45c1-ace9-f6e15decc556")
-		(property "Reference" "J_PWR"
+		(uuid "c0ce4c4a-f947-405c-91a2-6cadcb9d1b6b")
+		(property "Reference" "J_PWR1"
 			(at 30.0000 38.7300 0)
 			(effects
 				(font
@@ -5546,15 +5666,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "b358d608-af09-49df-b434-40a3d477450b")
+			(uuid "fd55d8fe-6ba9-444c-98f4-9864874b0b8f")
 		)
 		(pin "2"
-			(uuid "e7969b1e-beae-4b1d-9df6-bde5f17866b5")
+			(uuid "bc11151f-c6f2-438a-897c-862d01e54432")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "J_PWR")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "J_PWR1")
 					(unit 1)
 				)
 			)
@@ -5568,17 +5688,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "d17b7b10-fbaf-4723-ad99-0c300749afe6")
+		(uuid "0993c648-450d-4ab4-a56b-d26ac5dc27be")
 	)
 	(label "+12V_RAW"
-		(at 19.3400 40.0000 0)
+		(at 19.8400 40.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "f2e7730d-ce67-4f8d-95e5-86061e500244")
+		(uuid "f328ed71-68e4-4071-9e44-c205103de506")
 	)
 	(wire
 		(pts
@@ -5588,7 +5708,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "595905a1-9190-4857-b326-951e484a83b9")
+		(uuid "719fb5fe-a3bc-41b2-a4ff-ddc6bd48a870")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -5598,7 +5718,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "2d1ed2f9-12fc-4f0c-867a-1b9de8d90374")
+		(uuid "f461c403-043d-454e-8091-184b5ac56a5d")
 		(property "Reference" "#PWR01"
 			(at 19.8400 41.2700 0)
 			(effects
@@ -5645,11 +5765,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "b2dc2be3-9660-4e36-8484-d5368dc58edd")
+			(uuid "583543d1-d689-4ce3-8f63-078829cba8c2")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR01")
 					(unit 1)
 				)
@@ -5664,7 +5784,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "56763e7b-9fc8-428c-9111-74d8ee16c27e")
+		(uuid "7cf046e9-e572-4a36-9ba2-012aedc0af15")
 		(property "Reference" "F1"
 			(at 60.0000 33.7300 0)
 			(effects
@@ -5709,14 +5829,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "3d968078-07bf-4054-80a9-c0f10b5124fa")
+			(uuid "80412ca7-c74e-409d-9a87-48374ee42d7d")
 		)
 		(pin "2"
-			(uuid "14f282c4-ec6c-4a5d-8ede-8d4aeb396dae")
+			(uuid "5066cf55-0a4d-4e4c-a063-7b8213212714")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "F1")
 					(unit 1)
 				)
@@ -5725,43 +5845,43 @@
 	)
 	(wire
 		(pts
-			(xy 60.0000 31.1900) (xy 60.0000 28.1900)
+			(xy 56.1900 35.0000) (xy 53.1900 35.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "790cf3a0-72c8-464f-8aa1-eec5be1e66e3")
+		(uuid "b28f841d-987a-414e-9452-c6593d670eb4")
 	)
 	(label "+12V_RAW"
-		(at 60.0000 27.6900 90)
+		(at 53.1900 35.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "757608c0-a10c-413f-a4e3-aec80d464c7d")
+		(uuid "252e8a74-b560-4664-add1-b61bbce29c32")
 	)
 	(wire
 		(pts
-			(xy 60.0000 38.8100) (xy 60.0000 41.8100)
+			(xy 63.8100 35.0000) (xy 66.8100 35.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "9b1686ae-c7df-4213-88a1-b8716a7cee6c")
+		(uuid "ccbf2fbd-5fa1-49cf-b4ef-d8363273fd4e")
 	)
 	(label "+12V_FUSED"
-		(at 60.0000 42.3100 90)
+		(at 66.8100 35.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "f7905c6f-cda5-40ef-8463-05c5f611a61d")
+		(uuid "a87636d3-5898-4968-882d-9c622031d600")
 	)
 	(symbol
 		(lib_id "Device:D_Schottky")
@@ -5771,8 +5891,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "891bb2c4-f6ea-4d12-998b-b2933c8c0fdc")
-		(property "Reference" "D_RP"
+		(uuid "77e9b266-429e-45af-9c47-4f82142a1fa9")
+		(property "Reference" "D_RP1"
 			(at 95.0000 33.7300 0)
 			(effects
 				(font
@@ -5816,15 +5936,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "a7b86e28-0b6a-4f28-bf41-c4afe9d12a03")
+			(uuid "2ac4bdcd-2421-426a-ae81-4cd8ba1c8c5c")
 		)
 		(pin "2"
-			(uuid "3f3bbe4d-db59-4328-b585-1244a7014815")
+			(uuid "cb24e2fd-c7f3-41e2-b41a-ae14fc9661d7")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "D_RP")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "D_RP1")
 					(unit 1)
 				)
 			)
@@ -5832,43 +5952,43 @@
 	)
 	(wire
 		(pts
-			(xy 91.1900 35.0000) (xy 88.1900 35.0000)
+			(xy 95.0000 38.8100) (xy 95.0000 41.8100)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "cd0e2e46-ae00-4364-a8b4-b4d50013d132")
+		(uuid "0189b295-d0de-4cc8-b89f-14ef43b44da2")
 	)
 	(label "+12V_FUSED"
-		(at 87.6900 35.0000 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "8186d35e-e114-42d8-aae6-6c65b65de619")
-	)
-	(wire
-		(pts
-			(xy 98.8100 35.0000) (xy 101.8100 35.0000)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "59dfc11f-66bc-4831-8ffd-c5fa0b38c2ff")
-	)
-	(label "+12V_PROT"
-		(at 102.3100 35.0000 0)
+		(at 95.0000 41.8100 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "a0320dfb-0496-49e9-aa36-7b3913fd36dd")
+		(uuid "b0caac6f-14b3-4023-80c6-71878f5345ce")
+	)
+	(wire
+		(pts
+			(xy 95.0000 31.1900) (xy 95.0000 28.1900)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ca29d070-f723-4fd3-bc24-b161bcdad224")
+	)
+	(label "+12V_PROT"
+		(at 95.0000 28.1900 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d894c89d-7f22-40b8-81ff-86b6f68ce1f9")
 	)
 	(text "reverse-polarity block"
 		(exclude_from_sim no)
@@ -5881,7 +6001,179 @@
 			)
 			(justify left top)
 		)
-		(uuid "a4816ab4-03c9-4d54-973b-feb1503d9b8d")
+		(uuid "e259c462-687a-4d30-9680-fa6d9c6ef1e2")
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 30.0000 28.0000 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "fa576f13-5f2b-4884-9a8c-7785c3c57518")
+		(property "Reference" "#FLG01"
+			(at 30.0000 26.7300 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+12V_RAW"
+			(at 30.0000 29.2700 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 30.0000 28.0000 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 30.0000 28.0000 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 30.0000 28.0000 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e2de4048-21f1-42be-ac48-d60cc5351605")
+		)
+		(instances
+			(project "talavera-bench"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "#FLG01")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 30.0000 28.0000) (xy 30.0000 30.5400)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "85199ced-9e29-4a0a-b5ab-50decd371f17")
+	)
+	(label "+12V_RAW"
+		(at 30.0000 30.5400 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "56a2daca-c5ef-485d-b741-159d66797480")
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 50.0000 28.0000 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "02958177-c035-4e4b-9229-cb5eee2f8aef")
+		(property "Reference" "#FLG02"
+			(at 50.0000 26.7300 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 50.0000 29.2700 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 50.0000 28.0000 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 50.0000 28.0000 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 50.0000 28.0000 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cc6a1fd8-1bca-4c73-89be-6928a5496d1f")
+		)
+		(instances
+			(project "talavera-bench"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "#FLG02")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 50.0000 28.0000) (xy 50.0000 30.5400)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "25f47421-3976-46d3-8ec7-1e6075469034")
+	)
+	(label "GND"
+		(at 50.0000 30.5400 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "abf0f6ae-bbd0-43f7-8120-4e086c55d288")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -5891,7 +6183,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "3f3122b8-e807-473c-a6ba-c696a085af6e")
+		(uuid "44808244-75fb-4e66-900b-145c38a9d656")
 		(property "Reference" "C1"
 			(at 125.0000 38.7300 0)
 			(effects
@@ -5936,14 +6228,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "d18acb08-8a9a-46f9-993f-6b229c9d6cda")
+			(uuid "3cca020c-d24d-43e7-a2a2-ece27b568e48")
 		)
 		(pin "2"
-			(uuid "bbc345b2-7d0e-4c20-b748-ec8a8472bc3b")
+			(uuid "8da9aaba-456e-4fbc-9226-28cae65a3b3f")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "C1")
 					(unit 1)
 				)
@@ -5958,17 +6250,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "66c1ce4c-e9ea-40f9-b3c0-3fb158638ac3")
+		(uuid "065c143a-99bd-4cae-a523-9ab2167a14bc")
 	)
 	(label "+12V_PROT"
-		(at 125.0000 32.6900 90)
+		(at 125.0000 33.1900 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "29fa81d6-025b-4df9-ac54-cbcff2fa2600")
+		(uuid "308c2d68-8cde-4762-9ccb-48be921ee636")
 	)
 	(wire
 		(pts
@@ -5978,7 +6270,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "1a0d6e79-ed5a-480a-a6e6-fdf04094717a")
+		(uuid "b8ea2917-9692-4bb4-afb8-d2a76c632aed")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -5988,7 +6280,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "f8010a02-38ad-446e-a151-fb497615e37e")
+		(uuid "f1d067fe-33ae-45d5-a58b-7698f202d8da")
 		(property "Reference" "#PWR02"
 			(at 125.0000 47.6200 0)
 			(effects
@@ -6035,11 +6327,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "9fdd5864-c2ec-4d47-879c-24db8ca19124")
+			(uuid "75c37506-28c3-446d-be20-93459f056312")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR02")
 					(unit 1)
 				)
@@ -6057,7 +6349,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "011c5cd2-af47-4fbd-939b-85ff6e0f968c")
+		(uuid "03d7ce7e-aeac-425c-b835-54555b96071a")
 	)
 	(text "an E-STOP must not corrupt the data file."
 		(exclude_from_sim no)
@@ -6070,7 +6362,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "2571c1ab-ea5d-4f34-ba2f-79a40475c1af")
+		(uuid "2ad41566-97e2-44e8-ac41-67fcc421d91a")
 	)
 	(symbol
 		(lib_id "Device:Fuse")
@@ -6080,7 +6372,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "c3fccb24-159c-4d55-bfe9-ff08c3e0b807")
+		(uuid "4f4e0741-756a-4225-926c-d0e1a653de81")
 		(property "Reference" "F2"
 			(at 60.0000 78.7300 0)
 			(effects
@@ -6125,14 +6417,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "3a9854a1-4ff3-4e6d-abc7-fd94f1dedd31")
+			(uuid "02c80d9e-64a8-4a7a-a14b-d1d250faa2e7")
 		)
 		(pin "2"
-			(uuid "41e4f92f-6b2c-4cd8-b74f-d6a0176e5910")
+			(uuid "b8eb93b3-95d3-4539-abd9-fe477c873339")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "F2")
 					(unit 1)
 				)
@@ -6141,43 +6433,43 @@
 	)
 	(wire
 		(pts
-			(xy 60.0000 76.1900) (xy 60.0000 73.1900)
+			(xy 56.1900 80.0000) (xy 53.1900 80.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "cf532dcb-f3ea-48f8-b44b-2f57e1e0b1cb")
+		(uuid "c69ad058-8b74-4075-bcc3-65c04a644fb6")
 	)
 	(label "+12V_PROT"
-		(at 60.0000 72.6900 90)
+		(at 53.1900 80.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "c859b2a2-f5cb-4b46-a46f-5afe135f21e6")
+		(uuid "cbba1d9b-83dc-42ff-95e6-9043a472c05b")
 	)
 	(wire
 		(pts
-			(xy 60.0000 83.8100) (xy 60.0000 86.8100)
+			(xy 63.8100 80.0000) (xy 66.8100 80.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "84521fb0-e60d-42ad-9a13-938205ecebf1")
+		(uuid "0e403e3c-0c73-4a30-8eb9-baadff4da4e5")
 	)
 	(label "+12V_LOGGER"
-		(at 60.0000 87.3100 90)
+		(at 66.8100 80.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "6b645250-33d4-4310-89b6-868e1e1fb77d")
+		(uuid "bf783de3-0699-4bbd-809b-74bdd967e7c1")
 	)
 	(symbol
 		(lib_id "Regulator_Linear:AMS1117-3.3")
@@ -6187,7 +6479,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "d659a9ba-f012-410a-94d1-28a8bd6c83c1")
+		(uuid "95226aed-9c31-42d2-88ab-43bce13e946b")
 		(property "Reference" "U_3V3"
 			(at 108.0000 78.7300 0)
 			(effects
@@ -6232,17 +6524,17 @@
 			)
 		)
 		(pin "1"
-			(uuid "ff397747-4683-475a-8ca3-3d1abc960d75")
+			(uuid "8ea77aad-957b-4675-9cdd-0abc3932b41e")
 		)
 		(pin "2"
-			(uuid "056cb7c8-d83a-43f3-a68c-834d1118a2e7")
+			(uuid "3cdaff7a-db86-4ec6-a768-7c5a946c9548")
 		)
 		(pin "3"
-			(uuid "fff8d703-6644-4e0b-bd5d-92fdac41e7d2")
+			(uuid "f5671e88-2b22-42f1-8281-f09c51e29077")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "U_3V3")
 					(unit 1)
 				)
@@ -6257,17 +6549,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "f67b9699-8da1-4847-8266-f2f0e7c8e2db")
+		(uuid "e6c960d7-ca74-45bb-b00c-6b4914b7f4dc")
 	)
 	(label "+12V_LOGGER"
-		(at 108.0000 93.2000 90)
+		(at 108.0000 92.7000 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "7f168400-181c-4d52-87fa-5f74bf25febe")
+		(uuid "6ef7ad61-543b-4ae1-abf2-729900f21627")
 	)
 	(wire
 		(pts
@@ -6277,7 +6569,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7a452f59-d75d-4e1a-84ac-bcc8acf480be")
+		(uuid "3db3212c-6916-4d1a-94f0-b55167a6f895")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -6287,7 +6579,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "22815248-019e-4a4d-98d8-b0d41708e8d4")
+		(uuid "7be42cbf-f4ea-4b73-adf2-34e97ed3a1f2")
 		(property "Reference" "#PWR03"
 			(at 120.7000 78.7300 0)
 			(effects
@@ -6334,11 +6626,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "8d2e16ef-560c-4754-b6d0-f8fdb6a226d7")
+			(uuid "ad5d316f-ee88-4ff7-b860-83ea6d3f7989")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR03")
 					(unit 1)
 				)
@@ -6353,17 +6645,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "d0f77be4-f723-48b2-a960-c8c9d454074b")
+		(uuid "10b4282b-aa37-476f-be02-09fa8533364d")
 	)
 	(label "+3V3_LOGGER"
-		(at 94.8000 80.0000 0)
+		(at 95.3000 80.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "6f713e2c-edca-4c2e-b422-4b37f635a5ff")
+		(uuid "ca97be2d-ba7d-45d6-8935-d15c59b04ee3")
 	)
 	(symbol
 		(lib_id "Regulator_Linear:AMS1117-5.0")
@@ -6373,8 +6665,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp yes)
-		(uuid "715e8ff1-142e-493d-adf7-9822eada8647")
-		(property "Reference" "U_5V"
+		(uuid "1359347a-d5d1-4f08-881b-bd4087bbc52e")
+		(property "Reference" "U_5V1"
 			(at 108.0000 98.7300 0)
 			(effects
 				(font
@@ -6418,18 +6710,18 @@
 			)
 		)
 		(pin "1"
-			(uuid "cf74a196-dbfe-4ad9-b56a-20a80f89dbd0")
+			(uuid "c0c4a264-19fe-4dae-bd21-e351042a96c2")
 		)
 		(pin "2"
-			(uuid "aa5165d9-64f0-4f35-8ef9-69dfb98cc7c2")
+			(uuid "589a87e2-b6c4-44ab-ada6-a4d044d121a7")
 		)
 		(pin "3"
-			(uuid "95c8a9af-0a61-4e56-bca4-21dc5b198dac")
+			(uuid "99ed1ec2-1205-4b01-93a4-9e8716888d82")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "U_5V")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "U_5V1")
 					(unit 1)
 				)
 			)
@@ -6443,17 +6735,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "e5254e73-68fb-4734-97e9-1a1b9043b760")
+		(uuid "b06b3e36-a4ff-41e0-a956-e4ad0df4bd75")
 	)
 	(label "+12V_LOGGER"
-		(at 108.0000 113.2000 90)
+		(at 108.0000 112.7000 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "ea566499-9ede-4bdd-86fa-cfa186a56a20")
+		(uuid "9908842b-76f0-410e-a22e-6899ad91255e")
 	)
 	(wire
 		(pts
@@ -6463,7 +6755,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "05e37e89-672b-4daa-a94e-9644c8f753a9")
+		(uuid "a615d056-0c49-42a8-b6b2-5644fcdf9bac")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -6473,7 +6765,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "2cd3917e-bc72-4a12-828d-f6fe90bbd0e6")
+		(uuid "9b9fb579-8c1d-48e5-9793-fd0338058d71")
 		(property "Reference" "#PWR04"
 			(at 120.7000 98.7300 0)
 			(effects
@@ -6520,11 +6812,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "6de508c8-f57b-4688-bf07-d074ce0384af")
+			(uuid "7c8afaca-56a6-4e5c-9c35-81570ce405fe")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR04")
 					(unit 1)
 				)
@@ -6539,17 +6831,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "07e75528-1e41-4b84-b40a-d471769a793d")
+		(uuid "c2662844-619d-4e5d-bc1d-3bf7dc73a0e7")
 	)
 	(label "+5V_AMP"
-		(at 94.8000 100.0000 0)
+		(at 95.3000 100.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "ff95ed09-f814-4c27-a232-4f2d40baacf3")
+		(uuid "cfe98f25-fac7-46fb-9cc9-24ccf71f95bc")
 	)
 	(text "U_5V is only needed for analog path B (the AD620).\nLeave unpopulated while running path A."
 		(exclude_from_sim no)
@@ -6562,7 +6854,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "c0c8fc48-9fe3-4c49-96a1-78e172da93aa")
+		(uuid "5b1085c2-a878-4172-9652-5eca84830936")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -6572,7 +6864,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "96c29633-68de-4685-8c98-eebfe6636680")
+		(uuid "b3d5127a-6502-42c5-9871-60259cb2587e")
 		(property "Reference" "C2"
 			(at 140.0000 83.7300 0)
 			(effects
@@ -6617,14 +6909,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "238f5720-7c8f-4678-bbea-7970b2ade88b")
+			(uuid "f276eb9c-2d52-46fb-a7e8-37448d964891")
 		)
 		(pin "2"
-			(uuid "ee8b1b06-b4f0-4bb4-a8c5-5793840afbe3")
+			(uuid "f48b8a95-a5ad-402b-bf85-2f53caf094d1")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "C2")
 					(unit 1)
 				)
@@ -6639,17 +6931,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "dfb5d8c7-febb-4b0d-b303-acd4f36f3922")
+		(uuid "0e470f0d-394d-432e-ac7a-4b96e524c2c5")
 	)
 	(label "+12V_LOGGER"
-		(at 140.0000 77.6900 90)
+		(at 140.0000 78.1900 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "391ccdb6-624d-4bd2-8902-36db925d5ec9")
+		(uuid "d5a5003a-2176-45bf-a7b6-53ff1e37d64e")
 	)
 	(wire
 		(pts
@@ -6659,7 +6951,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "cc6cbb73-120a-400d-aaa8-dfd927fc62d9")
+		(uuid "db70725f-2e16-4fdf-90d5-b20930b1f353")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -6669,7 +6961,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "3cb4a2cf-e1da-47eb-a36c-6d6579875197")
+		(uuid "4d775206-6084-437e-9b1d-606b85910983")
 		(property "Reference" "#PWR05"
 			(at 140.0000 92.6200 0)
 			(effects
@@ -6716,11 +7008,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "260c3e14-e12c-4758-bbda-453861edc549")
+			(uuid "4ba3828e-b1ae-449f-a500-34e8323568e2")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR05")
 					(unit 1)
 				)
@@ -6735,7 +7027,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "b9205d69-c756-4e30-b5d0-8dc6b24ccebb")
+		(uuid "77b329f5-08a9-465b-b9eb-d0e1774e5a60")
 		(property "Reference" "C3"
 			(at 160.0000 83.7300 0)
 			(effects
@@ -6780,14 +7072,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "d2d12fab-cabc-4f9b-8e28-06260304a957")
+			(uuid "d9c37678-d913-4066-ad41-42c8760e554f")
 		)
 		(pin "2"
-			(uuid "720060a7-534d-4645-9f8b-af1eb22a2804")
+			(uuid "a4980fae-b616-4aee-a19a-359749aeadd5")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "C3")
 					(unit 1)
 				)
@@ -6802,17 +7094,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "2cebb3f2-1d60-4637-a7c2-3d39d0d16c0c")
+		(uuid "0f2ca5cb-6f04-480d-b5d2-e45d5b1ba062")
 	)
 	(label "+3V3_LOGGER"
-		(at 160.0000 77.6900 90)
+		(at 160.0000 78.1900 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "7021d837-3671-4ff1-b19e-6e3d25f5368f")
+		(uuid "c35ee178-15d5-47ad-98f7-75489047aacd")
 	)
 	(wire
 		(pts
@@ -6822,7 +7114,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "6d4c2abc-ef95-470a-a254-379e3c5d814c")
+		(uuid "6e64c0cb-b872-4e4a-99c9-29565e84ca66")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -6832,7 +7124,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "8081aa26-70b6-4695-aa5a-b744809d39d8")
+		(uuid "e79caac7-551c-4a72-a0c0-24eaba85c1c2")
 		(property "Reference" "#PWR06"
 			(at 160.0000 92.6200 0)
 			(effects
@@ -6879,11 +7171,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "1e94e849-8082-4ce9-a78a-5afacc919f7b")
+			(uuid "1276122a-ca19-4168-a953-fd7942b9f77a")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR06")
 					(unit 1)
 				)
@@ -6901,7 +7193,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "56f31303-28af-47d4-a2ad-3e918472a39f")
+		(uuid "9534a5e2-42c5-44e5-86a7-2daed6c122c3")
 	)
 	(rectangle
 		(start 12.0000 124.0000)
@@ -6913,7 +7205,7 @@
 		(fill
 			(type none)
 		)
-		(uuid "93bb0965-3640-41d2-81df-64da1c175707")
+		(uuid "521b3e42-f790-474c-b54a-306ccd83283e")
 	)
 	(text "Relay contacts use IEC numbering: 11 = COM, 12 = NC, 14 = NO."
 		(exclude_from_sim no)
@@ -6926,7 +7218,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "51ae247b-3744-49fd-a518-f48b8d364b9b")
+		(uuid "ecbb1936-8d9d-46be-a104-daa41d9db6a6")
 	)
 	(text "Physical SRD-12VDC-SL-C pin mapping is set at footprint assignment (O-3)."
 		(exclude_from_sim no)
@@ -6939,7 +7231,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "a0400633-0ccf-42e4-b4a4-33469ec2963d")
+		(uuid "11ca1c15-d13e-4bcf-8213-da2fa744509a")
 	)
 	(symbol
 		(lib_id "Relay:Relay_SPDT")
@@ -6949,7 +7241,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "2002a7f8-9032-434a-ad2a-b2da367c52cc")
+		(uuid "110e6059-6f53-43b2-a148-231aa5867522")
 		(property "Reference" "K4"
 			(at 40.0000 150.7300 0)
 			(effects
@@ -6994,23 +7286,23 @@
 			)
 		)
 		(pin "11"
-			(uuid "2685b39d-0fea-490a-b7bf-6fe370098d7b")
+			(uuid "2a8ec7da-baf0-4c5d-8d11-48ce98ab84be")
 		)
 		(pin "12"
-			(uuid "fad36b15-88fb-4bfd-b2b8-4d2e0f75811c")
+			(uuid "6227a1e3-cd3b-4cb2-a811-87668c0dff50")
 		)
 		(pin "14"
-			(uuid "0ad228bc-24cb-4b37-8eeb-aadc695fde92")
+			(uuid "502ba771-27f2-4ff5-8ef3-378339e2486c")
 		)
 		(pin "A1"
-			(uuid "e886b0e1-4791-41be-b2e7-12f0cf493242")
+			(uuid "7bc64546-014c-4ced-80d7-9139feab02e1")
 		)
 		(pin "A2"
-			(uuid "88d44a03-0dad-4c99-9af0-d8aad6f34042")
+			(uuid "3b2b601b-d00b-409f-b6c7-bdd8d52cac95")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "K4")
 					(unit 1)
 				)
@@ -7025,17 +7317,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "be5aee07-380a-4a94-b669-7890adc635e8")
+		(uuid "309d494d-26b8-4aa3-9f08-951552edf8ef")
 	)
 	(label "+12V_PROT"
-		(at 34.9200 138.8000 90)
+		(at 34.9200 139.3000 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "69fcfa91-bc54-405d-a32c-93b5b1d633ba")
+		(uuid "8edeb5f2-3ad4-4872-9901-60c7933bfb17")
 	)
 	(wire
 		(pts
@@ -7045,17 +7337,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "e11b1cbc-b705-4c1f-b99b-ee23df99b6ff")
+		(uuid "9ada62aa-3fe6-43c5-8bfd-3dbcd7ee0ee7")
 	)
 	(label "ESTOP_LOOP"
-		(at 34.9200 165.2000 90)
+		(at 34.9200 164.7000 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "dfb1a961-5a0b-4cc5-9be7-511d68cb948d")
+		(uuid "5a7a75a8-c2d4-4403-a2c3-e5fb6c037bf6")
 	)
 	(wire
 		(pts
@@ -7065,17 +7357,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "00642ad8-3d61-4dc0-93c6-6ce8ed1363da")
+		(uuid "f5e3e1a8-4ff8-47fe-b301-628f1d78a620")
 	)
 	(label "+12V_PROT"
-		(at 45.0800 165.2000 90)
+		(at 45.0800 164.7000 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "fb50ce92-475f-497e-890f-b2b682acde0d")
+		(uuid "e5729b13-5364-4712-9df8-d373a452d071")
 	)
 	(wire
 		(pts
@@ -7085,17 +7377,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "16977fb7-6671-42d8-be59-9e6d452609e5")
+		(uuid "5b65182b-f9d2-4f38-967e-c838cafca121")
 	)
 	(label "+12V_MASTER"
-		(at 47.6200 138.8000 90)
+		(at 47.6200 139.3000 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "825be6b0-a9aa-40c0-8bde-928bcc1aa9e7")
+		(uuid "a3feec2a-592e-4ace-b03b-ef34e41d3700")
 	)
 	(text "K4 MASTER: coil via E-STOP loop.\nDrops out = BENCH_UNPOWERED."
 		(exclude_from_sim no)
@@ -7108,7 +7400,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "407852e0-d91e-46fa-bc79-fbf0b3d9467c")
+		(uuid "ad10ba5a-3593-43c0-8cef-47c03b1a7adf")
 	)
 	(symbol
 		(lib_id "Device:D")
@@ -7118,7 +7410,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "7450971a-12e9-45c8-bfbc-8094133b2aab")
+		(uuid "a234be51-dad5-4ad0-9ea5-64bf483f56b4")
 		(property "Reference" "D_K4"
 			(at 75.0000 148.7300 0)
 			(effects
@@ -7163,14 +7455,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "c0846aba-1a0c-4979-896a-0220ee0a77ea")
+			(uuid "e54a37d5-8d5c-4094-b349-f020514a4bb9")
 		)
 		(pin "2"
-			(uuid "392eff10-2fa3-48b4-9a2d-d6fe18dbfc69")
+			(uuid "ab174c77-408e-46df-8353-9b817bbf67d9")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "D_K4")
 					(unit 1)
 				)
@@ -7179,43 +7471,43 @@
 	)
 	(wire
 		(pts
-			(xy 71.1900 150.0000) (xy 68.1900 150.0000)
+			(xy 75.0000 153.8100) (xy 75.0000 156.8100)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "378d9511-81d3-4aa4-ae98-377b6b2961eb")
+		(uuid "b40100b4-3252-4690-a16f-33176f22b92c")
 	)
 	(label "ESTOP_LOOP"
-		(at 67.6900 150.0000 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "965b05e5-f9d3-4fad-905f-2cb6d595eb7d")
-	)
-	(wire
-		(pts
-			(xy 78.8100 150.0000) (xy 81.8100 150.0000)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f0727b94-7e29-47cb-837b-eee46f349aab")
-	)
-	(label "+12V_PROT"
-		(at 82.3100 150.0000 0)
+		(at 75.0000 156.8100 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "b7ab88b2-faf1-462d-8aee-80ba363fac97")
+		(uuid "f091f828-3847-4ec9-8e81-cc81a24f3f0c")
+	)
+	(wire
+		(pts
+			(xy 75.0000 146.1900) (xy 75.0000 143.1900)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a307daa9-af25-45a5-8434-c7fc7fa20fad")
+	)
+	(label "+12V_PROT"
+		(at 75.0000 143.1900 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fcac731c-1bb0-41dc-a457-2afea53fd107")
 	)
 	(symbol
 		(lib_id "Relay:Relay_SPDT")
@@ -7225,7 +7517,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "8a3c899f-c434-4739-b58a-a7fe942bf532")
+		(uuid "159aa36b-3fa9-4a76-b803-b84653c2aacc")
 		(property "Reference" "K1"
 			(at 40.0000 198.7300 0)
 			(effects
@@ -7270,23 +7562,23 @@
 			)
 		)
 		(pin "11"
-			(uuid "13708dad-8f8b-403d-94a0-19105c985930")
+			(uuid "d4e4b47d-90a1-4ed2-a0f5-f9873e60131f")
 		)
 		(pin "12"
-			(uuid "c0458b1a-a1c8-4aa5-a0aa-a12d91b6de7e")
+			(uuid "ad73d135-ffd8-4d45-b31e-53be16cc1028")
 		)
 		(pin "14"
-			(uuid "23f05760-1336-4b25-9598-60619ca8f7e7")
+			(uuid "315abb73-ee7b-4123-9a11-746a88ede2b6")
 		)
 		(pin "A1"
-			(uuid "eefddf77-63ab-4b79-a4d2-269ffa046ac5")
+			(uuid "28c7944e-8efc-4527-afd2-eb2c23656353")
 		)
 		(pin "A2"
-			(uuid "eab08646-bdd4-4566-9ecd-aa9fc77f67d1")
+			(uuid "98794327-2acf-4995-adef-703f123226f3")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "K1")
 					(unit 1)
 				)
@@ -7301,17 +7593,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "afe56350-2b2d-4794-bbc6-ae056d66b0e9")
+		(uuid "28f0715b-39d8-41d1-89f2-f686a5787f9b")
 	)
 	(label "ARM_LINE"
-		(at 34.9200 186.8000 90)
+		(at 34.9200 187.3000 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "64db7dc0-ec4b-41ef-9304-7689e21aa9bd")
+		(uuid "a6cb022d-8458-4854-ace3-d14a4d4941ac")
 	)
 	(wire
 		(pts
@@ -7321,17 +7613,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "06366bbe-4edb-4f62-abd9-f46611f24863")
+		(uuid "00f5ec72-9499-4da8-bc65-f1d65ea7180e")
 	)
-	(label "GND_RTN"
-		(at 34.9200 213.2000 90)
+	(label "GND"
+		(at 34.9200 212.7000 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "8ea9678a-68b8-4f4f-b85f-f88c6e512ef2")
+		(uuid "ad123567-79b6-4da1-af97-16b6aafe1920")
 	)
 	(wire
 		(pts
@@ -7341,17 +7633,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "ebfa1b81-c6dd-4e11-a5a1-ec581a8fac95")
+		(uuid "c405aeef-bc8a-4ca3-9022-4a87404a345e")
 	)
 	(label "+12V_MASTER"
-		(at 45.0800 213.2000 90)
+		(at 45.0800 212.7000 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "2b67a28a-7903-47f0-bd8c-6478f8420042")
+		(uuid "d46a6b34-5cfc-4975-947f-daaeeb0d913b")
 	)
 	(wire
 		(pts
@@ -7361,17 +7653,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "2503070b-233c-4247-980d-ac6160e14cdc")
+		(uuid "09128508-8f0a-43ef-8385-8996f9f98f81")
 	)
 	(label "ARM_BUS"
-		(at 47.6200 186.8000 90)
+		(at 47.6200 187.3000 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "5c2054ac-a92f-46fd-96e9-d34119a50ff3")
+		(uuid "d1fb394d-65df-4ae2-b20a-941d5cbaa1a3")
 	)
 	(text "K1 ARM: energised by the station\nARM key. NO = DISARMED at rest."
 		(exclude_from_sim no)
@@ -7384,7 +7676,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "237b4666-e60c-4a56-9b99-2ca5da804563")
+		(uuid "bc176f68-6cd9-48f8-8070-ae28d1a23d05")
 	)
 	(symbol
 		(lib_id "Device:D")
@@ -7394,7 +7686,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "511acf89-ad34-4ff9-a2dc-57778da25f9e")
+		(uuid "8aa8e5e7-383f-4faa-953a-eb325e452189")
 		(property "Reference" "D_K1"
 			(at 75.0000 196.7300 0)
 			(effects
@@ -7439,14 +7731,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "0feefa03-f468-4965-a7bc-3f68ea9bada2")
+			(uuid "176f1102-ba49-443c-9097-bad4ed72f308")
 		)
 		(pin "2"
-			(uuid "8a1836b8-7109-44dd-afa1-d68460cf9e4c")
+			(uuid "2465afaf-7e47-4fde-91c9-868053b8656d")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "D_K1")
 					(unit 1)
 				)
@@ -7455,43 +7747,43 @@
 	)
 	(wire
 		(pts
-			(xy 71.1900 198.0000) (xy 68.1900 198.0000)
+			(xy 75.0000 201.8100) (xy 75.0000 204.8100)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "dab2447d-d8bc-4e8c-94f1-2ea4b496aec8")
+		(uuid "7b05418c-1f0c-481c-87bd-a376f515cc7d")
 	)
-	(label "GND_RTN"
-		(at 67.6900 198.0000 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "37815dab-1286-4ad9-8d6d-9e2d9d0dfe0b")
-	)
-	(wire
-		(pts
-			(xy 78.8100 198.0000) (xy 81.8100 198.0000)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "599e435a-273e-4aa6-bbc2-a513831f6c1a")
-	)
-	(label "ARM_LINE"
-		(at 82.3100 198.0000 0)
+	(label "GND"
+		(at 75.0000 204.8100 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "f239512c-7eee-4ca5-aa73-c95638b645b3")
+		(uuid "f5a090ad-7be2-415e-92f7-2943f7f02c6c")
+	)
+	(wire
+		(pts
+			(xy 75.0000 194.1900) (xy 75.0000 191.1900)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c50e7cf9-5262-4a6d-9474-a5a35597989f")
+	)
+	(label "ARM_LINE"
+		(at 75.0000 191.1900 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "13eb118c-275d-4705-a67e-9aca87e2ef17")
 	)
 	(symbol
 		(lib_id "Relay:Relay_SPDT")
@@ -7501,7 +7793,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "435d45d7-7a1d-4773-abcb-cb97888354a0")
+		(uuid "543a12d1-d55c-4a2e-9371-338c498fe0a0")
 		(property "Reference" "K2"
 			(at 130.0000 198.7300 0)
 			(effects
@@ -7546,23 +7838,23 @@
 			)
 		)
 		(pin "11"
-			(uuid "fb8ac997-0121-49e5-9435-a90eaa68b556")
+			(uuid "2e4b113d-f4ce-4651-8de4-fd5717891816")
 		)
 		(pin "12"
-			(uuid "b9f9c3ec-6283-457c-91d1-1561dcd16c07")
+			(uuid "1abe9249-ce8c-40d3-8728-cdd02bbe6534")
 		)
 		(pin "14"
-			(uuid "b522cbfa-fb1c-45de-b039-f0f725806ce9")
+			(uuid "af3c6c21-331d-4979-be0f-6dbb67a7ddb5")
 		)
 		(pin "A1"
-			(uuid "9cb7edbe-26da-4402-8b7d-21d13fafc43d")
+			(uuid "117775a9-5f31-4240-a69f-267f38416f0f")
 		)
 		(pin "A2"
-			(uuid "1b6db113-7f7f-46c8-a2ae-a4ba62f70e84")
+			(uuid "3a6f717a-23f9-453f-9f88-0af198b215a7")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "K2")
 					(unit 1)
 				)
@@ -7577,17 +7869,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "766e2c4f-0cc7-485c-8592-4ba88c5a91a4")
+		(uuid "80d33ce8-9fbb-4df8-b338-509dad2fc68a")
 	)
 	(label "FIRE_LINE"
-		(at 124.9200 186.8000 90)
+		(at 124.9200 187.3000 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "124a60b7-0d64-46ff-818d-095fb9e4ef45")
+		(uuid "06890c43-e636-4f0e-aa44-9bcc713ee076")
 	)
 	(wire
 		(pts
@@ -7597,17 +7889,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "90505b0b-8c27-41da-9b13-3d6e9dee590c")
+		(uuid "cf8bffd8-485b-4ba3-8af7-44197f9c1edc")
 	)
-	(label "GND_RTN"
-		(at 124.9200 213.2000 90)
+	(label "GND"
+		(at 124.9200 212.7000 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "13885ede-9468-48e3-b7e2-6d8cdac0866a")
+		(uuid "4978a2d8-e77f-45e2-94fc-c0a857ac8c55")
 	)
 	(wire
 		(pts
@@ -7617,17 +7909,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "9e09c78f-6e5c-43e0-a0ea-ac3032a9f150")
+		(uuid "24dffea6-84c6-41bc-8422-abe01e442e94")
 	)
 	(label "ARM_BUS"
-		(at 135.0800 213.2000 90)
+		(at 135.0800 212.7000 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "bae05885-41b6-4b31-b84e-fe1e245be657")
+		(uuid "6025a13b-3e4e-4c08-a433-af8523b1c5e0")
 	)
 	(wire
 		(pts
@@ -7637,17 +7929,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "dd970abe-28e1-402f-af1a-0daa10759dc4")
+		(uuid "5fd465e3-ebc4-4dc6-b4d1-3262c29e5c57")
 	)
 	(label "PYRO_FIRE_OUT"
-		(at 137.6200 186.8000 90)
+		(at 137.6200 187.3000 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "145258d4-635d-4c56-bd90-4566bb55f43d")
+		(uuid "a6026544-6e08-41fe-a025-2ece7970162c")
 	)
 	(text "K2 FIRE: energised only while\nthe FIRE button is held."
 		(exclude_from_sim no)
@@ -7660,7 +7952,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "8a811e3b-0f34-4dfe-ad12-c91b5952005b")
+		(uuid "09d3d8cd-60dd-424f-9b78-da87bb40031b")
 	)
 	(symbol
 		(lib_id "Device:D")
@@ -7670,7 +7962,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "c3ebe4cd-5372-44aa-a45a-acf2a8be1af2")
+		(uuid "5e451402-8af6-41bd-bdb3-01ed4b20fa24")
 		(property "Reference" "D_K2"
 			(at 165.0000 196.7300 0)
 			(effects
@@ -7715,14 +8007,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "b2b92dc6-cc2b-4f3c-a2e5-f3c86fc9f421")
+			(uuid "77db3f1d-6a88-4cae-b1cd-a4c15f28e089")
 		)
 		(pin "2"
-			(uuid "18fded4a-55b1-4a8d-a0e0-f99e66348c8a")
+			(uuid "8aedd580-03bc-4b6b-9a1a-5adb2afa3c7b")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "D_K2")
 					(unit 1)
 				)
@@ -7731,43 +8023,43 @@
 	)
 	(wire
 		(pts
-			(xy 161.1900 198.0000) (xy 158.1900 198.0000)
+			(xy 165.0000 201.8100) (xy 165.0000 204.8100)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "cfc6c15d-16d7-4ad1-9cd3-64965f763707")
+		(uuid "8dda7ed7-8a81-437f-9971-74b61dd7826e")
 	)
-	(label "GND_RTN"
-		(at 157.6900 198.0000 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "3b5b5609-87b4-42f5-8c2b-aba1fb0e5788")
-	)
-	(wire
-		(pts
-			(xy 168.8100 198.0000) (xy 171.8100 198.0000)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "22e2d490-67bf-46ea-8375-6c593372e7b5")
-	)
-	(label "FIRE_LINE"
-		(at 172.3100 198.0000 0)
+	(label "GND"
+		(at 165.0000 204.8100 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "44740dc3-3d7f-41af-ac4b-0f985de27ec0")
+		(uuid "f930f31b-11db-4966-b099-4630a2489f3e")
+	)
+	(wire
+		(pts
+			(xy 165.0000 194.1900) (xy 165.0000 191.1900)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b896c185-51ed-4734-b5f0-2a0dd6761fc2")
+	)
+	(label "FIRE_LINE"
+		(at 165.0000 191.1900 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a24b9785-bea2-4189-87e7-000b396bb4ac")
 	)
 	(symbol
 		(lib_id "Relay:Relay_SPDT")
@@ -7777,7 +8069,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "f0d3818c-54a6-4e49-b956-f83fd9f6640c")
+		(uuid "5332c153-238f-4e06-9d0b-563febd7ca63")
 		(property "Reference" "K3"
 			(at 40.0000 248.7300 0)
 			(effects
@@ -7822,23 +8114,23 @@
 			)
 		)
 		(pin "11"
-			(uuid "bff4edd0-0112-4e04-af51-977d449e5eb8")
+			(uuid "f1d39800-6865-404e-9b65-1b51b8ae7fca")
 		)
 		(pin "12"
-			(uuid "d865d226-c8dd-4064-8c84-dd603e52b3bc")
+			(uuid "87265032-297e-4298-b53d-a0bfd3120ed7")
 		)
 		(pin "14"
-			(uuid "b55f17de-a093-43aa-ac9a-1dfb66e47e26")
+			(uuid "2ec56c4f-c92b-4775-b651-3dff1129312a")
 		)
 		(pin "A1"
-			(uuid "0fd62f8b-7e10-404d-bd5b-c91fdb34b047")
+			(uuid "24a918a3-bcaf-4f22-8caf-96b2cb833698")
 		)
 		(pin "A2"
-			(uuid "d979c4a3-496a-4a4f-9349-67ba11ff4bda")
+			(uuid "97863752-4f32-4c71-a805-1646c4769d36")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "K3")
 					(unit 1)
 				)
@@ -7853,17 +8145,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "c9f2a117-9cb7-49df-881a-d0001c469a53")
+		(uuid "fa99d217-9760-48c0-8f5b-ae3ebbbfdcec")
 	)
 	(label "ARM_LINE"
-		(at 34.9200 236.8000 90)
+		(at 34.9200 237.3000 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "dc53d93a-6c8e-4e95-ae93-e26ceda7e8ad")
+		(uuid "4be13da0-8d45-495d-98d6-1960a9b614d1")
 	)
 	(wire
 		(pts
@@ -7873,17 +8165,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "0422b95f-c022-49b8-8b4b-9600b1b62a1a")
+		(uuid "cd1d90eb-a8eb-4a7c-a7d3-179e8cc7feef")
 	)
-	(label "GND_RTN"
-		(at 34.9200 263.2000 90)
+	(label "GND"
+		(at 34.9200 262.7000 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "60946a89-6d4c-4013-9ebc-b143e5ca4e93")
+		(uuid "04304992-e326-477c-932c-decb75ab6dc4")
 	)
 	(wire
 		(pts
@@ -7893,17 +8185,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "4d755ac3-d8d8-4769-addd-d7d8c0ebfd29")
+		(uuid "cea5dd06-7298-448b-97f0-d66bfd04d1cf")
 	)
 	(label "PYRO_MATCH_P"
-		(at 45.0800 263.2000 90)
+		(at 45.0800 262.7000 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "04f2232e-f85b-4607-8fd3-f8c4ef3a96a1")
+		(uuid "6e157aa9-cf1d-43a0-9fb1-ea442c8bd0c1")
 	)
 	(wire
 		(pts
@@ -7913,17 +8205,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b9e298ff-1124-4166-be91-18885a522c75")
+		(uuid "78281108-75a3-43c0-bac9-ec1fe33bb7ca")
 	)
 	(label "PYRO_MATCH_N"
-		(at 42.5400 236.8000 90)
+		(at 42.5400 237.3000 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "b0770ac8-bf1f-4921-89b7-3eb69ac6a7ad")
+		(uuid "0b492df2-5543-47b8-8eae-9f18429e07cd")
 	)
 	(text "K3 SHUNT: NC contact shorts the\nmatch whenever DISARMED (D-008).\nReleases only when K1 pulls in."
 		(exclude_from_sim no)
@@ -7936,7 +8228,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "9e86e43c-2d8e-489b-b984-2e9eb394e5dd")
+		(uuid "4389383d-519b-49b6-a859-49675a775c30")
 	)
 	(symbol
 		(lib_id "Device:D")
@@ -7946,7 +8238,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "9c187cf7-7a9d-499f-b8d6-fab301607842")
+		(uuid "afb87aa7-9a8f-43de-82ba-328ad032c82d")
 		(property "Reference" "D_K3"
 			(at 75.0000 246.7300 0)
 			(effects
@@ -7991,14 +8283,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "d58acbe4-9fe4-4fa0-8f21-99cfbdff4c75")
+			(uuid "2fae8202-1670-4af1-a756-529cc4eb7eb0")
 		)
 		(pin "2"
-			(uuid "eb412095-83ae-4a83-a0b4-2beb897f0898")
+			(uuid "8cb3de5e-334d-4d6b-a446-8b9c28151ffe")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "D_K3")
 					(unit 1)
 				)
@@ -8007,43 +8299,43 @@
 	)
 	(wire
 		(pts
-			(xy 71.1900 248.0000) (xy 68.1900 248.0000)
+			(xy 75.0000 251.8100) (xy 75.0000 254.8100)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "cfbac110-1d35-4cd1-8038-635dc7368446")
+		(uuid "9d856f8e-a4fa-4133-ad6f-02a50f76b2df")
 	)
-	(label "GND_RTN"
-		(at 67.6900 248.0000 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "c6cff0ce-1e48-4065-b479-a106a980efbe")
-	)
-	(wire
-		(pts
-			(xy 78.8100 248.0000) (xy 81.8100 248.0000)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4c9c4c8e-c2ff-4d53-aaef-83bdd78bbf13")
-	)
-	(label "ARM_LINE"
-		(at 82.3100 248.0000 0)
+	(label "GND"
+		(at 75.0000 254.8100 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "b12e1c12-72c5-4a3d-bdd5-c73fd93df4bc")
+		(uuid "0bc74404-eb9b-4a57-a806-24e7ef3777b0")
+	)
+	(wire
+		(pts
+			(xy 75.0000 244.1900) (xy 75.0000 241.1900)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "905a3096-2fd3-40df-92d8-cec531880fcd")
+	)
+	(label "ARM_LINE"
+		(at 75.0000 241.1900 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2e03864a-d3dd-4649-997c-7d43c039971b")
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
@@ -8053,8 +8345,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "d1183883-a844-4c73-b03b-a800aeed3000")
-		(property "Reference" "J_ARM"
+		(uuid "0f46b705-97c8-4445-bb93-09719fb127ea")
+		(property "Reference" "J_ARM1"
 			(at 130.0000 248.7300 0)
 			(effects
 				(font
@@ -8098,15 +8390,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "a54c6164-9575-47eb-9ac5-09c10356e961")
+			(uuid "74d0bbfb-7237-4d03-b394-f521de304dd2")
 		)
 		(pin "2"
-			(uuid "8f2e067c-479f-4cd7-a5ec-6e6d65334b8c")
+			(uuid "6d3c0411-e9dd-4eed-aacc-c21a912aa222")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "J_ARM")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "J_ARM1")
 					(unit 1)
 				)
 			)
@@ -8120,17 +8412,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "c05d9e26-9ce0-4cda-8e47-ac4b896d96a5")
+		(uuid "355f3bfb-fba7-41c2-8dbf-8a8bead99014")
 	)
 	(label "PYRO_FIRE_OUT"
-		(at 119.3400 250.0000 0)
+		(at 119.8400 250.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "e5b95638-1382-47b2-82f5-cc4d1dfd6419")
+		(uuid "2d7d0bfe-21eb-4082-ba45-0b70c5225dd4")
 	)
 	(wire
 		(pts
@@ -8140,17 +8432,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "662c8a17-4d76-424e-aea9-0b07ef88f99f")
+		(uuid "8ae51825-19d1-4056-8b4a-e7b0be4dec0d")
 	)
 	(label "PYRO_MATCH_P"
-		(at 119.3400 252.5400 0)
+		(at 119.8400 252.5400 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "f54ffd0c-68d2-428f-8c5f-54ceebfde0b9")
+		(uuid "6c556923-484b-4659-902b-cf86643b21a8")
 	)
 	(text "J_ARM: withdrawn by hand at the bench,\ninserted LAST. Third series element (D-013)."
 		(exclude_from_sim no)
@@ -8163,7 +8455,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "75cd43df-be96-400b-8b75-061d98322548")
+		(uuid "ad7d2e0e-9af2-49db-acb9-e7b183ebb0e2")
 	)
 	(text "3. PYRO INTERFACE - values blocked on O-1"
 		(exclude_from_sim no)
@@ -8176,7 +8468,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "dc760563-aa98-420c-aaea-b073ab3b6a00")
+		(uuid "1aa74f77-9a07-40c0-aa35-39735b56686a")
 	)
 	(rectangle
 		(start 12.0000 288.0000)
@@ -8188,7 +8480,7 @@
 		(fill
 			(type none)
 		)
-		(uuid "bde22908-9d45-435b-99b0-2af453f7bb18")
+		(uuid "a98f4498-6678-43ca-a8bd-9b6e3c6ecc35")
 	)
 	(text "BLOCKED: R_CONT, fuse and relay contact ratings all need the"
 		(exclude_from_sim no)
@@ -8201,7 +8493,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "9f15a962-08c9-415a-a51e-b6dd6cd39e32")
+		(uuid "895f5e0f-fc94-415f-b963-92539431f787")
 	)
 	(text "e-match no-fire current. Topology is complete; values are TBD."
 		(exclude_from_sim no)
@@ -8214,7 +8506,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "adb552a2-2c57-47a9-a37d-0f16b6c1902e")
+		(uuid "c015b9bc-6bbb-44fb-aa3c-ab71224ddb83")
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
@@ -8224,7 +8516,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "513206cb-83b3-4414-9750-bc8a34bc5655")
+		(uuid "42b11170-c9e3-4da4-a0f8-de86e9ec63ab")
 		(property "Reference" "P1"
 			(at 40.0000 316.7300 0)
 			(effects
@@ -8269,14 +8561,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "a8bfa87b-87c7-443b-b8d9-4a66acaa94c7")
+			(uuid "4d321835-5e9f-47ca-8ff5-c9fbaf1af9aa")
 		)
 		(pin "2"
-			(uuid "f0823059-104c-45c7-bb08-cc1014a9aac8")
+			(uuid "f0beb636-1a1b-45a7-b126-ea936af45c5a")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "P1")
 					(unit 1)
 				)
@@ -8291,17 +8583,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "27686e6e-35a6-4f0f-ac77-adac5f1d1df0")
+		(uuid "4d975052-08ce-4b17-8b45-51c2c73ad8df")
 	)
 	(label "PYRO_MATCH_P"
-		(at 29.3400 318.0000 0)
+		(at 29.8400 318.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "b7cc13f1-3eee-443c-8218-53d49914f55f")
+		(uuid "72616a7b-7c5e-41d0-94cc-e05c2f2db3f7")
 	)
 	(wire
 		(pts
@@ -8311,17 +8603,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "8c6007a6-3460-4cae-a331-d84dc7304416")
+		(uuid "b1ce68ae-927b-4da8-8c41-a166f25b370e")
 	)
 	(label "PYRO_MATCH_N"
-		(at 29.3400 320.5400 0)
+		(at 29.8400 320.5400 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "687c0e72-652c-43bc-9f1c-4f2295518e85")
+		(uuid "70f4cbac-13fc-4ee5-8d01-f704c33ed164")
 	)
 	(text "P1 is a SHORT LOCAL run to the match (~1-2 m).\nFiring current is sourced at the BENCH, so the pyro\npair never enters the umbilical - see note at O-18."
 		(exclude_from_sim no)
@@ -8334,7 +8626,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "42ef2406-0ad6-4e1d-8a05-ee7a94ee4db6")
+		(uuid "f124c662-ce9c-487a-a4b0-40728ce3b276")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -8344,8 +8636,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "3b55b8d8-2ac0-4957-8ac8-5e624a1f7150")
-		(property "Reference" "R_CONT"
+		(uuid "18c2f642-1959-499e-a70c-e3f138ff5dd5")
+		(property "Reference" "R_CONT1"
 			(at 110.0000 308.7300 0)
 			(effects
 				(font
@@ -8389,15 +8681,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "beae072f-4409-4d2f-ab6a-e7a87e962dc3")
+			(uuid "7828b261-edb4-4b76-ba39-d9141824b926")
 		)
 		(pin "2"
-			(uuid "1e3c9c52-9421-4d9b-8fee-1283d109aae0")
+			(uuid "f1c594d2-2787-4fc7-b247-68e0649f0507")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_CONT")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_CONT1")
 					(unit 1)
 				)
 			)
@@ -8405,43 +8697,43 @@
 	)
 	(wire
 		(pts
-			(xy 110.0000 306.1900) (xy 110.0000 303.1900)
+			(xy 106.1900 310.0000) (xy 103.1900 310.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "b21a8723-070e-4b88-9b78-72ed4ff99b12")
+		(uuid "cf431332-b87d-4855-a26e-7d3e40f49873")
 	)
 	(label "PYRO_MATCH_P"
-		(at 110.0000 302.6900 90)
+		(at 103.1900 310.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "19abe3a9-511f-4fcd-a6d8-513d5ea94837")
+		(uuid "f7ca9133-7fee-4dc1-9e43-9ecd009c87f3")
 	)
 	(wire
 		(pts
-			(xy 110.0000 313.8100) (xy 110.0000 316.8100)
+			(xy 113.8100 310.0000) (xy 116.8100 310.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "f6670c56-9187-433e-b99c-4891f344c90d")
+		(uuid "ac25c66a-505b-4bfa-9019-36640520cc21")
 	)
 	(label "CONT_LED_A"
-		(at 110.0000 317.3100 90)
+		(at 116.8100 310.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "cb09866c-5369-46b5-971b-495b4549159a")
+		(uuid "fbc7e149-faea-49b5-ad26-14ddb692e510")
 	)
 	(symbol
 		(lib_id "Isolator:PC817")
@@ -8451,8 +8743,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "75213372-125e-472b-b80b-1c1311abee40")
-		(property "Reference" "U_CONT"
+		(uuid "80aa70eb-8f74-423e-9f89-f21dbe6d7239")
+		(property "Reference" "U_CONT1"
 			(at 150.0000 313.7300 0)
 			(effects
 				(font
@@ -8496,21 +8788,21 @@
 			)
 		)
 		(pin "1"
-			(uuid "82baa6c4-f0be-4987-8695-3c605ffc53b5")
+			(uuid "c1aa875c-bd45-4e79-891f-6feaa76e887a")
 		)
 		(pin "2"
-			(uuid "c17f82ae-0445-46be-8af2-e4d295bc59d2")
+			(uuid "9c2a73ed-201e-42e2-a226-7a3d1f5eb82d")
 		)
 		(pin "3"
-			(uuid "593291d0-36f9-40eb-b1db-73fcd6308b74")
+			(uuid "f4adf87a-3290-4dcc-8b26-d01ff95c3576")
 		)
 		(pin "4"
-			(uuid "a8206396-acd3-4852-bd19-71d2c04c93a1")
+			(uuid "e92ac7db-e913-487a-a81d-e3b68ab6b704")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "U_CONT")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "U_CONT1")
 					(unit 1)
 				)
 			)
@@ -8524,17 +8816,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "344d1eba-588a-4a29-b7f7-b687adc15495")
+		(uuid "b8fee579-f127-4866-b776-6a046b03fb68")
 	)
 	(label "CONT_LED_A"
-		(at 136.8000 312.4600 0)
+		(at 137.3000 312.4600 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "0857a894-0191-42bf-b007-a9071cb127da")
+		(uuid "7628697e-6ad2-4fdb-ae66-b6b429f9b2c0")
 	)
 	(wire
 		(pts
@@ -8544,17 +8836,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "9c502863-07ed-48f1-bcdd-2ca06575d8d5")
+		(uuid "274ab138-ca13-4382-80a7-273363675657")
 	)
 	(label "PYRO_MATCH_N"
-		(at 136.8000 317.5400 0)
+		(at 137.3000 317.5400 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "d27269d4-b5a7-4668-8116-474780b8d166")
+		(uuid "a7df3151-be8f-476e-84ea-592a4d9cb9fe")
 	)
 	(wire
 		(pts
@@ -8564,17 +8856,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "101a7f4e-8577-4105-8627-5aed9156b114")
+		(uuid "d7f2673f-43ca-48e3-bf97-d1ab1422897b")
 	)
 	(label "PYRO_CONT_SENSE"
-		(at 163.2000 312.4600 0)
+		(at 162.7000 312.4600 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "ea662771-fc2a-4347-ad07-3c7794416568")
+		(uuid "24c72042-bb92-40b4-8bac-2f4465c6a27c")
 	)
 	(wire
 		(pts
@@ -8584,17 +8876,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5109fa5b-65f5-491a-bb1b-b485414fba82")
+		(uuid "34320a94-2a13-44bb-bbe3-07b905228c62")
 	)
-	(label "GND_RTN"
-		(at 163.2000 317.5400 0)
+	(label "GND"
+		(at 162.7000 317.5400 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "444f5ff7-7f3b-4eb9-aa18-b153ac47444b")
+		(uuid "0e931649-f2af-432b-8df5-d054bd1dba23")
 	)
 	(text "Continuity sense, opto-isolated.\nTopology from IGNIS v4 Pyros.SchDoc.\nSENSE ONLY - the IGNIS gate drive is\nNOT reused (D-045)."
 		(exclude_from_sim no)
@@ -8607,7 +8899,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "05e462ab-fab1-4d9f-a885-cd54a33bc1d3")
+		(uuid "5a1425e6-9e16-457e-b0f6-2f865b3d0d94")
 	)
 	(text "4. ANALOG FRONT END - values blocked on O-2"
 		(exclude_from_sim no)
@@ -8620,7 +8912,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "79cf9365-74ac-474c-a44a-9d13ecd05891")
+		(uuid "27a2c50f-7277-49d9-8157-775d882d2966")
 	)
 	(rectangle
 		(start 202.0000 22.0000)
@@ -8632,7 +8924,7 @@
 		(fill
 			(type none)
 		)
-		(uuid "546bfb9d-dca5-4ed9-952a-87af29e8dfda")
+		(uuid "12484e80-efdf-4d53-bb40-88a610502332")
 	)
 	(text "BLOCKED: PGA gain, excitation and reference choice need the"
 		(exclude_from_sim no)
@@ -8645,7 +8937,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "e6d1db5d-28e6-4566-80f6-bfccc3aec854")
+		(uuid "6d895c09-edc4-4313-ac72-1cf955d4791a")
 	)
 	(text "load cell datasheet. ADS1220 PGA is the primary front end (D-046)."
 		(exclude_from_sim no)
@@ -8658,7 +8950,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "77317204-049e-499a-a573-d0fb918af175")
+		(uuid "301c6ba0-92a4-412a-8548-25abcee00c64")
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
@@ -8668,8 +8960,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "b0730e05-842a-41b4-b63f-5e474909218a")
-		(property "Reference" "J_LC"
+		(uuid "b20a713a-d5b1-4897-84f1-28579f483eaf")
+		(property "Reference" "J_LC1"
 			(at 225.0000 48.7300 0)
 			(effects
 				(font
@@ -8713,21 +9005,21 @@
 			)
 		)
 		(pin "1"
-			(uuid "5c03e4a8-cd56-4d1f-8270-5361ca688c19")
+			(uuid "36cd63c1-8018-4304-aedf-ac0e732d758d")
 		)
 		(pin "2"
-			(uuid "371ee7d4-efc0-4ff9-b6ce-b03910c5dcea")
+			(uuid "e83d571f-abb7-47a9-a8ee-d38fcf171bfb")
 		)
 		(pin "3"
-			(uuid "77393bf8-9dbc-4d5f-b27b-8726a6e9620f")
+			(uuid "54526863-54ba-4b50-81c8-a75f32f21f37")
 		)
 		(pin "4"
-			(uuid "33a1b4f6-4df5-4a76-b056-63933fb35386")
+			(uuid "f5ba1e0b-b773-4b8f-8019-c364d272147b")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "J_LC")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "J_LC1")
 					(unit 1)
 				)
 			)
@@ -8741,17 +9033,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b0290a5f-b126-492d-ad5e-0ce8a5429eee")
+		(uuid "659aa081-8558-488f-a808-03f689b46d93")
 	)
 	(label "LC_EXC_P"
-		(at 214.3400 47.4600 0)
+		(at 214.8400 47.4600 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "448ac0ea-a245-48a9-8d0d-494350eaa0b8")
+		(uuid "95a9af2b-707a-434e-a732-9dd61843888c")
 	)
 	(wire
 		(pts
@@ -8761,17 +9053,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "aed63b9b-108b-4733-9360-601172669e9e")
+		(uuid "4a822395-ee69-4db1-8cab-d153a0ce2d1a")
 	)
 	(label "LC_SIG_P"
-		(at 214.3400 50.0000 0)
+		(at 214.8400 50.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "cf1e461f-bae7-4764-b052-0bbe056c4d39")
+		(uuid "243cab63-ec3c-473e-93ad-7d2efa3e4e42")
 	)
 	(wire
 		(pts
@@ -8781,17 +9073,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "722bd119-4ba5-46a9-bed4-491b793e7bcf")
+		(uuid "a2fe54a9-8b01-47a1-9d86-fd165d68418e")
 	)
 	(label "LC_SIG_N"
-		(at 214.3400 52.5400 0)
+		(at 214.8400 52.5400 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "d64a29e2-1d1c-4f7b-91cc-f43bdd0a2832")
+		(uuid "1f164de9-ece6-45ff-b8c6-83cc48d34ea8")
 	)
 	(wire
 		(pts
@@ -8801,17 +9093,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5593ba3f-8354-4655-905d-e5c163e418a0")
+		(uuid "d8666de9-cf58-4b37-9737-8a1062e7f1e0")
 	)
 	(label "LC_EXC_N"
-		(at 214.3400 55.0800 0)
+		(at 214.8400 55.0800 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "b7e35de9-863c-4c71-b4cc-a611970600b7")
+		(uuid "139faeed-bed5-4340-bca9-3c062d83bade")
 	)
 	(symbol
 		(lib_id "Analog_ADC:ADS1220xPW")
@@ -8821,8 +9113,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "96c0341c-f8fc-4606-9d95-d8ffc2becaac")
-		(property "Reference" "U_ADC"
+		(uuid "d6d56082-b906-4139-90ae-5bc0b3aaa3d7")
+		(property "Reference" "U_ADC1"
 			(at 300.0000 68.7300 0)
 			(effects
 				(font
@@ -8866,57 +9158,57 @@
 			)
 		)
 		(pin "1"
-			(uuid "1882cb1c-17b2-4581-ab2e-8da1ce5d843f")
+			(uuid "dbe69aa7-405b-46b4-8bdc-313cd4462e25")
 		)
 		(pin "2"
-			(uuid "5ae8406a-b08f-40cd-91ac-a3a885ae9b50")
+			(uuid "0134e6be-2cd4-404f-adb4-054b5b5e1483")
 		)
 		(pin "3"
-			(uuid "a34da6c4-a08a-40cd-91d4-d7393ad61647")
+			(uuid "0fff959f-332a-429f-9e3b-af9ecf869e7d")
 		)
 		(pin "4"
-			(uuid "1e7756e7-7cab-4cee-b900-5df95e554abd")
+			(uuid "5ec7ee95-5df4-4b76-8047-9f58bb79911b")
 		)
 		(pin "5"
-			(uuid "088770ba-930e-45ea-a89a-f40cb339307a")
+			(uuid "9e86295f-9dc2-4d12-929f-0385d5b10ab9")
 		)
 		(pin "6"
-			(uuid "2d2fd49f-8a6a-431c-aaaf-1c3f96ac5ec8")
+			(uuid "5419f79d-2a5c-455c-9dda-b6e58f1bf264")
 		)
 		(pin "7"
-			(uuid "6e5bbd68-9a4d-4b55-a687-41ee311ca536")
+			(uuid "5650feee-4195-44cd-ad78-54b653814f9a")
 		)
 		(pin "8"
-			(uuid "addb7297-b518-47bb-a80a-a6fdfc4f0bc0")
+			(uuid "73aab5ea-911b-4d0d-9b0c-812ae6a10181")
 		)
 		(pin "9"
-			(uuid "e999dff8-3a02-4589-a1c4-833a9c20898b")
+			(uuid "af217f8c-0463-4686-91bc-8e77524cfca0")
 		)
 		(pin "10"
-			(uuid "14c3cea5-a2ac-4ca2-9d72-7b0aafa9bef6")
+			(uuid "3a3f5ada-c53e-4beb-856e-fa066e2e2b0e")
 		)
 		(pin "11"
-			(uuid "46136818-b399-419c-a51b-78f9bd8d4374")
+			(uuid "793d5636-80a5-4995-8633-c4eb2967675d")
 		)
 		(pin "12"
-			(uuid "e2a88eb2-76a6-4a6c-b771-869a660851cb")
+			(uuid "f880ff33-2686-4cb9-a50e-5ce25c1022ec")
 		)
 		(pin "13"
-			(uuid "f1aeaf37-3286-4d78-b63b-115a6c7f3487")
+			(uuid "0f7e9638-d17a-4a63-b65d-497f79cfa231")
 		)
 		(pin "14"
-			(uuid "1f0691fe-b3b2-48b9-9682-edff9608cd0a")
+			(uuid "c42c5035-7dda-4065-89b3-0f519d4632ea")
 		)
 		(pin "15"
-			(uuid "f53a3c6d-0c38-48bc-a95d-c3dca1e91d37")
+			(uuid "ee4b5b61-a519-4d26-9ca3-beee8310333b")
 		)
 		(pin "16"
-			(uuid "bd49b5d0-dafe-4a21-96d5-8da4bebd5102")
+			(uuid "034d342d-fd47-4927-bcf6-c6bf7b711c79")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "U_ADC")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "U_ADC1")
 					(unit 1)
 				)
 			)
@@ -8930,17 +9222,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "3586e986-8a4b-4431-a8ea-83bf5cee9e94")
+		(uuid "a809912a-d680-4167-8f20-fe7c98157fdf")
 	)
 	(label "ADC_IN_P"
-		(at 276.6400 64.9200 0)
+		(at 277.1400 64.9200 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "9d0c09e5-a898-4306-a1c2-56db2566d736")
+		(uuid "7df7eb70-6bb1-4f65-956a-da064d4a15b3")
 	)
 	(wire
 		(pts
@@ -8950,17 +9242,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "dfe0e1fe-339f-4f6c-807d-b22b287f696c")
+		(uuid "9cb50e01-23d2-4d5f-aa7d-a5770439a71d")
 	)
 	(label "ADC_IN_N"
-		(at 276.6400 67.4600 0)
+		(at 277.1400 67.4600 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "f82dc546-e9db-49fb-87ed-ba270cd789e9")
+		(uuid "97ae4d12-1a99-4035-b337-c494b13f9f5e")
 	)
 	(wire
 		(pts
@@ -8970,17 +9262,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "00b391aa-35fc-4364-983c-636069ab72dd")
+		(uuid "5af32ce0-2ba0-49e7-8e02-61fae084c119")
 	)
 	(label "LC_EXC_P"
-		(at 276.6400 62.3800 0)
+		(at 277.1400 62.3800 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "daf415e0-0567-4596-9f0b-e7690b799bbd")
+		(uuid "a9d99469-9daf-47f6-b29e-313251d26019")
 	)
 	(wire
 		(pts
@@ -8990,17 +9282,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "944e3958-f549-4f8c-82fb-5c3a870de7e0")
+		(uuid "869de617-447a-4887-9dfd-22b6b257b62d")
 	)
 	(label "LC_EXC_N"
-		(at 276.6400 77.6200 0)
+		(at 277.1400 77.6200 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "57529e26-544c-4c9c-832e-4e5cfae9e060")
+		(uuid "0a1af8b8-9e5d-4c04-991f-2aa0ede334e0")
 	)
 	(wire
 		(pts
@@ -9010,7 +9302,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "1bfa7c1a-1af5-44e8-bbf7-563c8765c083")
+		(uuid "7ab1aa0f-be5c-4d64-b909-0f0d413e96e0")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -9020,7 +9312,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "94ac1217-55d1-4b69-b38b-1d023d372b05")
+		(uuid "20b0e66a-614c-45fb-975f-2eb4e8e386de")
 		(property "Reference" "#PWR07"
 			(at 277.1400 71.2700 0)
 			(effects
@@ -9067,11 +9359,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "f1c9974f-952a-4ca2-b607-215058ec407b")
+			(uuid "88509c86-b3bb-4a7a-92ba-137325bbad92")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR07")
 					(unit 1)
 				)
@@ -9086,7 +9378,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "20ce8c54-c05d-44a8-9866-6477fdbc94b7")
+		(uuid "53a310ce-8670-46b8-ab71-906f1aed7ddc")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -9096,7 +9388,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "69042e2c-d6ab-46c5-ae55-77b8942b61cf")
+		(uuid "e96128a7-6ff8-4e2f-824f-d36d6a69bd11")
 		(property "Reference" "#PWR08"
 			(at 277.1400 73.8100 0)
 			(effects
@@ -9143,11 +9435,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "c97fcf63-caf6-424c-b99b-313007006d0a")
+			(uuid "d4cd6090-2a03-451e-84f7-285da11480ae")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR08")
 					(unit 1)
 				)
@@ -9162,7 +9454,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "ba833944-0c36-4246-ae27-3e7a6fbdedb9")
+		(uuid "356f6aca-64be-4e3a-afe9-e0d083fbfda5")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -9172,7 +9464,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "3fafe678-b786-4fdd-9d72-6b6afce83d59")
+		(uuid "73bdd87b-b8b0-4364-94be-f0465db2bc3f")
 		(property "Reference" "#PWR09"
 			(at 322.8600 76.3500 0)
 			(effects
@@ -9219,11 +9511,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "69edbbda-23b0-4bf9-a431-975f152c6361")
+			(uuid "6756bae9-3c34-4cf7-a497-b39d8dcac4d5")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR09")
 					(unit 1)
 				)
@@ -9238,7 +9530,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "1e9b2ef3-8772-4214-95de-f55afdb681cc")
+		(uuid "b665994c-454c-4490-8617-b9d258b00242")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -9248,7 +9540,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "aa3dbdd2-4b1d-4469-8f95-4f1e4fbedb17")
+		(uuid "88fc2bf5-dc4d-47d5-855f-aff69893b094")
 		(property "Reference" "#PWR10"
 			(at 300.0000 50.9500 0)
 			(effects
@@ -9295,11 +9587,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "762854c5-16e2-4f7b-8a1e-5b973605782d")
+			(uuid "043cb1b2-69f6-4e6b-bffb-d7147ef5f4c7")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR10")
 					(unit 1)
 				)
@@ -9314,7 +9606,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "d13f9e04-01e4-444e-a2a4-e0b17624c556")
+		(uuid "5c031684-89f8-40ef-95a9-73991bd12759")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -9324,7 +9616,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "39a1c615-8675-441d-8279-457ecdec4b4d")
+		(uuid "099139b0-902a-43d0-9647-ca164fd589c0")
 		(property "Reference" "#PWR11"
 			(at 302.5400 50.9500 0)
 			(effects
@@ -9371,11 +9663,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "da95ad0a-fad9-42f3-8cfd-296ca137dfbd")
+			(uuid "af61e818-0fa8-4f52-a6cf-4c14383ccbc8")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR11")
 					(unit 1)
 				)
@@ -9390,7 +9682,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "dd2ec2f5-588f-470c-8d5c-6a472649ef55")
+		(uuid "4bcd7511-fd41-4053-9e04-e9bf84a09740")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -9400,7 +9692,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "ccdaafc2-8bbf-487b-ac91-1414bc98d0ef")
+		(uuid "eae57b69-5ae4-407b-b4b3-a22b3bf79cdd")
 		(property "Reference" "#PWR12"
 			(at 300.0000 86.5100 0)
 			(effects
@@ -9447,11 +9739,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "c0e92abf-a74f-45f4-877a-90ee88a013dc")
+			(uuid "eeea2cfd-0c6a-4dfc-9014-d2668ed45787")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR12")
 					(unit 1)
 				)
@@ -9466,7 +9758,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "6c667641-a537-484c-b5ee-25a7de3b6268")
+		(uuid "b056b95d-e4f2-4153-af9e-e89e7f355eb1")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -9476,7 +9768,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "8d3f211c-de16-4fdd-9eba-fffd9083de23")
+		(uuid "e2be415b-c7c5-49af-8b1c-21d9a1ce1a48")
 		(property "Reference" "#PWR13"
 			(at 302.5400 86.5100 0)
 			(effects
@@ -9523,11 +9815,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "8060e750-b7b3-4505-945d-67a651210c46")
+			(uuid "bfa5629f-cec5-4978-bfd1-4c77df60461f")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR13")
 					(unit 1)
 				)
@@ -9542,17 +9834,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5500ecb4-0d7c-411c-9af0-75ef41f70c42")
+		(uuid "c2d3b992-65e9-4755-a749-1a98fd343525")
 	)
 	(label "SPI_SCK"
-		(at 323.3600 62.3800 0)
+		(at 322.8600 62.3800 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "99543d8e-bbd4-41f8-892b-b8a21e685507")
+		(uuid "6668400e-dc85-4f2d-819e-a629da022be0")
 	)
 	(wire
 		(pts
@@ -9562,17 +9854,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "4b211b1b-c34c-4106-bf54-ac3a97120cce")
+		(uuid "848b28c2-4ed1-45de-8981-fc1a28e05505")
 	)
 	(label "ADC_CS"
-		(at 323.3600 70.0000 0)
+		(at 322.8600 70.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "9a99784f-782d-4be3-b219-301ea4c019ea")
+		(uuid "a109426c-2bdb-4cbb-b813-07409fc9f319")
 	)
 	(wire
 		(pts
@@ -9582,17 +9874,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "53bf5ced-aa3b-479d-8c9b-0e7dd6b9cc81")
+		(uuid "75bab133-6352-4e33-bd25-07d5f3fb81f0")
 	)
 	(label "SPI_MOSI"
-		(at 323.3600 64.9200 0)
+		(at 322.8600 64.9200 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "219d76e7-a62a-4206-a4d0-f6afa921c1ee")
+		(uuid "d9f3a2fd-a121-4a36-9c3e-920d8d0bce1e")
 	)
 	(wire
 		(pts
@@ -9602,17 +9894,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "a1e2db93-bedb-4f49-9927-43b67192747f")
+		(uuid "e1e4ef17-df2b-4a52-b186-43b3a8d1c8c8")
 	)
 	(label "SPI_MISO"
-		(at 323.3600 67.4600 0)
+		(at 322.8600 67.4600 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "de987e6e-1d01-4dc2-b4ab-a97934d07c01")
+		(uuid "c58c0359-14ff-4080-8c30-f8943f717ed1")
 	)
 	(wire
 		(pts
@@ -9622,17 +9914,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "a7963566-f5b6-4b7f-8485-d18737a5f40f")
+		(uuid "91f70cc2-4bca-4295-befb-5fa61994d680")
 	)
 	(label "ADC_DRDY"
-		(at 323.3600 75.0800 0)
+		(at 322.8600 75.0800 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "076162f4-988a-4fa9-8015-cf621a3cf0ac")
+		(uuid "41316ef4-c6dd-4994-bca7-521b1306c973")
 	)
 	(text "REFP0/REFN0 tied to the excitation for a\nratiometric measurement - confirm at O-2."
 		(exclude_from_sim no)
@@ -9645,7 +9937,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "eaeac388-2e63-4f22-bbaa-5b747b8258f1")
+		(uuid "b8cb36be-3a30-489f-98ca-fd28c5d4633e")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -9655,7 +9947,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "f870124d-1156-43b6-a61d-b70f71df606d")
+		(uuid "edb72002-bd9a-40ae-9dbe-b423202c98ed")
 		(property "Reference" "C5"
 			(at 350.0000 43.7300 0)
 			(effects
@@ -9700,14 +9992,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "e06a3ac0-1e97-439a-8922-a4e1557fb5f5")
+			(uuid "c13f85a2-d9de-40f8-8bd2-434a2eacd341")
 		)
 		(pin "2"
-			(uuid "3854ba13-991f-46fb-83af-69fb2639595d")
+			(uuid "6b12c4d9-eb02-47f6-b52d-746fbe8f0e41")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "C5")
 					(unit 1)
 				)
@@ -9722,17 +10014,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "97fb7795-e34e-4231-9155-bbcc7ab0aac2")
+		(uuid "8bd08e05-4fd5-48f7-b5c5-97cf2a9a7633")
 	)
 	(label "+3V3_LOGGER"
-		(at 350.0000 37.6900 90)
+		(at 350.0000 38.1900 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "82f9174e-6100-4614-a261-a6fae3cea7ed")
+		(uuid "2a8e99b8-aed5-4710-8312-a4d63a893a8b")
 	)
 	(wire
 		(pts
@@ -9742,7 +10034,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b32771c9-7974-4ece-9bf5-9b1d0c39a4dc")
+		(uuid "eaa4ca65-4bb4-4194-93b1-1de165d3ba8b")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -9752,7 +10044,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "ac4da67c-2cd0-471f-83b0-a36bc5eaf6f2")
+		(uuid "fe904cf3-9389-49d7-a9a2-549a73bb27f1")
 		(property "Reference" "#PWR14"
 			(at 350.0000 52.6200 0)
 			(effects
@@ -9799,11 +10091,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "29643b68-89e5-44bc-873e-d2860bebab0a")
+			(uuid "3f80a401-65d4-48f5-9ad6-ddabddef990a")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR14")
 					(unit 1)
 				)
@@ -9818,7 +10110,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "de9fecbf-2f3e-48d6-9e20-b83d2c264856")
+		(uuid "34d53ebf-40ba-4c74-8759-c905108a1c8c")
 		(property "Reference" "C6"
 			(at 370.0000 43.7300 0)
 			(effects
@@ -9863,14 +10155,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "d0ddf9a4-8b56-48fc-b681-3c007154e3c1")
+			(uuid "2db2787a-c412-464f-9626-93c810c0c96b")
 		)
 		(pin "2"
-			(uuid "00416843-9249-4786-a6ba-f8e8c88cb381")
+			(uuid "81de1b07-312c-424b-bdf2-946c5631730e")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "C6")
 					(unit 1)
 				)
@@ -9885,17 +10177,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "76280ae4-3d74-4a16-83b3-45f194079ec6")
+		(uuid "8e55c83f-8a03-440c-9827-5bfdc535bf09")
 	)
 	(label "+3V3_LOGGER"
-		(at 370.0000 37.6900 90)
+		(at 370.0000 38.1900 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "5bd273ec-e226-4b0f-9b2f-0fd80b29888f")
+		(uuid "a8d99b64-f121-46b1-be4c-33c100070a1e")
 	)
 	(wire
 		(pts
@@ -9905,7 +10197,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "f51a8c0e-28a1-43c8-b03a-f4d23b567044")
+		(uuid "ea6239f8-312f-4ad9-b89f-8b1a650ffd07")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -9915,7 +10207,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "4354a4de-24ce-46a3-be7f-a12930804c46")
+		(uuid "6a81d121-ced7-494b-abb0-2948b36181e2")
 		(property "Reference" "#PWR15"
 			(at 370.0000 52.6200 0)
 			(effects
@@ -9962,11 +10254,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "0bd07e00-e713-445c-bb32-757f9e6bec4b")
+			(uuid "822b93b7-f41c-4285-91f7-0ed1af62cbdd")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR15")
 					(unit 1)
 				)
@@ -9981,8 +10273,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp yes)
-		(uuid "b247d130-a5c1-4c09-833c-5519782c2d10")
-		(property "Reference" "U_AMP"
+		(uuid "e996624d-7878-4200-9d74-0d382437b16e")
+		(property "Reference" "U_AMP1"
 			(at 240.0000 123.7300 0)
 			(effects
 				(font
@@ -10026,33 +10318,33 @@
 			)
 		)
 		(pin "1"
-			(uuid "b27618f3-02a3-4285-bc8d-7e8ed68952a6")
+			(uuid "006d5a34-d042-4b05-8efa-df0583134067")
 		)
 		(pin "2"
-			(uuid "f82a93b6-4dea-4b2d-ba9b-a334572143db")
+			(uuid "09084ecd-bd3f-4e3d-82bf-d67935184105")
 		)
 		(pin "3"
-			(uuid "e92b3097-ad81-468e-86d9-c5a1dad53801")
+			(uuid "fc954130-fe99-4680-8997-7ec1a6934aae")
 		)
 		(pin "4"
-			(uuid "a8c9d392-6dfb-4a3c-b09c-87d351491e33")
+			(uuid "c4368f91-aab3-44b4-a1f1-974a3e308b94")
 		)
 		(pin "5"
-			(uuid "63428ce2-8bdc-4567-8208-a4de9b174782")
+			(uuid "69990e2a-37a7-40de-813c-fdd884cc2218")
 		)
 		(pin "6"
-			(uuid "8743fe8a-1a84-45c9-83a9-64d66ec5b904")
+			(uuid "813bd491-066d-4cec-a8df-e7f31e454cce")
 		)
 		(pin "7"
-			(uuid "9a3788a0-a1f7-4c30-8d76-3116ee741386")
+			(uuid "60530666-e59c-4c2c-8eed-edaa44da4da6")
 		)
 		(pin "8"
-			(uuid "04e1396a-63dc-4c69-9c9c-fd9a1a5edb2f")
+			(uuid "d209b339-212f-460e-b70a-2da5864fad90")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "U_AMP")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "U_AMP1")
 					(unit 1)
 				)
 			)
@@ -10066,17 +10358,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "f6c811fd-8052-4b67-bd92-9262a24c44fb")
+		(uuid "51cf0414-7511-4a34-b658-a4411c6711c1")
 	)
 	(label "LC_SIG_N"
-		(at 224.2600 119.9200 0)
+		(at 224.7600 119.9200 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "a61fb4b9-f9bb-4344-9f73-fb3c0d4aef33")
+		(uuid "bc4e05a9-19c6-48e1-925e-a7a6c6dab0d4")
 	)
 	(wire
 		(pts
@@ -10086,17 +10378,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "6f4cacd3-883a-45cc-8c3d-332318887cc2")
+		(uuid "cfc2a339-3837-4c98-a7d8-5ebe5be40097")
 	)
 	(label "LC_SIG_P"
-		(at 224.2600 130.0800 0)
+		(at 224.7600 130.0800 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "fcadbe37-b4d3-4526-8de6-8ffe5c8b6430")
+		(uuid "961be7ec-dc95-4c4f-8a27-c9b649bdb6ca")
 	)
 	(wire
 		(pts
@@ -10106,17 +10398,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "31d209d3-cbeb-4358-8c02-3627d19d080c")
+		(uuid "3548bea7-b551-4254-8015-bb6bea9ac803")
 	)
 	(label "RG_A"
-		(at 224.2600 122.4600 0)
+		(at 224.7600 122.4600 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "2b98accd-a024-4c84-9448-2617c53c2d9a")
+		(uuid "f5b6bdcc-3466-41a3-af7e-72a122559189")
 	)
 	(wire
 		(pts
@@ -10126,17 +10418,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "759f750d-e842-465f-858f-0fb404ecf19e")
+		(uuid "db85dfa7-689d-4ed2-8179-24a63b187fee")
 	)
 	(label "RG_B"
-		(at 224.2600 127.5400 0)
+		(at 224.7600 127.5400 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "fd85c88b-3ee2-45e3-8e62-bf0255787c09")
+		(uuid "8c513198-4e9e-4318-bb59-09588be23b3f")
 	)
 	(wire
 		(pts
@@ -10146,17 +10438,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "07f20aaf-3722-4b11-bfb0-ebc69445dcdd")
+		(uuid "b70c38e3-3397-441b-9fd7-5317a0152fb1")
 	)
 	(label "AMP_OUT"
-		(at 255.7400 125.0000 0)
+		(at 255.2400 125.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "c52c0ccc-8708-4d22-a388-f63b32da7e6e")
+		(uuid "a3300fd8-f82c-46b1-b272-6a18073fac19")
 	)
 	(wire
 		(pts
@@ -10166,17 +10458,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b9ac12f4-463c-4ff0-84e4-7e8fa19aaf3a")
+		(uuid "01890658-dfc7-4444-8712-6d03ac7aa9b9")
 	)
 	(label "+5V_AMP"
-		(at 237.4600 111.8000 90)
+		(at 237.4600 112.3000 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "8899ef0c-f0e2-49f6-a095-2741b64fd6a3")
+		(uuid "fc45593e-7601-4c8b-a50b-88746c4b585c")
 	)
 	(wire
 		(pts
@@ -10186,7 +10478,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "ffb1e293-1d6f-4504-b119-352e8e8066a0")
+		(uuid "dd2f7fe0-a571-4424-af87-f349b9e141c1")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -10196,7 +10488,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "1dd63443-7cd9-4856-8829-4f3d56d487b3")
+		(uuid "a1894825-b6ef-4f6c-adcd-c47b01093fe9")
 		(property "Reference" "#PWR16"
 			(at 237.4600 136.4300 0)
 			(effects
@@ -10243,11 +10535,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "eb67eb18-d330-49ff-85ec-0b39c15d0865")
+			(uuid "7c2b0072-ee5b-4811-85cd-2c0cb0538a3e")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR16")
 					(unit 1)
 				)
@@ -10265,7 +10557,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "a2c9ac5f-c7b8-40fc-a3c9-447c0ad0753b")
+		(uuid "df8b014d-f57b-448a-bf06-4adeb786db11")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -10275,8 +10567,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "a970d519-9915-471b-b176-bac75d3cc606")
-		(property "Reference" "R_G"
+		(uuid "10541500-ad08-43e7-a0a6-df7d215a7760")
+		(property "Reference" "R_G1"
 			(at 212.0000 138.7300 0)
 			(effects
 				(font
@@ -10320,15 +10612,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "c9df7b50-8ff3-49e3-a300-6873f221f701")
+			(uuid "5eccafdb-978d-4c01-8e53-fdd08e3c31c6")
 		)
 		(pin "2"
-			(uuid "b388e74d-b45d-41a4-879d-1384e6f35fde")
+			(uuid "c80625f2-aa7b-4ca4-b8ff-2b9013ffd628")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_G")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_G1")
 					(unit 1)
 				)
 			)
@@ -10336,43 +10628,43 @@
 	)
 	(wire
 		(pts
-			(xy 212.0000 136.1900) (xy 212.0000 133.1900)
+			(xy 208.1900 140.0000) (xy 205.1900 140.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "f49a14c1-869b-4b59-90a4-066fad6cc704")
+		(uuid "59413104-6663-4106-9d15-1857c0993941")
 	)
 	(label "RG_A"
-		(at 212.0000 132.6900 90)
+		(at 205.1900 140.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "3099dca3-9cb6-4e16-98fc-0e483766f22c")
+		(uuid "a9724a4c-3fee-4292-b04c-0384378826d9")
 	)
 	(wire
 		(pts
-			(xy 212.0000 143.8100) (xy 212.0000 146.8100)
+			(xy 215.8100 140.0000) (xy 218.8100 140.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "4e496897-b288-4a55-950e-a967a44026e1")
+		(uuid "361101d6-2ebc-4044-a1a7-4df5b8e9f565")
 	)
 	(label "RG_B"
-		(at 212.0000 147.3100 90)
+		(at 218.8100 140.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "b59d65cf-446b-4b5c-9389-12dc7d2fd3cf")
+		(uuid "11ca6b13-c94b-4b4a-b3ef-546b1395c59e")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -10382,7 +10674,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "50c1c39a-96fc-489b-ad78-b565504b5fde")
+		(uuid "c855c6b6-45a0-4cd3-9c26-329b4ce0e480")
 		(property "Reference" "R_BYP1"
 			(at 285.0000 138.7300 0)
 			(effects
@@ -10427,14 +10719,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "8614574c-2478-405a-8067-2d319b2023f3")
+			(uuid "a1b604fc-3ac1-4b23-9674-9fdcc1af4074")
 		)
 		(pin "2"
-			(uuid "d58c2f55-dc21-4662-8ed8-9e5ebb43b715")
+			(uuid "ba8ba89c-e783-4011-914b-f3ef033e95af")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "R_BYP1")
 					(unit 1)
 				)
@@ -10443,43 +10735,43 @@
 	)
 	(wire
 		(pts
-			(xy 285.0000 136.1900) (xy 285.0000 133.1900)
+			(xy 281.1900 140.0000) (xy 278.1900 140.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "b60910b7-e6bf-40d9-b365-2a73f9a9f054")
+		(uuid "4a7cfe65-b1ab-4205-8a62-884a5fbbeef8")
 	)
 	(label "LC_SIG_P"
-		(at 285.0000 132.6900 90)
+		(at 278.1900 140.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "c5a62804-d059-44c0-951e-7fd3ce4b350c")
+		(uuid "0efa45ea-75b1-4e3e-afb6-0d920c8a25a3")
 	)
 	(wire
 		(pts
-			(xy 285.0000 143.8100) (xy 285.0000 146.8100)
+			(xy 288.8100 140.0000) (xy 291.8100 140.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "8d93a7ef-30a4-4623-8d2c-32db9bca6200")
+		(uuid "4b7831ff-901d-410e-b7a9-a9d18b1d80ff")
 	)
 	(label "ADC_IN_P"
-		(at 285.0000 147.3100 90)
+		(at 291.8100 140.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "7af32121-234c-442d-b0db-4367b8b6d815")
+		(uuid "3e98b0af-e79b-462f-82d9-44a1af4f0b8d")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -10489,7 +10781,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "88c5d78e-6376-4fee-86a1-f259c7aaf4ac")
+		(uuid "a53e11db-08c2-4758-9e55-d3dcf73fc3b5")
 		(property "Reference" "R_BYP2"
 			(at 310.0000 138.7300 0)
 			(effects
@@ -10534,14 +10826,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "1ced67ea-d67b-46d1-9133-9d77057ed1ad")
+			(uuid "faeefd30-fca0-4f7b-82e6-c607e65a1b79")
 		)
 		(pin "2"
-			(uuid "608a8c32-fdd0-409b-afca-76a890c93a61")
+			(uuid "0571aba8-2f91-45d4-94f8-b956595dae53")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "R_BYP2")
 					(unit 1)
 				)
@@ -10550,43 +10842,43 @@
 	)
 	(wire
 		(pts
-			(xy 310.0000 136.1900) (xy 310.0000 133.1900)
+			(xy 306.1900 140.0000) (xy 303.1900 140.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "67fb8f35-e5f2-40c7-b096-44540b3dae50")
+		(uuid "8d9d0c76-3d90-461d-8c7b-9d47208240b4")
 	)
 	(label "LC_SIG_N"
-		(at 310.0000 132.6900 90)
+		(at 303.1900 140.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "07089c6c-c67f-412e-8eda-53cd1953b524")
+		(uuid "eb1199a2-97ff-41f0-a6d2-be50094b1f37")
 	)
 	(wire
 		(pts
-			(xy 310.0000 143.8100) (xy 310.0000 146.8100)
+			(xy 313.8100 140.0000) (xy 316.8100 140.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "18a91606-bfbe-48f0-8bfb-406821665bee")
+		(uuid "06e010e5-3540-4240-bc26-af700c69ca54")
 	)
 	(label "ADC_IN_N"
-		(at 310.0000 147.3100 90)
+		(at 316.8100 140.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "75bc4a36-209b-45a6-93fa-7a1bee229af4")
+		(uuid "0dcbb979-8581-4258-95d3-5cb3f33a8db8")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -10596,7 +10888,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp yes)
-		(uuid "63afa9b7-2844-4ffe-b016-5538bf18974c")
+		(uuid "1bfc016a-e450-4e00-a85c-f8a410c26aa1")
 		(property "Reference" "R_BYP3"
 			(at 335.0000 138.7300 0)
 			(effects
@@ -10641,14 +10933,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "63044963-abfb-40ef-b30b-071ace473f41")
+			(uuid "908b7784-2a17-4737-81cc-92da37e7523d")
 		)
 		(pin "2"
-			(uuid "d074a5fe-f83f-48f3-a198-b87119d7cca0")
+			(uuid "877def0d-9011-4333-8c2b-726933e0a58d")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "R_BYP3")
 					(unit 1)
 				)
@@ -10657,43 +10949,43 @@
 	)
 	(wire
 		(pts
-			(xy 335.0000 136.1900) (xy 335.0000 133.1900)
+			(xy 331.1900 140.0000) (xy 328.1900 140.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "8a507038-16b0-4878-825a-c41f8e8d8977")
+		(uuid "200e2183-d62d-4278-a247-eeca38816672")
 	)
 	(label "AMP_OUT"
-		(at 335.0000 132.6900 90)
+		(at 328.1900 140.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "aba838ba-8314-4eb5-a221-6f763f026c74")
+		(uuid "33dc431a-80e5-4738-af4c-ec81fd825b42")
 	)
 	(wire
 		(pts
-			(xy 335.0000 143.8100) (xy 335.0000 146.8100)
+			(xy 338.8100 140.0000) (xy 341.8100 140.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "8337ac24-3aac-4f1e-ac92-d3be03d912c4")
+		(uuid "9504a6f8-6a5a-4160-97a4-b98814e3c8ab")
 	)
 	(label "ADC_IN_P"
-		(at 335.0000 147.3100 90)
+		(at 341.8100 140.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "8b488816-0cd2-403a-9322-7c2dceea9912")
+		(uuid "e7e0c3d7-5fb4-440b-8d56-73d4051a5492")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -10703,7 +10995,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp yes)
-		(uuid "acae79b9-efe4-4587-85cc-c1293f8c56e1")
+		(uuid "52735300-0b72-42eb-9463-217cc5251181")
 		(property "Reference" "R_BYP4"
 			(at 360.0000 138.7300 0)
 			(effects
@@ -10748,14 +11040,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "838e51b6-00c0-4083-b1a6-318dae84e09c")
+			(uuid "a7195bff-ac50-4bf5-b800-35446d0775e3")
 		)
 		(pin "2"
-			(uuid "8e30eae4-62d3-47ba-93ac-4e441fb4a75d")
+			(uuid "3b972beb-eb89-47d3-aa1f-9de18272e941")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "R_BYP4")
 					(unit 1)
 				)
@@ -10764,43 +11056,43 @@
 	)
 	(wire
 		(pts
-			(xy 360.0000 136.1900) (xy 360.0000 133.1900)
+			(xy 356.1900 140.0000) (xy 353.1900 140.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "9888d76e-5a4a-4282-a469-60a70c984953")
+		(uuid "642c8305-80b6-4a60-bf64-bc4e07159166")
 	)
 	(label "AMP_REF"
-		(at 360.0000 132.6900 90)
+		(at 353.1900 140.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "ea2af47d-fc3f-45e7-9a78-bce45d22fd7b")
+		(uuid "219134d7-95c3-44b3-aef9-e44c676d2f04")
 	)
 	(wire
 		(pts
-			(xy 360.0000 143.8100) (xy 360.0000 146.8100)
+			(xy 363.8100 140.0000) (xy 366.8100 140.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "e4be8236-a3be-4af9-9b06-5f645b9c611f")
+		(uuid "9562be4b-ea07-4bcb-ae1a-7c2c61b6d180")
 	)
 	(label "ADC_IN_N"
-		(at 360.0000 147.3100 90)
+		(at 366.8100 140.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "c715664e-7a46-47ac-b7f5-f304f0624768")
+		(uuid "0436c00a-b12d-498e-86db-df939a8e958b")
 	)
 	(wire
 		(pts
@@ -10810,17 +11102,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "f9e56165-2b07-4946-ae5a-52c5f80a00dd")
+		(uuid "77be4aba-cec5-44dd-bbda-3a13c1eaf71f")
 	)
 	(label "AMP_REF"
-		(at 242.5400 138.2000 90)
+		(at 242.5400 137.7000 270)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "214403b9-a855-4670-af8a-16bfad855c5c")
+		(uuid "0ed24af4-59b4-4931-8f35-9df34dcf1888")
 	)
 	(text "A/B LINK NETWORK (D-054).\nPath A, default: BYP1+BYP2 fitted, AD620 socket empty - ADS1220 PGA reads the bridge directly.\nPath B: pull BYP1+BYP2, fit BYP3+BYP4 and the AD620 - two-stage chain, as Wirikuta had it.\nNever fit all four: that shorts the amplifier output to the bridge."
 		(exclude_from_sim no)
@@ -10833,7 +11125,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "e834c193-cc25-4c61-9b09-96ecf0f0ab20")
+		(uuid "9b1fcab3-8ea9-4b63-8dbe-defc940a6702")
 	)
 	(text "5. LOGGER - ESP32-DevKitC V4, zero authority"
 		(exclude_from_sim no)
@@ -10846,7 +11138,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "dc2aae57-4713-4a9b-912a-18f9264ac8d5")
+		(uuid "5eff8ab2-8647-43f8-ac5c-bb5f0586826a")
 	)
 	(rectangle
 		(start 202.0000 179.0000)
@@ -10858,7 +11150,7 @@
 		(fill
 			(type none)
 		)
-		(uuid "7cb898f7-8311-4c54-b594-74002eb63bb0")
+		(uuid "e8ac56a3-f216-4af3-a5b5-42495244f426")
 	)
 	(text "No outputs reach any safety net. Radios stopped at boot (D-029)."
 		(exclude_from_sim no)
@@ -10871,7 +11163,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "48990282-65e3-44d9-8b06-f7ef396bc378")
+		(uuid "5d387b28-4ac5-46f3-bd19-bb2ee30cad60")
 	)
 	(symbol
 		(lib_id "RF_Module:ESP32-WROOM-32D")
@@ -10881,7 +11173,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "03497cfe-2790-4dae-94f7-d1349c26a330")
+		(uuid "63dc0e6f-92f7-49f6-9bf8-f0c381b23e5b")
 		(property "Reference" "MCU1"
 			(at 290.0000 248.7300 0)
 			(effects
@@ -10926,125 +11218,125 @@
 			)
 		)
 		(pin "1"
-			(uuid "32daf236-3d97-4baf-a82e-86b760529f72")
+			(uuid "c1411724-d980-4ff9-aaad-4eed909811d2")
 		)
 		(pin "2"
-			(uuid "e2a5b005-a574-46fd-ae94-ec2c2c2ae55b")
+			(uuid "407d2505-1b99-4a79-ac96-317fe4d6507c")
 		)
 		(pin "3"
-			(uuid "ad210b3b-a97a-4937-95c2-51ec9d442015")
+			(uuid "8a2710a0-f4e5-43ce-af75-26f04953b6af")
 		)
 		(pin "4"
-			(uuid "6a2cc22c-d9d3-4593-9617-dba7d37265a7")
+			(uuid "dcf99625-da5d-488b-8d87-66fdbe247988")
 		)
 		(pin "5"
-			(uuid "c9f0464f-3367-4496-bfa6-6beaf0a0c216")
+			(uuid "c50736c2-2ff0-4d34-9e0f-def07156a940")
 		)
 		(pin "6"
-			(uuid "a5282e26-ae36-40ce-af08-9c2e16540fe2")
+			(uuid "7e6884c5-a36c-41ed-977c-ba16e255339b")
 		)
 		(pin "7"
-			(uuid "42307dfb-5c85-4c1a-9550-a094e9ff5523")
+			(uuid "b7acde97-0a2f-4277-b9b8-817ec900b7f2")
 		)
 		(pin "8"
-			(uuid "1c23e4b6-97f7-4241-a78d-c2ea86292210")
+			(uuid "12d69849-bab8-43d1-8ebf-1842702b7bb6")
 		)
 		(pin "9"
-			(uuid "995a98d5-bea9-4abb-b281-1bb658e6fbed")
+			(uuid "8cae4b30-14fe-4c21-bec3-74428d2dd64d")
 		)
 		(pin "10"
-			(uuid "6b34890b-28a5-49bd-9cf0-f9ddaa87a4e8")
+			(uuid "26321d1e-1e5e-4abf-ba3d-585ab6cfc05c")
 		)
 		(pin "11"
-			(uuid "d38f839e-5f81-440e-808a-648bf67fcf34")
+			(uuid "f036492d-0c88-4677-9f65-f71c084f7d5f")
 		)
 		(pin "12"
-			(uuid "d4830d26-c07d-4f3f-bca5-59d2cc5030f7")
+			(uuid "0bd0c2c1-ca58-4271-bbf1-68ecd45c83b0")
 		)
 		(pin "13"
-			(uuid "e2b8987a-4d4f-42a0-9e94-f21b66f4f7b4")
+			(uuid "9fcf1a5e-2ecd-4a3f-a604-0de48f745164")
 		)
 		(pin "14"
-			(uuid "b183b2cb-7452-442d-a120-89a7367c11cb")
+			(uuid "3e06fb4e-c402-4567-8fdc-32a1170552d8")
 		)
 		(pin "15"
-			(uuid "65f4d3cf-2d57-4235-b0d3-7f0ae99594ef")
+			(uuid "2a34f76a-5f09-453e-8353-5c92527e1008")
 		)
 		(pin "16"
-			(uuid "abb4c432-298b-49e3-9111-0b7e7a815da4")
+			(uuid "49ad89dc-1bdf-4749-8758-68957aed2b31")
 		)
 		(pin "17"
-			(uuid "1894c063-2645-4981-ba88-717f0c0bba3f")
+			(uuid "7cebba67-18f7-4f61-af33-3a22511d4485")
 		)
 		(pin "18"
-			(uuid "3d1aaf62-a4b3-44eb-be58-64bde7e2eca3")
+			(uuid "8b352929-e74f-43ba-bb5d-f448ea42c8c4")
 		)
 		(pin "19"
-			(uuid "04a4a94f-8f54-4ee1-aa8a-f9bd6e5e5a64")
+			(uuid "dc7c93d9-c705-47e9-a893-befd1cdbd92b")
 		)
 		(pin "20"
-			(uuid "58ca978a-f3ed-4f55-b74c-7c07433206d0")
+			(uuid "032d7d72-fcf1-4e6f-9fae-d8cb2a2f5fc3")
 		)
 		(pin "21"
-			(uuid "dad3a3e8-c4ab-4b55-9ada-60c2b9d461e7")
+			(uuid "1e68285a-fe17-4b69-a078-2390974711f3")
 		)
 		(pin "22"
-			(uuid "a8b005dc-e9fe-4db3-ab98-d06c54d019da")
+			(uuid "e353760f-0b77-453c-a6cb-9838436cea30")
 		)
 		(pin "23"
-			(uuid "4fe10191-8d5e-4d17-b832-ed8205630cc5")
+			(uuid "da93b433-ad4e-46f4-83f6-a1e0317c5358")
 		)
 		(pin "24"
-			(uuid "53398096-5dc6-4741-9bb7-e53103b32e11")
+			(uuid "2c5402e4-497f-4aab-bbb1-51ac8f7ebad4")
 		)
 		(pin "25"
-			(uuid "8621c624-f20f-440b-8a78-1ff3ec9911f1")
+			(uuid "d44ddfee-1809-4738-b2ca-6c1b834f1250")
 		)
 		(pin "26"
-			(uuid "19da3582-8f06-4348-a612-d3d382991c5e")
+			(uuid "37423420-1a13-496d-9692-6908ca459c2b")
 		)
 		(pin "27"
-			(uuid "493d118b-f0a4-41bb-a65f-7e89b03bd563")
+			(uuid "5d453a98-afdb-40cf-adbd-d08551a93f26")
 		)
 		(pin "28"
-			(uuid "de195a06-68c0-4b6c-ae18-01d2c38c912f")
+			(uuid "7fa38ee1-ad87-4840-b59a-c8697197ce7d")
 		)
 		(pin "29"
-			(uuid "07860030-92d7-4f1e-be4c-edd31d33449e")
+			(uuid "ded3456b-570c-40a9-86a4-66652f20f026")
 		)
 		(pin "30"
-			(uuid "e62bb818-adf0-4841-b840-e8f9ff6c94c4")
+			(uuid "50768589-ce71-472c-bf05-5e34d06f3306")
 		)
 		(pin "31"
-			(uuid "304a84d5-78ae-4aa4-a8f2-b75a3709465d")
+			(uuid "177d3403-0a00-476c-aebb-179e5044e6dd")
 		)
 		(pin "32"
-			(uuid "a3ace157-5ed3-4ec1-8d83-2219336b81b5")
+			(uuid "09dd8a46-c503-4c91-803e-673262ffed32")
 		)
 		(pin "33"
-			(uuid "b304077f-e61a-47ac-b151-3caa7101ea28")
+			(uuid "c752ea57-6d97-4120-a5fb-f69c39994abe")
 		)
 		(pin "34"
-			(uuid "9311a40f-9d39-4444-b37b-3e06202090fa")
+			(uuid "8318e2b9-2b67-42aa-bd85-b5b312867417")
 		)
 		(pin "35"
-			(uuid "a8b7f987-922c-4ec1-96b6-9f3d25f6e3b3")
+			(uuid "d9fb9c37-70b9-4aae-b3ee-c27653234064")
 		)
 		(pin "36"
-			(uuid "6ce6fd3d-d712-4c54-87cb-005ede1c9408")
+			(uuid "66aab344-7947-4132-bef3-addc5fb7f500")
 		)
 		(pin "37"
-			(uuid "5fe76a57-462c-4691-a8c8-b867cad4bfd4")
+			(uuid "d7c1318f-8c94-43e1-a966-9e0fa7dc1d62")
 		)
 		(pin "38"
-			(uuid "ba0f614c-e588-4b47-b390-5f413f9a61bc")
+			(uuid "646e2724-7202-41f1-a756-c04e8461fcc7")
 		)
 		(pin "39"
-			(uuid "39254836-7773-4109-b959-d2e208f0de77")
+			(uuid "7336b44d-caf3-4ce7-a863-3f7300f332f3")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "MCU1")
 					(unit 1)
 				)
@@ -11059,7 +11351,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "a46cacc8-a5a8-4e30-9a81-49a4ac9fbfd5")
+		(uuid "27a7fa9d-8253-44c1-be55-5e423a3190a8")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -11069,7 +11361,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "7de0433d-4739-4f91-a59b-f613d5d8b74a")
+		(uuid "7ea309c7-aa3f-4831-872a-9a57b734ecda")
 		(property "Reference" "#PWR17"
 			(at 290.0000 208.0900 0)
 			(effects
@@ -11116,11 +11408,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "85742374-c0a5-4cd7-9ae6-6ec911185f21")
+			(uuid "847e268a-84c6-4fdf-b265-6fc095cc4ab8")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR17")
 					(unit 1)
 				)
@@ -11135,7 +11427,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "3dfd8bdf-8465-47fc-8af1-2f582ce7d622")
+		(uuid "39e91b85-2496-42eb-9264-2ee0dbac86d8")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -11145,7 +11437,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "3e995997-b79b-40bf-ac87-e713bf821a0d")
+		(uuid "fa51be73-2d99-480c-86db-5789af3bf729")
 		(property "Reference" "#PWR18"
 			(at 290.0000 289.3700 0)
 			(effects
@@ -11192,11 +11484,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "955414f7-1ba0-48aa-a619-25fc0449f30f")
+			(uuid "a81767ae-568b-49ea-8779-4dfec1983716")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR18")
 					(unit 1)
 				)
@@ -11211,17 +11503,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "ea3afe86-eafa-4c26-ba35-180fb224a461")
+		(uuid "b25c8397-32a1-44b8-98bb-98532b52baff")
 	)
 	(label "SPI_SCK"
-		(at 310.8200 250.0000 0)
+		(at 310.3200 250.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "1d51028b-8863-4a31-ae1b-ccf3b834c1ee")
+		(uuid "10135485-94d3-496c-aa71-25efa85bbef9")
 	)
 	(wire
 		(pts
@@ -11231,17 +11523,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "72815eb2-49a2-4333-8a5c-37ffbd542db3")
+		(uuid "461b8b53-e7ca-4d54-bfa0-10820b5963fc")
 	)
 	(label "SPI_MOSI"
-		(at 310.8200 260.1600 0)
+		(at 310.3200 260.1600 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "1a50a204-3fdd-42b0-b524-25051017c4db")
+		(uuid "cd37188b-b6d0-4b0e-a6c8-2c1b858aa3aa")
 	)
 	(wire
 		(pts
@@ -11251,17 +11543,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "9b186dea-9db9-4fe4-b247-25b63dd5a0b9")
+		(uuid "bbc1cad5-1a7d-436a-b04a-274a2615d1e9")
 	)
 	(label "SPI_MISO"
-		(at 310.8200 252.5400 0)
+		(at 310.3200 252.5400 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "84a6006e-5ff5-42d0-ac89-84186c93f0af")
+		(uuid "ce418cc5-2287-4372-93dc-da13371b592e")
 	)
 	(wire
 		(pts
@@ -11271,17 +11563,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "df4a6fee-fbb2-45b2-912c-9c83c263245c")
+		(uuid "d4c6e9ba-1524-4a32-8074-febb9c738564")
 	)
 	(label "ADC_CS"
-		(at 310.8200 247.4600 0)
+		(at 310.3200 247.4600 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "496607e6-8501-4af5-a3ba-652ea2f250c4")
+		(uuid "c21dd5f2-037b-4204-a248-abac53142d7c")
 	)
 	(wire
 		(pts
@@ -11291,17 +11583,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "d6d68bd7-da1d-423b-b1f3-b3e9c89d9bea")
+		(uuid "2ac1e921-57ea-4e83-b275-48176802c6a8")
 	)
 	(label "ADC_DRDY"
-		(at 310.8200 244.9200 0)
+		(at 310.3200 244.9200 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "bcd6bb7f-265a-4a8d-ad52-8ea62a1c555a")
+		(uuid "0b4cec42-0fed-4d37-88dd-452cb75d0da5")
 	)
 	(wire
 		(pts
@@ -11311,17 +11603,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "acd1208a-3ec4-48ab-87ab-eba2e03b9509")
+		(uuid "7af15796-713d-4975-88c2-249b1a89d014")
 	)
 	(label "SD_CS"
-		(at 310.8200 229.6800 0)
+		(at 310.3200 229.6800 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "10e1e06c-05c0-45d5-b12a-f57ae04cf79d")
+		(uuid "41d4475f-2ec0-47a8-88a2-0579940849cb")
 	)
 	(wire
 		(pts
@@ -11331,17 +11623,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "6bc9ab69-49b5-44b5-bc56-19f4797b6ac2")
+		(uuid "b3899e63-f1c2-406f-97c5-f2b2802a262a")
 	)
 	(label "SD_DETECT"
-		(at 310.8200 267.7800 0)
+		(at 310.3200 267.7800 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "5fd19058-1b7a-4a4d-beaf-50886ed52378")
+		(uuid "b14b82a9-4433-4ebe-bcbc-5fb40a5deb51")
 	)
 	(wire
 		(pts
@@ -11351,17 +11643,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "ff31af73-5555-45e0-9218-43739001db8f")
+		(uuid "ab9b6b87-b5e6-4f17-bba5-af1ea1b1fdcd")
 	)
 	(label "RECORD"
-		(at 310.8200 275.4000 0)
+		(at 310.3200 275.4000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "30643011-03dc-4359-9efb-b27f71f1e164")
+		(uuid "c2355402-9d7b-4b2a-b3e0-47ba247c39ab")
 	)
 	(wire
 		(pts
@@ -11371,17 +11663,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "204905a7-580f-4edf-99d4-d192dc35296e")
+		(uuid "822080e4-fcb2-4167-82c9-781cc6eba89c")
 	)
 	(label "LOGGER_LED"
-		(at 310.8200 237.3000 0)
+		(at 310.3200 237.3000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "775f643e-4116-4f9b-94cb-f72a4a1d36e5")
+		(uuid "8ccdc11a-32e6-4e87-8ec8-b8497495a1ab")
 	)
 	(wire
 		(pts
@@ -11391,17 +11683,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "c45f521e-41bf-4509-b070-065f1189989b")
+		(uuid "9ec62243-a703-4b8f-a3dd-1d322aa792d9")
 	)
 	(label "RS485_DI"
-		(at 310.8200 262.7000 0)
+		(at 310.3200 262.7000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "9661b41c-1656-4197-841f-d7e515f0880a")
+		(uuid "a2d21424-fd39-4580-b76e-aee73d7e3eaf")
 	)
 	(wire
 		(pts
@@ -11411,17 +11703,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "efd72182-68df-414e-b6e4-4c3ec851e755")
+		(uuid "6532f553-7a56-408f-95be-1544a55e669b")
 	)
 	(label "RS485_RO"
-		(at 310.8200 265.2400 0)
+		(at 310.3200 265.2400 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "4af0e1d4-bf03-4bf9-9d01-315a724dd332")
+		(uuid "7aa60725-848e-456f-b4cb-25e5806a3f5c")
 	)
 	(wire
 		(pts
@@ -11431,17 +11723,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "8557710e-bd96-4d8d-b42d-504a4344fec0")
+		(uuid "2788453c-f033-44bd-95f1-bfbc2bde527e")
 	)
 	(label "RS485_DE"
-		(at 310.8200 239.8400 0)
+		(at 310.3200 239.8400 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "1f87f63b-87fd-4646-ac71-afbb226418f6")
+		(uuid "8e77344b-674f-4930-881d-c28043ae1c68")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -11451,8 +11743,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "3a49827d-9a51-4bd7-9df8-c8bf87623885")
-		(property "Reference" "R_EN"
+		(uuid "7accfc36-0241-4cfc-897f-d7500dea2ba5")
+		(property "Reference" "R_EN1"
 			(at 240.0000 213.7300 0)
 			(effects
 				(font
@@ -11496,15 +11788,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "7443f888-a429-426f-9617-5d9d7b857e57")
+			(uuid "e061b17c-36df-4b71-b921-cf1cafc1458d")
 		)
 		(pin "2"
-			(uuid "1db2a8f8-1cbb-48d0-9209-28796880ec96")
+			(uuid "4e1778e5-3885-4e99-9ed9-e323c473a0d5")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_EN")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_EN1")
 					(unit 1)
 				)
 			)
@@ -11512,43 +11804,43 @@
 	)
 	(wire
 		(pts
-			(xy 240.0000 211.1900) (xy 240.0000 208.1900)
+			(xy 236.1900 215.0000) (xy 233.1900 215.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "71266a78-d1dc-4a66-b837-e4fc70bc9357")
+		(uuid "66b11007-8500-4e12-b4f6-b862a8552b82")
 	)
 	(label "+3V3_LOGGER"
-		(at 240.0000 207.6900 90)
+		(at 233.1900 215.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "6581c53f-2d3b-4889-b684-fa300168e281")
+		(uuid "3a24191d-a664-48cd-bec0-cf0e276bae32")
 	)
 	(wire
 		(pts
-			(xy 240.0000 218.8100) (xy 240.0000 221.8100)
+			(xy 243.8100 215.0000) (xy 246.8100 215.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "65a6be91-278f-4197-8344-5a8f6082d9c7")
+		(uuid "e1e74186-a532-4fcb-b5a0-b0fc9dac56f3")
 	)
 	(label "ESP_EN"
-		(at 240.0000 222.3100 90)
+		(at 246.8100 215.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "2b6f2cdf-71b9-460a-98b6-417e1b8c864a")
+		(uuid "ae67808b-d339-4df5-85d0-3b9ac770bd82")
 	)
 	(wire
 		(pts
@@ -11558,17 +11850,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "60e7ae9b-d826-482c-887e-16fe46ba0277")
+		(uuid "9c518134-d833-49d3-99cc-a72aa4b06ccf")
 	)
 	(label "ESP_EN"
-		(at 269.1800 219.5200 0)
+		(at 269.6800 219.5200 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "928b379b-24e7-4d88-9d2f-20a0141786a1")
+		(uuid "6bc0b1cb-e13a-4498-b5e5-ce5014fcc1b9")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -11578,8 +11870,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "bf3dfc63-511c-4c31-b884-0b929d131c45")
-		(property "Reference" "C_EN"
+		(uuid "87a82de6-981d-43e3-9d01-b21a1e92d849")
+		(property "Reference" "C_EN1"
 			(at 215.0000 228.7300 0)
 			(effects
 				(font
@@ -11623,15 +11915,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "45191b71-8121-41b6-8a99-be8e457744da")
+			(uuid "24cdaec6-3945-41ad-bfeb-831ca17e401e")
 		)
 		(pin "2"
-			(uuid "a5eaa9c8-6289-4fab-82a9-1b9794a9fbcd")
+			(uuid "1b9f47ee-4314-4785-bc18-9ebff5ddd12c")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "C_EN")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "C_EN1")
 					(unit 1)
 				)
 			)
@@ -11645,17 +11937,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "867d5fa0-b201-4d16-a0fe-8745cc30d1ec")
+		(uuid "f3ea323f-0213-475d-a789-e3a33e6ea0f6")
 	)
 	(label "ESP_EN"
-		(at 215.0000 222.6900 90)
+		(at 215.0000 223.1900 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "f6e1d160-fd11-4ecf-8334-3c25b4534155")
+		(uuid "d13e7574-482b-4a62-87a4-1939d519ee74")
 	)
 	(wire
 		(pts
@@ -11665,7 +11957,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "dcf1bbaf-4a2d-4f6b-b001-8a43b60c39b4")
+		(uuid "62244d1c-3eb4-4cce-aaa2-3db9147e4680")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -11675,7 +11967,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "c158413b-59bc-4d59-bd11-8ba5dc9e0637")
+		(uuid "8960f470-214b-4309-924a-ebafee472b68")
 		(property "Reference" "#PWR19"
 			(at 215.0000 237.6200 0)
 			(effects
@@ -11722,11 +12014,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "fe3c0d8f-5250-4485-adf6-247f5782d4fd")
+			(uuid "c2a278de-448d-49b3-b25e-a5673df85882")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR19")
 					(unit 1)
 				)
@@ -11741,7 +12033,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "76d258c9-2e61-464f-b2af-02f448eac0c4")
+		(uuid "c13b6ff5-fd28-4c5f-87a2-41f1590fff22")
 		(property "Reference" "C9"
 			(at 360.0000 213.7300 0)
 			(effects
@@ -11786,14 +12078,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "c90da62a-4336-400f-8b58-0d17b6a39ac4")
+			(uuid "e6b8ed2a-9535-4341-8fb5-7a48de69b800")
 		)
 		(pin "2"
-			(uuid "faff0bda-63b1-4daf-9f8d-b3e87841bce0")
+			(uuid "072938ae-48de-4fa9-b0b6-ec327f7b1803")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "C9")
 					(unit 1)
 				)
@@ -11808,17 +12100,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "0b20f35b-df3b-41bb-bebc-e6b9767c4ab3")
+		(uuid "df1a59ee-64ec-48a1-bac4-cbab767b5da5")
 	)
 	(label "+3V3_LOGGER"
-		(at 360.0000 207.6900 90)
+		(at 360.0000 208.1900 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "496262cf-363e-4831-9c7a-9c74b83f6df6")
+		(uuid "df8ea70b-7deb-4ddf-b113-2f530264ec16")
 	)
 	(wire
 		(pts
@@ -11828,7 +12120,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b74b5b58-c653-4c48-b298-fb6be0b0acd0")
+		(uuid "27d507f3-1735-4bdf-bc10-9fdac208443c")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -11838,7 +12130,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "5407593a-b30f-4255-bb0f-3112f2af5391")
+		(uuid "1faa8064-3caf-4912-bd3b-81e9a40bcf9e")
 		(property "Reference" "#PWR20"
 			(at 360.0000 222.6200 0)
 			(effects
@@ -11885,11 +12177,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "49814bbe-c996-454e-91b4-e2fc9242ca3a")
+			(uuid "215632ef-4e28-43a8-8cbd-d533ea679aaf")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR20")
 					(unit 1)
 				)
@@ -11904,7 +12196,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "968f31eb-0552-48f1-9d01-a6f083c1c32d")
+		(uuid "eaebbb8c-456b-45d8-a571-9f74c3da77c6")
 		(property "Reference" "C10"
 			(at 380.0000 213.7300 0)
 			(effects
@@ -11949,14 +12241,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "2cee694c-3e9b-45ee-ac1c-680d5ddb84ef")
+			(uuid "e2ff8619-8855-45bd-90c6-86aef51e59d7")
 		)
 		(pin "2"
-			(uuid "fc7fff3c-3791-4919-9f32-8f6a38d6202d")
+			(uuid "9c8c4c0a-5d2e-43e5-a315-944beb8ee99f")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "C10")
 					(unit 1)
 				)
@@ -11971,17 +12263,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "af0868a6-0007-40ea-8802-a2be192e2fab")
+		(uuid "c1290ba9-b00a-46bf-a665-f9e6655d77b2")
 	)
 	(label "+3V3_LOGGER"
-		(at 380.0000 207.6900 90)
+		(at 380.0000 208.1900 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "5527ba31-8f90-4884-b0cb-d372a3cea239")
+		(uuid "841a05c4-ca2c-4d9c-a6bb-c7088f5a43da")
 	)
 	(wire
 		(pts
@@ -11991,7 +12283,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "3cc78401-1fbc-41ed-bebb-29ef8b781ea1")
+		(uuid "81533085-657c-4d88-858e-2d382ee79e84")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -12001,7 +12293,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "15b4ba24-9645-4627-8b7a-da2b338825a7")
+		(uuid "87747771-053c-4b67-946d-082755455506")
 		(property "Reference" "#PWR21"
 			(at 380.0000 222.6200 0)
 			(effects
@@ -12048,11 +12340,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "c02cb52c-44dd-4c93-a674-e547b4721893")
+			(uuid "4ad861cf-1ac4-4035-874a-fa21dc915591")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR21")
 					(unit 1)
 				)
@@ -12070,7 +12362,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "5bc3d2a9-27ed-43ec-9dea-eaa4f104e1d9")
+		(uuid "f014252a-67af-40af-a561-9ac4398a8480")
 	)
 	(text "The PHYSICAL part is a socketed ESP32-DevKitC V4 on 2 x PPTC191LFBN-RC (D-042),"
 		(exclude_from_sim no)
@@ -12083,7 +12375,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "7a0c93de-3899-45f0-ba2a-5e434ac34fd2")
+		(uuid "41a53ab2-e3cc-44a6-b9b4-8090e12117ab")
 	)
 	(text "so the symbol-to-socket pin mapping is set when the DevKitC footprint is made (O-16)."
 		(exclude_from_sim no)
@@ -12096,7 +12388,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "3a53597c-2551-443f-8199-5555c5b16e8b")
+		(uuid "f086ddcd-cb09-4520-91f9-fd07913d3365")
 	)
 	(text "Pins avoid GPIO6-11 (SPI flash) and all strapping pins 0, 2, 5, 12, 15 (D-031)."
 		(exclude_from_sim no)
@@ -12109,7 +12401,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "e66d08db-9a4a-4835-946b-a6f15246a844")
+		(uuid "9e36631e-46d7-4e93-af8f-efd8b840f714")
 	)
 	(text "RECORD sits on IO34 because 34-39 are INPUT-ONLY and cannot become outputs."
 		(exclude_from_sim no)
@@ -12122,7 +12414,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "b491ed99-3f06-4274-9e85-1b6faf714b76")
+		(uuid "220b2bff-3bf7-43bd-8395-3a9aa85c4b54")
 	)
 	(text "6. STORAGE - on-board microSD"
 		(exclude_from_sim no)
@@ -12135,7 +12427,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "a643bf57-0c57-4303-8ccd-72fa1cff13a0")
+		(uuid "91c8658a-1db4-4865-9fff-b9494b961afd")
 	)
 	(rectangle
 		(start 397.0000 22.0000)
@@ -12147,7 +12439,7 @@
 		(fill
 			(type none)
 		)
-		(uuid "e4c7fa7e-64b2-4cec-9917-c9b06aace1a2")
+		(uuid "7e41ddd3-fb96-41fc-86b9-113b9e2a6ca5")
 	)
 	(symbol
 		(lib_id "Connector:Micro_SD_Card_Det2")
@@ -12157,7 +12449,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "52cde019-e93e-4044-9c15-fad49012a973")
+		(uuid "5140f0cb-08b4-430a-a223-cb6f73460288")
 		(property "Reference" "CARD1"
 			(at 470.0000 58.7300 0)
 			(effects
@@ -12202,41 +12494,41 @@
 			)
 		)
 		(pin "1"
-			(uuid "2aef3f5c-2d9d-4696-865c-7c4e1b24dec6")
+			(uuid "f5e4b3a1-1278-4080-a3fa-c117b6f45059")
 		)
 		(pin "2"
-			(uuid "79d735bb-7417-4cf2-a658-ca1b2ccfa89f")
+			(uuid "9312c4dd-c4bf-46a3-83da-953381720b6c")
 		)
 		(pin "3"
-			(uuid "4c01170d-ddb4-416b-a59d-7a7dc7a3d3dd")
+			(uuid "ed478118-ee12-475d-be58-26faaf1841f0")
 		)
 		(pin "4"
-			(uuid "d1c5608f-468f-43ef-aa66-00b07c3028cc")
+			(uuid "87ec9ece-568a-40a8-97f1-f7a275a2fafa")
 		)
 		(pin "5"
-			(uuid "a09fce5f-ca4c-4626-a418-5bcb1c236221")
+			(uuid "e9b7e6ba-90b2-44a3-8728-28d3149908af")
 		)
 		(pin "6"
-			(uuid "95524938-f321-453a-8a37-6163fb94ccde")
+			(uuid "afa81396-14d5-47ff-be96-f2f8517b9d32")
 		)
 		(pin "7"
-			(uuid "eae680d8-372a-4639-809f-de0de24fbba5")
+			(uuid "e6f2eead-e901-480a-b195-18568fb92040")
 		)
 		(pin "8"
-			(uuid "12a1f49c-e8e1-4efd-aa21-b5d4a1db503d")
+			(uuid "2227693a-d8fa-42c9-877f-f8b0d59a3b28")
 		)
 		(pin "9"
-			(uuid "57f30787-7721-4ec4-910c-58dc587dc3c5")
+			(uuid "3050e416-27c4-490c-ac11-8f8d6739a581")
 		)
 		(pin "10"
-			(uuid "10147081-b74a-4641-b36c-4f831ea20c5f")
+			(uuid "abb55865-faf8-49c8-8f45-81f7e8fde352")
 		)
 		(pin "SH"
-			(uuid "348063bf-7079-400d-a852-92f225d23441")
+			(uuid "af3ed62f-fa08-47bf-8179-aa25135dcfe7")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "CARD1")
 					(unit 1)
 				)
@@ -12251,17 +12543,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "91ce01ec-4eab-4142-9860-75ac3b16cdc1")
+		(uuid "328c1e93-7785-4164-8eac-eca8454a7ea1")
 	)
 	(label "SD_CS"
-		(at 441.5600 52.3800 0)
+		(at 442.0600 52.3800 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "01868065-8c63-44f7-9015-c3a76a438591")
+		(uuid "bb925903-5252-432b-bb13-99c0ae2814b8")
 	)
 	(wire
 		(pts
@@ -12271,17 +12563,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "a7256906-50f8-4dc7-95a0-d65f76c6775e")
+		(uuid "12468c5a-3622-48f1-be07-82545b34d029")
 	)
 	(label "SPI_MOSI"
-		(at 441.5600 54.9200 0)
+		(at 442.0600 54.9200 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "3ba34c0a-73d9-4f19-b893-228264bb6db5")
+		(uuid "e9e5807f-576c-490c-9d42-d7394ae40e6a")
 	)
 	(wire
 		(pts
@@ -12291,17 +12583,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5c5ace44-e0ba-4321-bf4b-318370a7fa85")
+		(uuid "b264e0a1-0050-490d-8ff0-c55909104186")
 	)
 	(label "SPI_SCK"
-		(at 441.5600 60.0000 0)
+		(at 442.0600 60.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "0d0c20e4-be7a-45a8-a56c-3273f082802c")
+		(uuid "ca038465-9f9f-4645-b0e8-7392716120bd")
 	)
 	(wire
 		(pts
@@ -12311,17 +12603,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "9dbcd861-ffe5-4496-b191-ec02df34c69d")
+		(uuid "6a460bc5-1331-4264-b3e6-085088c647c0")
 	)
 	(label "SPI_MISO"
-		(at 441.5600 65.0800 0)
+		(at 442.0600 65.0800 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "6679b6fb-b9ac-405c-bf69-edfa7c81fab8")
+		(uuid "130d0ba5-d204-47cc-b0e5-edf0439ab939")
 	)
 	(wire
 		(pts
@@ -12331,7 +12623,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "57083173-e21f-4d5e-ae44-1a72b4709699")
+		(uuid "cd02691f-d255-4329-8f8b-4794b3ec7ecd")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -12341,7 +12633,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "1c46818d-bccc-4d62-a45b-15e1157966ff")
+		(uuid "c15277d5-66d7-4934-9dc5-53140ae327b8")
 		(property "Reference" "#PWR22"
 			(at 442.0600 56.1900 0)
 			(effects
@@ -12388,11 +12680,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "d586a5d4-a844-4d61-8913-3243c1d2a8cb")
+			(uuid "4617b75a-5583-4ff8-a025-11b808cba5ea")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR22")
 					(unit 1)
 				)
@@ -12407,7 +12699,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "2be0d3e8-a4ae-4bbf-8b78-68e05fc1fa5b")
+		(uuid "61af2f19-7374-4737-b35a-070886bc673d")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -12417,7 +12709,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "ee2a19cd-de77-44f8-9c97-6d498384576b")
+		(uuid "b327d34c-9f58-44b7-8223-8afc4f4b7352")
 		(property "Reference" "#PWR23"
 			(at 442.0600 61.2700 0)
 			(effects
@@ -12464,11 +12756,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "19099816-dd55-4ef3-9d7e-0a64defbd852")
+			(uuid "26061a95-89fe-4ea2-9175-7fb2b3f2a025")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR23")
 					(unit 1)
 				)
@@ -12483,17 +12775,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "92985793-0b1a-4a31-b869-36907c286f02")
+		(uuid "52064a4c-6156-48fd-be51-a5dba7b71d81")
 	)
 	(label "SD_DETECT"
-		(at 441.5600 70.1600 0)
+		(at 442.0600 70.1600 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "2439a551-16aa-46bc-8778-ff522146fdeb")
+		(uuid "d74cbc3d-aae9-4483-8366-f6406e9a8a58")
 	)
 	(wire
 		(pts
@@ -12503,7 +12795,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "de2f1a8f-8aea-40e0-b9f4-bf93242b1e29")
+		(uuid "30106abd-7475-4661-8b25-d1ebc35510b8")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -12513,7 +12805,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "0c2588e5-ca0c-47a7-98be-86b18060d03f")
+		(uuid "ffb3ad3d-822e-43ce-9c5c-2cd1aa7f4c62")
 		(property "Reference" "#PWR24"
 			(at 442.0600 71.4300 0)
 			(effects
@@ -12560,11 +12852,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "8a2d2e87-6e41-4c45-ad88-fa749509ae5b")
+			(uuid "c45f88d2-6b0f-4f85-ab59-9a26e7a4cd93")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR24")
 					(unit 1)
 				)
@@ -12579,7 +12871,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "f35cf2fb-680a-4f4f-8ca7-8051fd6f017b")
+		(uuid "cd18e0cb-b551-466a-a05f-b254a4a6ec32")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -12589,7 +12881,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "397c8d85-2ba2-46ed-aa45-df85c8575678")
+		(uuid "9d84436d-6ba7-4906-a077-8507fe21e507")
 		(property "Reference" "#PWR25"
 			(at 495.4000 71.4300 0)
 			(effects
@@ -12636,11 +12928,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "581175ee-815e-470d-9474-1bbd36572b3b")
+			(uuid "b5f62efb-eccd-45b0-b3e5-a4a5a7184529")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR25")
 					(unit 1)
 				)
@@ -12655,8 +12947,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "93a15224-6c0d-4eb5-aa8d-4290f9eff085")
-		(property "Reference" "R_SDCS"
+		(uuid "ef7ff7f2-ad3f-4962-960f-094483b073ea")
+		(property "Reference" "R_SDCS1"
 			(at 415.0000 103.7300 0)
 			(effects
 				(font
@@ -12700,15 +12992,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "3149472c-029f-49e2-84a0-34ecbfd6ad03")
+			(uuid "3a80b70a-20c5-4554-8ea3-de5613536a1f")
 		)
 		(pin "2"
-			(uuid "c7a08333-7fee-4e46-8307-8a942a43a309")
+			(uuid "94f7b9a2-f924-4921-b561-182e0150530c")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_SDCS")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_SDCS1")
 					(unit 1)
 				)
 			)
@@ -12716,43 +13008,43 @@
 	)
 	(wire
 		(pts
-			(xy 415.0000 101.1900) (xy 415.0000 98.1900)
+			(xy 411.1900 105.0000) (xy 408.1900 105.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "e919001d-1b0e-42f1-890d-f11071dcaafd")
+		(uuid "25ccc845-8afb-42ec-bfc5-48f1526c77c2")
 	)
 	(label "+3V3_LOGGER"
-		(at 415.0000 97.6900 90)
+		(at 408.1900 105.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "32b01eed-e2ec-4742-b526-c7929ad65901")
+		(uuid "fb9d9c56-3049-45a0-990a-4225d76c93e4")
 	)
 	(wire
 		(pts
-			(xy 415.0000 108.8100) (xy 415.0000 111.8100)
+			(xy 418.8100 105.0000) (xy 421.8100 105.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "f54509ca-30eb-47cb-953c-efe32db6df74")
+		(uuid "3608be39-8ece-4a2f-a329-9317d04d0d11")
 	)
 	(label "SD_CS"
-		(at 415.0000 112.3100 90)
+		(at 421.8100 105.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "73e8d24c-bce6-46c1-8d96-c1587f9ba6b2")
+		(uuid "9eee7836-8784-4f63-bc6f-6734495db65d")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -12762,8 +13054,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "8465812a-d3f1-491f-a756-883bf3bdecfc")
-		(property "Reference" "R_SDDI"
+		(uuid "19f6b4d6-ad42-43b6-8866-f404311e7be6")
+		(property "Reference" "R_SDDI1"
 			(at 435.0000 103.7300 0)
 			(effects
 				(font
@@ -12807,15 +13099,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "7c4a9478-9a41-4c96-843b-f4dd0567c326")
+			(uuid "ca6f1d9e-d741-4bfc-bafc-6f0e868d15e5")
 		)
 		(pin "2"
-			(uuid "a11728e4-217d-4a9f-9a66-caa4177b5878")
+			(uuid "25c41930-08ae-4f05-bccb-42d77c6664b8")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_SDDI")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_SDDI1")
 					(unit 1)
 				)
 			)
@@ -12823,43 +13115,43 @@
 	)
 	(wire
 		(pts
-			(xy 435.0000 101.1900) (xy 435.0000 98.1900)
+			(xy 431.1900 105.0000) (xy 428.1900 105.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "da78555b-7dfe-427d-b962-1ee272e2a482")
+		(uuid "5edff331-0745-426b-b7a7-86ae41cf5e8a")
 	)
 	(label "+3V3_LOGGER"
-		(at 435.0000 97.6900 90)
+		(at 428.1900 105.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "491c4575-f571-400b-94d0-aad02c49fbe0")
+		(uuid "2bce99ec-795c-48c4-a6b0-e98b044493b4")
 	)
 	(wire
 		(pts
-			(xy 435.0000 108.8100) (xy 435.0000 111.8100)
+			(xy 438.8100 105.0000) (xy 441.8100 105.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "299e5140-f75b-4b47-99ae-7a10a4f92f1a")
+		(uuid "3ce2dd58-0d23-44c8-b146-43feb06da1f0")
 	)
 	(label "SPI_MOSI"
-		(at 435.0000 112.3100 90)
+		(at 441.8100 105.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "d59225ed-f716-4881-b769-f246db2f4171")
+		(uuid "42246193-1276-428b-975a-4685727d23bf")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -12869,8 +13161,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "ae6d803d-27b0-4fd9-95cf-39d278c27a41")
-		(property "Reference" "R_SDDO"
+		(uuid "ad4d6047-9e71-429f-b6d4-be99c5c95aa3")
+		(property "Reference" "R_SDDO1"
 			(at 455.0000 103.7300 0)
 			(effects
 				(font
@@ -12914,15 +13206,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "c12cf4e5-4040-4e83-9a3d-e6dac98794e9")
+			(uuid "057cc160-547c-4622-8076-465bc13fa3c5")
 		)
 		(pin "2"
-			(uuid "0b9975e4-b3f9-42b2-aa44-642a6ea06469")
+			(uuid "e85975e7-15ab-4ba3-9ef4-256846d908fd")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_SDDO")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_SDDO1")
 					(unit 1)
 				)
 			)
@@ -12930,43 +13222,43 @@
 	)
 	(wire
 		(pts
-			(xy 455.0000 101.1900) (xy 455.0000 98.1900)
+			(xy 451.1900 105.0000) (xy 448.1900 105.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "d39ebcaa-e416-4ef3-8530-94741791d58e")
+		(uuid "cc19eecc-cccb-4f6c-8600-67cb31969776")
 	)
 	(label "+3V3_LOGGER"
-		(at 455.0000 97.6900 90)
+		(at 448.1900 105.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "2ef0f190-fcd5-4c3b-8485-b9d02209f393")
+		(uuid "c3af9bed-017b-443c-86a7-7bf482492d15")
 	)
 	(wire
 		(pts
-			(xy 455.0000 108.8100) (xy 455.0000 111.8100)
+			(xy 458.8100 105.0000) (xy 461.8100 105.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "21dfbbd1-529f-4f86-902a-86cff9d984d9")
+		(uuid "6a37a58a-a99f-47cf-a831-d18b1d7319c2")
 	)
 	(label "SPI_MISO"
-		(at 455.0000 112.3100 90)
+		(at 461.8100 105.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "082e1197-6f03-4932-a6d6-adc177cefd1c")
+		(uuid "11aa5ed1-f266-4adc-af2e-f1e03cad1e2e")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -12976,8 +13268,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "96e09c00-7801-413d-bc8d-3ba1a044ac13")
-		(property "Reference" "R_SDDET"
+		(uuid "f10ab7b6-e90d-4fb2-be77-b79fac31d3a9")
+		(property "Reference" "R_SDDET1"
 			(at 475.0000 103.7300 0)
 			(effects
 				(font
@@ -13021,15 +13313,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "0197d738-6093-40ba-ae5d-ee977f7321ba")
+			(uuid "6c6d01f3-0d19-4a5a-9bb6-8dd164366801")
 		)
 		(pin "2"
-			(uuid "8358ebac-ca52-41aa-8ed5-98339069ea0f")
+			(uuid "4fa4b099-278a-4e7e-acb8-22b748adc37a")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_SDDET")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_SDDET1")
 					(unit 1)
 				)
 			)
@@ -13037,43 +13329,43 @@
 	)
 	(wire
 		(pts
-			(xy 475.0000 101.1900) (xy 475.0000 98.1900)
+			(xy 471.1900 105.0000) (xy 468.1900 105.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "a8485be7-7727-4739-a67e-49625b8bca98")
+		(uuid "893771c8-31d8-45ce-a2cb-897bb8baa9e2")
 	)
 	(label "+3V3_LOGGER"
-		(at 475.0000 97.6900 90)
+		(at 468.1900 105.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "6b15d3b5-c3b5-4aea-834e-bfc60afd5daa")
+		(uuid "67de91dc-2f32-4b7d-aaba-ce1669711f0e")
 	)
 	(wire
 		(pts
-			(xy 475.0000 108.8100) (xy 475.0000 111.8100)
+			(xy 478.8100 105.0000) (xy 481.8100 105.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "c0c871d0-25ff-41f5-b09d-2f3e857c96b7")
+		(uuid "62dbe0be-ba5e-4215-8a17-0f9896cf2668")
 	)
 	(label "SD_DETECT"
-		(at 475.0000 112.3100 90)
+		(at 481.8100 105.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "1a2c91d7-3421-4480-a441-876acc720af9")
+		(uuid "59fa7d1d-4d2c-4c71-8a5a-b1b9c03fcafa")
 	)
 	(text "Pull-ups per IGNIS v5 Storage.SchDoc.\nSD_DETECT on pin 9 CD with a 10k pull-up,\nshell to GND, pegs drilled 1.3 mm."
 		(exclude_from_sim no)
@@ -13086,7 +13378,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "5e7941b2-1380-4457-a1ae-ab3da9467e93")
+		(uuid "ba884b47-8d4c-4784-ac18-15648aa66abf")
 	)
 	(text "7. TELEMETRY - isolated RS-485 to the station"
 		(exclude_from_sim no)
@@ -13099,7 +13391,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "3f31fb94-b424-4f22-9ce4-da5dbcec0dcf")
+		(uuid "d6ff6d8f-f8d8-4c74-a4f6-2042f05773e6")
 	)
 	(rectangle
 		(start 397.0000 146.0000)
@@ -13111,7 +13403,7 @@
 		(fill
 			(type none)
 		)
-		(uuid "2eb33600-f2a9-410b-95f0-dd300d23ec1e")
+		(uuid "3065a89a-a650-4f78-bc44-b722fff773cb")
 	)
 	(text "Data OUTWARD only. Never a command path."
 		(exclude_from_sim no)
@@ -13124,7 +13416,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "fd3576c8-894d-4b99-b9fc-d123df6379f9")
+		(uuid "41c27a46-239e-49c2-9364-c70e1593e7e2")
 	)
 	(symbol
 		(lib_id "Interface_UART:SP3485EN")
@@ -13134,7 +13426,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "cb683f61-5ff8-4021-95ee-ced7126351bd")
+		(uuid "9e014203-5d4d-4277-bf76-bdebc13fbb6f")
 		(property "Reference" "U_485"
 			(at 470.0000 188.7300 0)
 			(effects
@@ -13179,32 +13471,32 @@
 			)
 		)
 		(pin "1"
-			(uuid "34ccf6f8-6607-4ee7-aa9b-5f740547f67a")
+			(uuid "d9cc8599-3b1b-49a3-80e6-59716e8c5e15")
 		)
 		(pin "2"
-			(uuid "62e52105-b609-4d92-9cda-6716f3941d0d")
+			(uuid "d757113a-a67d-4369-93eb-02046e785854")
 		)
 		(pin "3"
-			(uuid "5acb7c7a-23a9-4752-84cb-339929cfda49")
+			(uuid "5757a05e-0544-4577-be3b-0f016e64cd2c")
 		)
 		(pin "4"
-			(uuid "6483c7fc-0b02-4e51-8edc-c93dc0ae6338")
+			(uuid "f063875b-d345-4c75-8080-94ef4016eee0")
 		)
 		(pin "5"
-			(uuid "6869a6a6-1c87-4a88-9d02-5e56a1de372f")
+			(uuid "10ec2273-e592-4c1d-889b-f06ef75cbf18")
 		)
 		(pin "6"
-			(uuid "0bf310aa-9b80-4a40-b635-4e16ca7af3d0")
+			(uuid "85c38031-986c-4755-8365-a93b362fa280")
 		)
 		(pin "7"
-			(uuid "1ae48cff-1bf9-4bde-a8c0-122f74768faf")
+			(uuid "8f1f891b-4352-4e62-9a6a-6f487be3b58a")
 		)
 		(pin "8"
-			(uuid "594bcea9-3a8e-494d-b365-5bccceaa00c0")
+			(uuid "bbee99fe-7fbb-4c10-bfb3-197160d3ec50")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "U_485")
 					(unit 1)
 				)
@@ -13219,17 +13511,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "37a52fb2-659c-405e-87fa-8d9e9d190ea0")
+		(uuid "c63ed3f2-4702-4add-8f2f-ef39f2bdf1f9")
 	)
 	(label "RS485_RO"
-		(at 454.2600 184.9200 0)
+		(at 454.7600 184.9200 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "9bfde82e-0f70-4f6f-820c-eddfd357ba7f")
+		(uuid "b65e1356-e875-4cbb-9bbb-5ca4e1125cdd")
 	)
 	(wire
 		(pts
@@ -13239,17 +13531,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "36523616-6736-4563-9823-789212b59557")
+		(uuid "37c95b29-a7f0-4c91-af9a-ecb5c514bc07")
 	)
 	(label "RS485_DE"
-		(at 454.2600 187.4600 0)
+		(at 454.7600 187.4600 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "fdde2070-dccf-48e6-942a-e3dab02f4580")
+		(uuid "17353be6-2036-4e82-a841-a3d04ef6389b")
 	)
 	(wire
 		(pts
@@ -13259,17 +13551,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "2f19130a-6e31-487c-9204-e68f127589a8")
+		(uuid "3c945ff5-dd87-4549-b2b5-5bb271687a12")
 	)
 	(label "RS485_DE"
-		(at 454.2600 190.0000 0)
+		(at 454.7600 190.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "02fa4dc0-95b5-40f3-a7d1-320d8e491027")
+		(uuid "148f72be-90ad-4272-a7db-289a43ae2af0")
 	)
 	(wire
 		(pts
@@ -13279,17 +13571,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "02153431-cb2f-4761-8b1f-2c2d2a94e425")
+		(uuid "bb1fbf83-29bf-4bf3-a174-078ac9993c05")
 	)
 	(label "RS485_DI"
-		(at 454.2600 195.0800 0)
+		(at 454.7600 195.0800 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "bdd14b34-77ef-47e7-99a9-886b1a2a6382")
+		(uuid "923f9f2b-6533-4ae1-901b-530a1115dfdf")
 	)
 	(wire
 		(pts
@@ -13299,17 +13591,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "83bfb9e0-dc54-4a46-8551-0d490e9b44ef")
+		(uuid "8a8e7d8f-f90d-420a-8157-42471bebe688")
 	)
 	(label "RS485_A"
-		(at 485.7400 182.3800 0)
+		(at 485.2400 182.3800 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "8a9507ca-0468-4696-a1ed-66d77fb81e5a")
+		(uuid "408d2364-4f4c-425f-b117-8c5d8abb995a")
 	)
 	(wire
 		(pts
@@ -13319,17 +13611,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "db9bf265-a2b2-4240-9c09-b8e0e5af996e")
+		(uuid "a7f0ff7b-9457-4b7c-8d48-9764f2c85b2b")
 	)
 	(label "RS485_B"
-		(at 485.7400 187.4600 0)
+		(at 485.2400 187.4600 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "adbbe161-1e88-4317-90ea-8070f2f54800")
+		(uuid "3eea8c14-807f-4daa-8d1c-d28e81741538")
 	)
 	(wire
 		(pts
@@ -13339,7 +13631,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "c19c838e-2c7a-4266-8960-c0384a9bab12")
+		(uuid "998ab4b6-8460-4d5c-a306-3c5b3f339f0f")
 	)
 	(symbol
 		(lib_id "power:+3V3")
@@ -13349,7 +13641,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "925ba2bc-af5b-4f44-910c-5dac90ec005d")
+		(uuid "35540f94-4ac4-4f17-8486-9ffac18d0058")
 		(property "Reference" "#PWR26"
 			(at 470.0000 168.4100 0)
 			(effects
@@ -13396,11 +13688,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "bf9dec8e-50c7-42d1-88a3-ff67ca113299")
+			(uuid "2c79d5c9-b598-4d79-b7dc-05c3b3efe3a5")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR26")
 					(unit 1)
 				)
@@ -13415,7 +13707,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7f611287-e409-436f-86ba-06e908d73c19")
+		(uuid "6b1dbbee-0354-410c-a8b7-9dd1621f9b6f")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -13425,7 +13717,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "b60a82e7-2382-4e6a-b34e-535e1ab4367a")
+		(uuid "154fe385-0487-4863-89b0-897cf02bd906")
 		(property "Reference" "#PWR27"
 			(at 470.0000 209.0500 0)
 			(effects
@@ -13472,11 +13764,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "1a36b81d-f3c6-4221-a6cd-c9960683b93d")
+			(uuid "c015dcd3-9e0f-4afb-9044-0d15eb44d92c")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR27")
 					(unit 1)
 				)
@@ -13491,8 +13783,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "13f0f5af-1b76-4cda-b02e-f0e1ceb88c30")
-		(property "Reference" "R_TERM"
+		(uuid "408fae32-0ea7-461c-9660-0c0b0ac4387a")
+		(property "Reference" "R_TERM1"
 			(at 530.0000 198.7300 0)
 			(effects
 				(font
@@ -13536,15 +13828,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "c1414a64-8741-4111-b51f-4a1d29bca185")
+			(uuid "99a4250e-59e6-439e-bd72-8933f6a0ff53")
 		)
 		(pin "2"
-			(uuid "85cb7511-58c0-405d-9170-80d2223f2be4")
+			(uuid "bfc70ac9-fd78-43c5-9894-d6843bd09b9f")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_TERM")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_TERM1")
 					(unit 1)
 				)
 			)
@@ -13552,43 +13844,43 @@
 	)
 	(wire
 		(pts
-			(xy 530.0000 196.1900) (xy 530.0000 193.1900)
+			(xy 526.1900 200.0000) (xy 523.1900 200.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "f7e9eaee-b70d-462d-b111-91ff4aff623b")
+		(uuid "13c41515-a301-47af-ac92-0e176291c3df")
 	)
 	(label "RS485_A"
-		(at 530.0000 192.6900 90)
+		(at 523.1900 200.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "4cc21556-8f3c-42ab-b062-df6f2eb84070")
+		(uuid "74831217-ff3b-4b4a-81a3-d3dabee5b13c")
 	)
 	(wire
 		(pts
-			(xy 530.0000 203.8100) (xy 530.0000 206.8100)
+			(xy 533.8100 200.0000) (xy 536.8100 200.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "a69f98b1-30f8-4646-ba6e-0e470df7396b")
+		(uuid "20fd4875-8e56-4d4e-af92-b938587d8ffa")
 	)
 	(label "RS485_B"
-		(at 530.0000 207.3100 90)
+		(at 536.8100 200.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "e4994373-a8d6-48c2-96ed-03485009e5c3")
+		(uuid "0c077d77-8c0f-43da-877d-8d845bf8af6a")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -13598,7 +13890,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "b1a2dbee-7c01-4fad-95e9-3a8c35d74320")
+		(uuid "bf5366c1-7015-451a-8a56-57ba7d17d9b6")
 		(property "Reference" "C7"
 			(at 420.0000 198.7300 0)
 			(effects
@@ -13643,14 +13935,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "34c487d7-4fc3-4136-a7f7-4c18b9717d68")
+			(uuid "5fca5028-4dd3-4e82-93c9-f7e73c1a863b")
 		)
 		(pin "2"
-			(uuid "0ba660bd-6601-47e9-89d9-fe6b09f5fc1f")
+			(uuid "2312091b-b902-4053-9cc7-a8e68a22966a")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "C7")
 					(unit 1)
 				)
@@ -13665,17 +13957,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7d49f26b-b679-4a56-a91c-5ef527982835")
+		(uuid "a259f124-358b-439c-a14c-bb1d919637d3")
 	)
 	(label "+3V3_LOGGER"
-		(at 420.0000 192.6900 90)
+		(at 420.0000 193.1900 90)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "34d88449-56d3-4434-9567-f873662a77ff")
+		(uuid "30550701-edbc-42be-abf5-ecb63f9aad56")
 	)
 	(wire
 		(pts
@@ -13685,7 +13977,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b90cbe5c-8aeb-4ca4-a1a1-4159158e6d67")
+		(uuid "6b1b9327-c754-4d27-8d3d-c1ff301cfa8c")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -13695,7 +13987,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "31e1231b-1f1a-41af-8b6d-f5bb2f1d80f1")
+		(uuid "33be0253-684f-4e96-9171-4533316c51a9")
 		(property "Reference" "#PWR28"
 			(at 420.0000 207.6200 0)
 			(effects
@@ -13742,11 +14034,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "6257377f-213e-4172-b8a4-fe9120123547")
+			(uuid "5f43ade5-9f95-4e61-82dd-e09b428c241a")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR28")
 					(unit 1)
 				)
@@ -13764,7 +14056,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "98fcf05a-9141-436e-9dad-9e01569bc7fe")
+		(uuid "c7e056be-50a0-41ba-ae46-741bfa080463")
 	)
 	(rectangle
 		(start 397.0000 250.0000)
@@ -13776,7 +14068,7 @@
 		(fill
 			(type none)
 		)
-		(uuid "06e0ee48-df89-428e-b122-7a394542a813")
+		(uuid "8a59830c-daea-4253-990a-18725229d685")
 	)
 	(text "D-017: the beacon must not be able to misreport state,"
 		(exclude_from_sim no)
@@ -13789,7 +14081,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "93732308-a220-453d-99ab-7127e2bb7236")
+		(uuid "46071859-2c58-42f9-a847-5bd15a68cae5")
 	)
 	(text "so it is NOT driven by the MCU. WS2812B cannot serve here (D-043)."
 		(exclude_from_sim no)
@@ -13802,7 +14094,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "6d246df2-1612-420f-8a9c-ec47100f17e4")
+		(uuid "619638d0-d35b-4b6f-8ca1-1d6e6fbf9118")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -13812,8 +14104,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "ac684f79-7b9c-4020-84e3-6bdfbb7cde87")
-		(property "Reference" "R_D_ARM"
+		(uuid "6285e6cd-5d7b-48f5-93f7-1a5f759cb0fe")
+		(property "Reference" "R_D_ARM1"
 			(at 420.0000 283.7300 0)
 			(effects
 				(font
@@ -13857,15 +14149,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "2ae46cad-a636-4a7f-807d-9e04da14249c")
+			(uuid "c6cdde12-d3ad-42c9-b3a6-e23c5466a986")
 		)
 		(pin "2"
-			(uuid "77a6442f-d416-4dd2-acf4-87bb933ce429")
+			(uuid "25716890-960d-4f46-b50e-83752a54b91a")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_D_ARM")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_D_ARM1")
 					(unit 1)
 				)
 			)
@@ -13873,23 +14165,23 @@
 	)
 	(wire
 		(pts
-			(xy 420.0000 281.1900) (xy 420.0000 278.1900)
+			(xy 416.1900 285.0000) (xy 413.1900 285.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "0e116192-9ceb-49fa-ba5c-401ba0934c0e")
+		(uuid "28ed7f11-2708-4ef9-a6f9-9437c8bed8a8")
 	)
 	(label "ARM_BUS"
-		(at 420.0000 277.6900 90)
+		(at 413.1900 285.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "ad781797-b790-44c4-902e-cc9bb75dbcd8")
+		(uuid "59af4878-2b72-4e99-bbc8-6ff1aa8cabdc")
 	)
 	(symbol
 		(lib_id "Device:LED")
@@ -13899,8 +14191,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "da1cec6a-bdd5-49af-9742-cb4c5b21a87b")
-		(property "Reference" "D_ARM"
+		(uuid "ff9054fc-e177-46d9-9f91-5569789d6cee")
+		(property "Reference" "D_ARM1"
 			(at 420.0000 308.7300 0)
 			(effects
 				(font
@@ -13944,15 +14236,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "1927d0ff-b541-4f00-ad4b-fe8553df9d3b")
+			(uuid "e85c259c-8d2d-41c3-bdc6-3466852e6739")
 		)
 		(pin "2"
-			(uuid "a036e2cf-da64-4860-90c6-a4694d8fa291")
+			(uuid "e7d520fd-40bd-4842-9a78-d5a758817f66")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "D_ARM")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "D_ARM1")
 					(unit 1)
 				)
 			)
@@ -13960,35 +14252,35 @@
 	)
 	(wire
 		(pts
-			(xy 420.0000 288.8100) (xy 423.8100 310.0000)
+			(xy 423.8100 285.0000) (xy 420.0000 306.1900)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "d45d74f0-9342-4751-93fd-6c1de9c789a8")
+		(uuid "25666f1b-7462-4877-b96e-8e7d90d993e9")
 	)
 	(wire
 		(pts
-			(xy 416.1900 310.0000) (xy 411.1100 310.0000)
+			(xy 420.0000 313.8100) (xy 420.0000 318.8900)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "3c04e654-3668-4024-b22e-541ac48678f7")
+		(uuid "0089cab2-6e53-4cb2-8f87-7729aacf524d")
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 411.1100 310.0000 90)
+		(at 420.0000 318.8900 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "6e6a5298-a704-45dc-b33c-6a825e3ce6a7")
+		(uuid "e7d8aa82-9b95-4ff3-93e1-a234f8f6292e")
 		(property "Reference" "#PWR29"
-			(at 411.1100 308.7300 0)
+			(at 420.0000 317.6200 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13997,7 +14289,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 411.1100 311.2700 0)
+			(at 420.0000 320.1600 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14006,7 +14298,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 411.1100 310.0000 0)
+			(at 420.0000 318.8900 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14015,7 +14307,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 411.1100 310.0000 0)
+			(at 420.0000 318.8900 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14024,7 +14316,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 411.1100 310.0000 0)
+			(at 420.0000 318.8900 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14033,11 +14325,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "7d7593c3-79a3-425d-af1f-fe578b756315")
+			(uuid "b8517947-f635-4265-b8f0-f2d1f13ef6f3")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR29")
 					(unit 1)
 				)
@@ -14052,8 +14344,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "3b6db265-dce2-4b3b-9f7b-03ec63cd8ef2")
-		(property "Reference" "R_D_FIRE"
+		(uuid "9dd4f2d0-75bb-448d-a0c3-6af96a4c9f8c")
+		(property "Reference" "R_D_FIRE1"
 			(at 465.0000 283.7300 0)
 			(effects
 				(font
@@ -14097,15 +14389,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "159740bc-ae1c-491e-a3eb-7a61f69c1029")
+			(uuid "b9eff4b7-88b1-4e18-9fbf-9a3fdfab7048")
 		)
 		(pin "2"
-			(uuid "7106e98d-54c9-421f-b31a-4af4ad29c293")
+			(uuid "51634be8-bc46-4e97-ab79-538f0c28edad")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_D_FIRE")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_D_FIRE1")
 					(unit 1)
 				)
 			)
@@ -14113,23 +14405,23 @@
 	)
 	(wire
 		(pts
-			(xy 465.0000 281.1900) (xy 465.0000 278.1900)
+			(xy 461.1900 285.0000) (xy 458.1900 285.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "e50c228f-e400-497b-b089-9b8b91b0e685")
+		(uuid "c8c2398c-08c6-42ed-b8d7-dad0477b61ad")
 	)
 	(label "PYRO_FIRE_OUT"
-		(at 465.0000 277.6900 90)
+		(at 458.1900 285.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "bc2a5cb8-a6f9-42a3-adb2-d409e39f113e")
+		(uuid "f6ebcdb0-0969-4074-9fa2-44b022626090")
 	)
 	(symbol
 		(lib_id "Device:LED")
@@ -14139,8 +14431,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "be5a9271-8563-4832-9522-dc571b5b8d6c")
-		(property "Reference" "D_FIRE"
+		(uuid "0d060adc-b68c-4699-850d-6547613f1bc8")
+		(property "Reference" "D_FIRE1"
 			(at 465.0000 308.7300 0)
 			(effects
 				(font
@@ -14184,15 +14476,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "34287736-e568-426e-928d-452ea6e87e01")
+			(uuid "f60cb751-cb56-4d8a-883d-5ca255a58024")
 		)
 		(pin "2"
-			(uuid "3f6ae79d-73ac-4c0a-b471-0fecf1bd0b87")
+			(uuid "6587e24a-b7ff-46c8-9eb5-182ea168d208")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "D_FIRE")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "D_FIRE1")
 					(unit 1)
 				)
 			)
@@ -14200,35 +14492,35 @@
 	)
 	(wire
 		(pts
-			(xy 465.0000 288.8100) (xy 468.8100 310.0000)
+			(xy 468.8100 285.0000) (xy 465.0000 306.1900)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "6df97c34-5063-408f-a457-e5e931f203ab")
+		(uuid "4986d8f5-a043-4db1-98a3-3ac7c63337d0")
 	)
 	(wire
 		(pts
-			(xy 461.1900 310.0000) (xy 456.1100 310.0000)
+			(xy 465.0000 313.8100) (xy 465.0000 318.8900)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "cd3f1fd2-ba90-4574-8b91-4ebfb2e9b7bd")
+		(uuid "e42b8006-0ec9-4425-8c1f-0ff92e25a010")
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 456.1100 310.0000 90)
+		(at 465.0000 318.8900 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "bd27dadd-ce19-461a-9623-8bb26e0fb20d")
+		(uuid "a507b297-b91a-4cf2-9b6f-bfbae2425dae")
 		(property "Reference" "#PWR30"
-			(at 456.1100 308.7300 0)
+			(at 465.0000 317.6200 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14237,7 +14529,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 456.1100 311.2700 0)
+			(at 465.0000 320.1600 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14246,7 +14538,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 456.1100 310.0000 0)
+			(at 465.0000 318.8900 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14255,7 +14547,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 456.1100 310.0000 0)
+			(at 465.0000 318.8900 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14264,7 +14556,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 456.1100 310.0000 0)
+			(at 465.0000 318.8900 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14273,11 +14565,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "5a1cffaf-2d12-4de2-82df-f471685bd1cb")
+			(uuid "9112560f-ae36-473b-9dc6-4400d79c6dbd")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR30")
 					(unit 1)
 				)
@@ -14292,8 +14584,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "febb0ca5-8b95-4780-bb67-bdc8c4decaa0")
-		(property "Reference" "R_D_PWR"
+		(uuid "549cf35e-22dd-499b-a393-6ccc649fb071")
+		(property "Reference" "R_D_PWR1"
 			(at 510.0000 283.7300 0)
 			(effects
 				(font
@@ -14337,15 +14629,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "f1aca691-db87-4cb1-b76a-d45839a6832d")
+			(uuid "a18a1bc5-9f4d-4812-be0d-a24910cb0456")
 		)
 		(pin "2"
-			(uuid "4571f5b1-b2fe-4f24-bff4-290ca1469ae3")
+			(uuid "cc81c270-2b08-4387-be89-f4ab16f60cbd")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_D_PWR")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_D_PWR1")
 					(unit 1)
 				)
 			)
@@ -14353,23 +14645,23 @@
 	)
 	(wire
 		(pts
-			(xy 510.0000 281.1900) (xy 510.0000 278.1900)
+			(xy 506.1900 285.0000) (xy 503.1900 285.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "f58f764a-9d0d-4bb2-b127-cf0de6328571")
+		(uuid "669b69f4-1ef1-4bd5-8520-1c07dde3c647")
 	)
 	(label "+12V_MASTER"
-		(at 510.0000 277.6900 90)
+		(at 503.1900 285.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "11c86dcc-0690-4f0b-a4c9-5201fea3e6eb")
+		(uuid "bab55285-df53-434b-8d3f-9688896d6f59")
 	)
 	(symbol
 		(lib_id "Device:LED")
@@ -14379,8 +14671,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "2b44a1a2-b0e6-4d0e-831b-a180491baa75")
-		(property "Reference" "D_PWR"
+		(uuid "66ecaa72-3717-4d15-b8d5-c7c325795eec")
+		(property "Reference" "D_PWR1"
 			(at 510.0000 308.7300 0)
 			(effects
 				(font
@@ -14424,15 +14716,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "9ab825bd-3896-4998-888d-debf55de2faf")
+			(uuid "09de06ec-7af8-4e22-a5b7-a99ca3377625")
 		)
 		(pin "2"
-			(uuid "d503256e-d88d-4aed-a061-70ff099e130f")
+			(uuid "8fc8e9c8-f035-4979-9163-cb00d1772a21")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "D_PWR")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "D_PWR1")
 					(unit 1)
 				)
 			)
@@ -14440,35 +14732,35 @@
 	)
 	(wire
 		(pts
-			(xy 510.0000 288.8100) (xy 513.8100 310.0000)
+			(xy 513.8100 285.0000) (xy 510.0000 306.1900)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "4bc5078e-8625-4835-b5f7-4abb43830b2b")
+		(uuid "48033b2e-28cd-48b9-87e2-e13c7ad8700e")
 	)
 	(wire
 		(pts
-			(xy 506.1900 310.0000) (xy 501.1100 310.0000)
+			(xy 510.0000 313.8100) (xy 510.0000 318.8900)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "9056368e-0951-4b85-9927-f0865cd31a7e")
+		(uuid "2078cb0b-807f-4743-a081-ab6fa615c42a")
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 501.1100 310.0000 90)
+		(at 510.0000 318.8900 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "745e8315-ef3b-4daf-9978-6b7b96364559")
+		(uuid "0344d0f7-32df-445c-90d8-bef1cf2d4c27")
 		(property "Reference" "#PWR31"
-			(at 501.1100 308.7300 0)
+			(at 510.0000 317.6200 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14477,7 +14769,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 501.1100 311.2700 0)
+			(at 510.0000 320.1600 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14486,7 +14778,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 501.1100 310.0000 0)
+			(at 510.0000 318.8900 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14495,7 +14787,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 501.1100 310.0000 0)
+			(at 510.0000 318.8900 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14504,7 +14796,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 501.1100 310.0000 0)
+			(at 510.0000 318.8900 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14513,11 +14805,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "110ed482-589e-44e5-b7d8-7b38c1b0bc1d")
+			(uuid "80e20ee9-08ea-4fcb-b594-6c1efe7c7b61")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR31")
 					(unit 1)
 				)
@@ -14535,7 +14827,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "39944f3a-ff42-4da5-840d-5dd8c1c0fc19")
+		(uuid "d3fc11c5-b419-49c5-84e8-8c674a289c96")
 	)
 	(text "9. UMBILICAL - cable B, control + analog"
 		(exclude_from_sim no)
@@ -14548,7 +14840,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "cc27bfc1-876b-49f6-bebc-dfe462afb2a1")
+		(uuid "69f2646c-abd5-4040-9326-a127eaa06b99")
 	)
 	(rectangle
 		(start 202.0000 344.0000)
@@ -14560,7 +14852,7 @@
 		(fill
 			(type none)
 		)
-		(uuid "af77e0da-ef64-415f-9a53-53e30b69f4a9")
+		(uuid "b2b4c8cf-7c55-4a79-af61-5a5b278de739")
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x12")
@@ -14570,8 +14862,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "bb4a159c-7efc-4f74-8f21-eac7d09c8aba")
-		(property "Reference" "J_UMB"
+		(uuid "9bc95f2b-2a85-43f1-b19f-08e4ca0a1a45")
+		(property "Reference" "J_UMB1"
 			(at 250.0000 370.7300 0)
 			(effects
 				(font
@@ -14615,45 +14907,45 @@
 			)
 		)
 		(pin "1"
-			(uuid "652421b0-655b-42e1-af5c-dba102ef77f9")
+			(uuid "82010f7e-fb83-481e-beeb-eb0eec3cd7a8")
 		)
 		(pin "2"
-			(uuid "e35fc290-157d-4dc6-bd98-ae8169bb5fd7")
+			(uuid "37cc6392-b632-4cbd-a8ba-a71165693fb5")
 		)
 		(pin "3"
-			(uuid "570782cf-63c3-47ea-b1bf-d810d63fa6aa")
+			(uuid "dc761ed0-21f5-49d7-8b95-2e596aabb021")
 		)
 		(pin "4"
-			(uuid "26e8730e-0df4-40e9-8c10-454989a3e556")
+			(uuid "0f3b3d13-f836-4d8f-b4ba-33c0482b2932")
 		)
 		(pin "5"
-			(uuid "79e2a6f1-5dc6-4168-9566-c3521abe0d75")
+			(uuid "8857b5f1-d924-4565-b4b6-ee1f23f48e41")
 		)
 		(pin "6"
-			(uuid "6ac533b2-ec53-4028-b33b-f249ff9ce1e2")
+			(uuid "a41df7c0-058e-44de-bc05-6351a984ccf6")
 		)
 		(pin "7"
-			(uuid "55329304-488b-4344-b766-970ffbe1ff9c")
+			(uuid "b9b1058c-5949-4e09-b9a9-8299efbb4587")
 		)
 		(pin "8"
-			(uuid "25258fd1-213a-479e-a9c8-67a9a35e8904")
+			(uuid "0f6bc326-20d5-4c21-a518-e464412368c2")
 		)
 		(pin "9"
-			(uuid "66230271-befe-4bf1-8890-6c4b7ebd7dab")
+			(uuid "d7b296a1-a66b-49cf-828d-bd6b51df72b0")
 		)
 		(pin "10"
-			(uuid "4a3b2d08-56cc-4074-aa2a-14db212d8227")
+			(uuid "2df44c7b-2e47-4593-85a3-82c672fc9876")
 		)
 		(pin "11"
-			(uuid "962a2d74-232c-499c-acaf-99d8f474ebff")
+			(uuid "b9bf37d6-6041-4e1a-bc6f-69ff73c96a88")
 		)
 		(pin "12"
-			(uuid "a2181cff-ed9e-4087-9878-36b91e224acb")
+			(uuid "6c258a6d-d7a3-4ebe-b616-161df8ebc313")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "J_UMB")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "J_UMB1")
 					(unit 1)
 				)
 			)
@@ -14667,17 +14959,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "d8167119-1676-4862-a252-f30699591f4d")
+		(uuid "2be88d40-d3a9-4e65-a978-cb900189514b")
 	)
 	(label "ARM_LINE"
-		(at 239.3400 359.3000 0)
+		(at 239.8400 359.3000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "9e468ffe-1259-4723-9d31-6353ec210c9d")
+		(uuid "d825b67d-8bb4-4e92-89bc-eaeb0677b9d0")
 	)
 	(wire
 		(pts
@@ -14687,17 +14979,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "eb9b55c6-4c37-43d0-8a4e-2a2fe6178a98")
+		(uuid "b4037961-f9ed-4376-8d3d-4a859ded4257")
 	)
 	(label "FIRE_LINE"
-		(at 239.3400 361.8400 0)
+		(at 239.8400 361.8400 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "c4ab935b-1b01-409a-8661-3b2d32784e67")
+		(uuid "9bff61c7-6108-4dd3-a547-ba9d59723bf6")
 	)
 	(wire
 		(pts
@@ -14707,17 +14999,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "febe3c96-5d0e-40b8-8520-fa08db3662c3")
+		(uuid "f7a7ebcf-5134-4c2c-9a95-fb792a2afe7e")
 	)
 	(label "ESTOP_LOOP"
-		(at 239.3400 364.3800 0)
+		(at 239.8400 364.3800 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "ab3ffe91-8a4f-43c2-8368-eb219cd8b25f")
+		(uuid "61ce4d0f-ba00-468a-85eb-aac9ec2b531e")
 	)
 	(wire
 		(pts
@@ -14727,17 +15019,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "a4858912-5828-417d-8663-e37db1732366")
+		(uuid "048157d4-f319-4f55-a594-fb37e97e66cb")
 	)
 	(label "PYRO_CONT_SENSE"
-		(at 239.3400 366.9200 0)
+		(at 239.8400 366.9200 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "968ddfe3-d020-4116-b31d-a4bf40d3035a")
+		(uuid "4899718f-36f2-4c63-b528-71a7da1e7d17")
 	)
 	(wire
 		(pts
@@ -14747,17 +15039,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "08ccf7d5-48d4-44b6-892d-b749a6819754")
+		(uuid "36b1333f-fef5-4ad3-a3a2-de2548bc7c25")
 	)
 	(label "RS485_A"
-		(at 239.3400 369.4600 0)
+		(at 239.8400 369.4600 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "163aae37-e5e7-4fc6-a3b9-9cc345b7ecf5")
+		(uuid "8c3b727e-17f2-443b-ac6f-daba468f5726")
 	)
 	(wire
 		(pts
@@ -14767,17 +15059,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "e7013fc9-0c57-4bdf-b60d-a6c28b830ae2")
+		(uuid "27ea8605-bdc0-438e-aef3-20a419c44483")
 	)
 	(label "RS485_B"
-		(at 239.3400 372.0000 0)
+		(at 239.8400 372.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "b0f92b79-a01c-4d5f-86d0-4c8a00fc28bb")
+		(uuid "c71c90b4-b668-40ac-8c8f-b3b82825cdf9")
 	)
 	(wire
 		(pts
@@ -14787,17 +15079,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7b18ae9a-bce9-4aec-bede-96fb2c19caf8")
+		(uuid "46559930-e57e-48c7-89d8-c2d7b7e851df")
 	)
 	(label "VBAT_SENSE"
-		(at 239.3400 374.5400 0)
+		(at 239.8400 374.5400 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "f36e6f76-ed8e-4acc-8be4-0bb33c6c430d")
+		(uuid "f50b11b4-d95d-4da5-9366-ec4f087fee90")
 	)
 	(wire
 		(pts
@@ -14807,17 +15099,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "cfa05f4b-68ce-4a9a-9f51-c2b59ac62409")
+		(uuid "e5d0f95e-6e17-4188-b0d4-064bc364f99a")
 	)
 	(label "THRUST_DIFF_P"
-		(at 239.3400 377.0800 0)
+		(at 239.8400 377.0800 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "157913ac-8a80-4c62-90fb-4697a5f1a7ff")
+		(uuid "f84f744b-a5d8-48aa-a87b-e8d712d05ef0")
 	)
 	(wire
 		(pts
@@ -14827,17 +15119,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "c19543cf-0eb0-46fd-a05e-36645006d661")
+		(uuid "fbfcf1d8-101b-450f-a3a4-4fb6cfd79997")
 	)
 	(label "THRUST_DIFF_N"
-		(at 239.3400 379.6200 0)
+		(at 239.8400 379.6200 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "ce3a4afc-9ff7-4815-9c5e-e557eb8e52e2")
+		(uuid "ceb248c6-4ff5-4f9b-965e-f879a6b3f9ac")
 	)
 	(wire
 		(pts
@@ -14847,17 +15139,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "4acb29b6-9c4c-4262-b693-52aadef7d4e3")
+		(uuid "bbd77d94-43ac-4b3e-a58d-cd7a218edff8")
 	)
-	(label "GND_RTN"
-		(at 239.3400 382.1600 0)
+	(label "GND"
+		(at 239.8400 382.1600 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "0a2ce1f5-632d-4d41-9918-7eb1874efd9b")
+		(uuid "bb2a6a4e-64ac-4c33-b402-c35794869347")
 	)
 	(wire
 		(pts
@@ -14867,17 +15159,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "1a42c46f-c17c-480b-bc6b-08ccc6af0abe")
+		(uuid "e1691feb-043c-4f01-9cc7-27caa34994ea")
 	)
-	(label "GND_RTN"
-		(at 239.3400 384.7000 0)
+	(label "GND"
+		(at 239.8400 384.7000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "4b08a089-624b-4025-9b07-ba00b5c47884")
+		(uuid "0281570d-eb3e-48cc-8d42-9ad191096326")
 	)
 	(wire
 		(pts
@@ -14887,7 +15179,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "37517371-ed6f-4555-9a42-0cde376dd5e9")
+		(uuid "e94bc151-adc3-4465-bf00-27bc4054ef7d")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -14897,7 +15189,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "6aba75c6-029c-4435-961b-af3c1a142ac7")
+		(uuid "55350058-828d-4d10-a02e-044b34f1aeab")
 		(property "Reference" "#PWR32"
 			(at 239.8400 385.9700 0)
 			(effects
@@ -14944,11 +15236,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "775b6483-1109-4e61-9c53-983f94373650")
+			(uuid "d28e1523-797b-49e4-8b8a-d0a8c0186505")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR32")
 					(unit 1)
 				)
@@ -14966,7 +15258,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "89949a0d-a276-4a0d-aaf0-bb038bca8433")
+		(uuid "f706ec8b-c622-4cb7-9671-498ba3c1c0ea")
 	)
 	(text "THRUST_DIFF_P/N conductors are reserved on the umbilical, but no part is"
 		(exclude_from_sim no)
@@ -14979,7 +15271,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "37ffe0f3-0767-4d51-915d-599fda9ca170")
+		(uuid "8991b7df-f5c6-4245-af29-da02852722ae")
 	)
 	(text "chosen, so no circuit is faked here. The ADS1220 swallows the signal into"
 		(exclude_from_sim no)
@@ -14992,7 +15284,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "e044c430-d9fa-4a32-a478-49e4df03aec5")
+		(uuid "1139058b-217e-4b76-a9af-f33d772b9871")
 	)
 	(text "SPI, so path 2 needs its OWN buffer - it cannot tap the converter."
 		(exclude_from_sim no)
@@ -15005,7 +15297,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "fee4db1c-c1c0-4c31-ab05-903eb8afb7e9")
+		(uuid "9f76e625-36b5-4dcd-bb39-c3bf3ddd7c21")
 	)
 	(text "Path 2 is a live MONITOR, not a precision record: the SD log is the measurement."
 		(exclude_from_sim no)
@@ -15018,7 +15310,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "96308dbd-154d-45c3-9b08-65c66d785501")
+		(uuid "edfc4b2e-0226-4ea8-8353-f46729950666")
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
@@ -15028,8 +15320,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "768dd203-3b85-45b4-a4e4-d975e1790fe9")
-		(property "Reference" "J_REC"
+		(uuid "7e933d65-338c-4f2f-b9db-8429c29094c9")
+		(property "Reference" "J_REC1"
 			(at 250.0000 323.7300 0)
 			(effects
 				(font
@@ -15073,15 +15365,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "91835585-2e25-403c-b7a5-0e0a3b307316")
+			(uuid "59042603-0afd-40a5-85fb-ea77b1f616e2")
 		)
 		(pin "2"
-			(uuid "73025c0e-c280-4aad-8d9b-24bf177de6b1")
+			(uuid "d6b40442-c4db-445b-aa97-4dd52c0c1e66")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "J_REC")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "J_REC1")
 					(unit 1)
 				)
 			)
@@ -15095,17 +15387,17 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7cf5f202-2502-4dba-b534-cf913f2ae5a8")
+		(uuid "023294b2-0acf-4213-83ca-b4ed4f4eedfe")
 	)
 	(label "RECORD"
-		(at 239.3400 325.0000 0)
+		(at 239.8400 325.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "79a4daa6-597b-476d-97ac-a98548579e2e")
+		(uuid "3a4cbd7c-733c-4a7d-b5f0-73f210e559a6")
 	)
 	(wire
 		(pts
@@ -15115,7 +15407,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "458b0d2b-0f9f-48d0-a28f-38c57a23819f")
+		(uuid "238b6b81-b630-4167-8705-908d7ea9d235")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -15125,7 +15417,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "870ab730-8290-4c08-a64b-e8b5303d5caf")
+		(uuid "add43404-7fea-4bf2-a47e-1c701ed0f9eb")
 		(property "Reference" "#PWR33"
 			(at 239.8400 326.2700 0)
 			(effects
@@ -15172,11 +15464,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "b40dcfdf-8548-488e-bd23-324c0f557717")
+			(uuid "e8a7a272-71d1-4f3c-853a-60203a7ca4be")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR33")
 					(unit 1)
 				)
@@ -15191,8 +15483,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "f0bd23d2-d582-408a-a092-109daa7a95f1")
-		(property "Reference" "R_REC"
+		(uuid "fb727956-e1a1-4725-b167-64ed6553d406")
+		(property "Reference" "R_REC1"
 			(at 290.0000 316.7300 0)
 			(effects
 				(font
@@ -15236,15 +15528,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "15bd050b-b164-49a3-a7c3-9b010b6fdcf5")
+			(uuid "730f6929-094e-4788-895b-d65b9f4acc51")
 		)
 		(pin "2"
-			(uuid "e7d8f9b6-4a56-4faa-8908-3f578fb51c9e")
+			(uuid "e0afa28e-95ce-4e12-b240-9e9e44a39cb0")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_REC")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_REC1")
 					(unit 1)
 				)
 			)
@@ -15252,43 +15544,43 @@
 	)
 	(wire
 		(pts
-			(xy 290.0000 314.1900) (xy 290.0000 311.1900)
+			(xy 286.1900 318.0000) (xy 283.1900 318.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "26d3d3ce-487d-4902-9ee2-eb4d4f99b0f6")
+		(uuid "735d6798-216e-42b4-92ec-5862bf18527d")
 	)
 	(label "+3V3_LOGGER"
-		(at 290.0000 310.6900 90)
+		(at 283.1900 318.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "7a40a7fc-c908-4be0-bc96-37c60c6d0b91")
+		(uuid "51d6b57d-6803-45cd-a1b2-6ffec297f5d6")
 	)
 	(wire
 		(pts
-			(xy 290.0000 321.8100) (xy 290.0000 324.8100)
+			(xy 293.8100 318.0000) (xy 296.8100 318.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "00f5934f-9261-4663-b520-f853708e5487")
+		(uuid "cf9c350d-5bb0-4e3a-89e4-356328c91945")
 	)
 	(label "RECORD"
-		(at 290.0000 325.3100 90)
+		(at 296.8100 318.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "a37674d2-ddf2-48d8-9c5d-c2f558b5d803")
+		(uuid "97a24529-2f0c-49d4-9363-0d18b3b5f7d4")
 	)
 	(text "RECORD pull-up is EXTERNAL: GPIO34 has none.\nOpen = not recording, so a broken line loses data,\nnever safety (D-032)."
 		(exclude_from_sim no)
@@ -15301,7 +15593,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "b8621b62-3fc1-4a07-99a6-bcc294fa3521")
+		(uuid "c5ada10f-c9cd-48d8-91ff-02cb9e3509fc")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -15311,8 +15603,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "74c6fccf-113b-4859-bdef-06b2907561aa")
-		(property "Reference" "R_LOG"
+		(uuid "d787c42f-1806-422f-bb32-985d8d3b858c")
+		(property "Reference" "R_LOG1"
 			(at 360.0000 248.7300 0)
 			(effects
 				(font
@@ -15356,15 +15648,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "c68447a4-ecdc-4a65-9322-672ab010f0f9")
+			(uuid "268dc577-91fa-4cba-8f90-379ec4c12825")
 		)
 		(pin "2"
-			(uuid "a051528d-847f-4cbc-b4bf-f608cf0071f7")
+			(uuid "8698b85a-ad4e-4674-a798-b9abb64ab117")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "R_LOG")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "R_LOG1")
 					(unit 1)
 				)
 			)
@@ -15372,23 +15664,23 @@
 	)
 	(wire
 		(pts
-			(xy 360.0000 246.1900) (xy 360.0000 243.1900)
+			(xy 356.1900 250.0000) (xy 353.1900 250.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "6543aca8-ce7e-4740-b375-f86f2b3ebbdc")
+		(uuid "06fc2739-76af-4c80-aafc-3e91e0ce1b6e")
 	)
 	(label "LOGGER_LED"
-		(at 360.0000 242.6900 90)
+		(at 353.1900 250.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "c2b98478-23a8-44fb-b1b6-a5a4f39913e9")
+		(uuid "137f2d90-3b83-400f-b1c7-a1f706633b5d")
 	)
 	(symbol
 		(lib_id "Device:LED")
@@ -15398,8 +15690,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "f18ab0d6-0f88-4e15-93d2-3c1b892647c8")
-		(property "Reference" "D_LOG"
+		(uuid "23d8084a-64a7-4735-b8e7-4bb01213a3f6")
+		(property "Reference" "D_LOG1"
 			(at 360.0000 270.7300 0)
 			(effects
 				(font
@@ -15443,15 +15735,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "fa93577a-c898-4f33-9926-3fb4b207a143")
+			(uuid "5a170547-01ac-4ab4-85b8-5f737e36b0eb")
 		)
 		(pin "2"
-			(uuid "863200a3-0710-4858-8132-c0a61bff2c1b")
+			(uuid "60f33b85-66ab-4968-8271-650f1a284e60")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
-					(reference "D_LOG")
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
+					(reference "D_LOG1")
 					(unit 1)
 				)
 			)
@@ -15459,35 +15751,35 @@
 	)
 	(wire
 		(pts
-			(xy 360.0000 253.8100) (xy 363.8100 272.0000)
+			(xy 363.8100 250.0000) (xy 360.0000 268.1900)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "4596b527-3165-4bb1-8beb-3d61d1867bd8")
+		(uuid "7ba26797-5106-4085-a530-38ceafc16147")
 	)
 	(wire
 		(pts
-			(xy 356.1900 272.0000) (xy 351.1100 272.0000)
+			(xy 360.0000 275.8100) (xy 360.0000 280.8900)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "ad9d848a-a370-4d23-8f7e-b401536d7706")
+		(uuid "6388d6be-a110-4ede-99b9-a5194f5c7c2c")
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 351.1100 272.0000 90)
+		(at 360.0000 280.8900 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "b7cabe6f-9246-468b-9785-e1671d61e0fa")
+		(uuid "0da2fede-f32b-48be-8b31-22b0a645b771")
 		(property "Reference" "#PWR34"
-			(at 351.1100 270.7300 0)
+			(at 360.0000 279.6200 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15496,7 +15788,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 351.1100 273.2700 0)
+			(at 360.0000 282.1600 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15505,7 +15797,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 351.1100 272.0000 0)
+			(at 360.0000 280.8900 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15514,7 +15806,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 351.1100 272.0000 0)
+			(at 360.0000 280.8900 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15523,7 +15815,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 351.1100 272.0000 0)
+			(at 360.0000 280.8900 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15532,11 +15824,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "703593f7-b4ce-459a-aa1e-5230bf80ecd7")
+			(uuid "11d45277-6661-4b07-802f-f931cda48dda")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR34")
 					(unit 1)
 				)
@@ -15551,7 +15843,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "5541af6f-b7fe-40e6-8f62-3884ff95bdf0")
+		(uuid "8183cb37-5a37-48f7-9233-c961c7d7b9b8")
 		(property "Reference" "R_V1"
 			(at 320.0000 363.7300 0)
 			(effects
@@ -15596,14 +15888,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "f4fd92a5-7cb1-4b77-a6ac-128d592ecea1")
+			(uuid "abbaeaa9-4329-4b89-9445-026d7798b995")
 		)
 		(pin "2"
-			(uuid "4ed13241-2214-44ed-ac92-05e213629666")
+			(uuid "173cfe33-71bb-4c1a-91b7-3f9749ef41c6")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "R_V1")
 					(unit 1)
 				)
@@ -15612,43 +15904,43 @@
 	)
 	(wire
 		(pts
-			(xy 320.0000 361.1900) (xy 320.0000 358.1900)
+			(xy 316.1900 365.0000) (xy 313.1900 365.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "1428948e-dd09-4083-b817-b3235d1fadcd")
+		(uuid "9948819d-63c3-4150-9e80-d5fff7f32d63")
 	)
 	(label "+12V_PROT"
-		(at 320.0000 357.6900 90)
+		(at 313.1900 365.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "03128f81-97f6-4977-a711-1ec492be917d")
+		(uuid "b15f1f0c-54b8-4546-995e-23e1af79fda7")
 	)
 	(wire
 		(pts
-			(xy 320.0000 368.8100) (xy 320.0000 371.8100)
+			(xy 323.8100 365.0000) (xy 326.8100 365.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "a2a49371-c672-4561-94af-1676d1e18c44")
+		(uuid "40c33864-6256-4e4c-906f-79b2d1e0b22d")
 	)
 	(label "VBAT_SENSE"
-		(at 320.0000 372.3100 90)
+		(at 326.8100 365.0000 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
-		(uuid "2e7e903c-96ba-43dd-970f-85745f4f8f15")
+		(uuid "085647ca-3cee-4b5e-a486-879b83ba5708")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -15658,7 +15950,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "b147cad9-a996-449d-adda-58fe94bf66d2")
+		(uuid "f157e642-c113-4bda-9d6e-5b21d8cc62d3")
 		(property "Reference" "R_V2"
 			(at 320.0000 390.7300 0)
 			(effects
@@ -15703,14 +15995,14 @@
 			)
 		)
 		(pin "1"
-			(uuid "dbc77975-b10f-4f9d-913c-ee927d677144")
+			(uuid "7b10ea4f-cf62-40c5-b3c8-063f24840353")
 		)
 		(pin "2"
-			(uuid "9a26e849-c534-40cc-bc46-87ae38085a8e")
+			(uuid "d7c02101-decf-4ba7-b22f-85bcf0c0e6af")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "R_V2")
 					(unit 1)
 				)
@@ -15719,45 +16011,45 @@
 	)
 	(wire
 		(pts
-			(xy 320.0000 388.1900) (xy 320.0000 385.1900)
+			(xy 316.1900 392.0000) (xy 313.1900 392.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "7dde85fc-29b6-479d-8e51-a12b217c1eb1")
+		(uuid "0277d23c-2d76-4492-a321-ff5414fd45ff")
 	)
 	(label "VBAT_SENSE"
-		(at 320.0000 384.6900 90)
+		(at 313.1900 392.0000 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "430f2aed-7683-42df-b8fe-722f6d221592")
+		(uuid "7ee00b96-8a58-4750-b7da-7796b6e33676")
 	)
 	(wire
 		(pts
-			(xy 320.0000 395.8100) (xy 320.0000 400.8900)
+			(xy 323.8100 392.0000) (xy 328.8900 392.0000)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "3bf20583-0013-4fd2-a070-58e54a50f173")
+		(uuid "6400e7dc-f38f-46c2-8cc3-3d023589c455")
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 320.0000 400.8900 0)
+		(at 328.8900 392.0000 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "bb069fe1-219e-4e3c-8c7e-ac33b3b77da6")
+		(uuid "aaa18691-4383-469e-97a0-1b035a65b163")
 		(property "Reference" "#PWR35"
-			(at 320.0000 399.6200 0)
+			(at 328.8900 390.7300 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15766,7 +16058,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 320.0000 402.1600 0)
+			(at 328.8900 393.2700 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15775,7 +16067,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 320.0000 400.8900 0)
+			(at 328.8900 392.0000 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15784,7 +16076,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 320.0000 400.8900 0)
+			(at 328.8900 392.0000 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15793,7 +16085,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 320.0000 400.8900 0)
+			(at 328.8900 392.0000 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15802,11 +16094,11 @@
 			)
 		)
 		(pin "1"
-			(uuid "6978860b-03da-4736-a26c-f22c00fbb569")
+			(uuid "a1506435-19b6-401a-8252-6e1486f90f95")
 		)
 		(instances
 			(project "talavera-bench"
-				(path "/982eb379-eda3-47ea-88c9-28a2261b30bf"
+				(path "/61c69782-613f-44b9-9120-10d99eb9b3db"
 					(reference "#PWR35")
 					(unit 1)
 				)
@@ -15824,7 +16116,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "86a5b95f-4984-4c28-b3f2-ca1bd6d280d3")
+		(uuid "b324a7e9-bd38-4e78-a46f-b39b09a3fff6")
 	)
 	(text "TBD values await O-1 (e-match no-fire current) and O-2 (load cell datasheet)."
 		(exclude_from_sim no)
@@ -15837,7 +16129,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "bda363fd-5cdc-4976-9a83-3537b9328db5")
+		(uuid "85b3264e-27cb-4130-a693-2c61774c0773")
 	)
 	(sheet_instances
 		(path "/"

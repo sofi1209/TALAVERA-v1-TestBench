@@ -1,0 +1,613 @@
+ERC report (2026-11-06T17:51:02, Encoding UTF8)
+Report includes: Errors
+
+***** Sheet /
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1228 mils, 12835 mils): Symbol R_D_ARMED Pin 1 [Passive, Line]
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(1378 mils, 12685 mils): Vertical Wire, length 118 mils
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(1378 mils, 12985 mils): Wire, length 732 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1378 mils, 13551 mils): Symbol D_ARMED Pin 2 [A, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1378 mils, 13851 mils): Symbol D_ARMED Pin 1 [K, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1528 mils, 12835 mils): Symbol R_D_ARMED Pin 2 [Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1572 mils, 6614 mils): Symbol J_ARMSW Pin 1 [Pin_1, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1572 mils, 6714 mils): Symbol J_ARMSW Pin 2 [Pin_2, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1572 mils, 7992 mils): Symbol J_FIRESW Pin 1 [Pin_1, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1572 mils, 8092 mils): Symbol J_FIRESW Pin 2 [Pin_2, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1572 mils, 9449 mils): Symbol J_ESTOP Pin 1 [Pin_1, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1572 mils, 10709 mils): Symbol J_CONTSW Pin 1 [Pin_1, Passive, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(1746 mils, 2041 mils): Label 'FIRE_LINE'
+[label_dangling]: Label not connected
+    ; error
+    @(1746 mils, 2141 mils): Label 'ESTOP_LOOP'
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1965 mils, 1941 mils): Symbol J_UMB Pin 1 [Pin_1, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1965 mils, 2041 mils): Symbol J_UMB Pin 2 [Pin_2, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1965 mils, 2141 mils): Symbol J_UMB Pin 3 [Pin_3, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1965 mils, 2241 mils): Symbol J_UMB Pin 4 [Pin_4, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1965 mils, 2341 mils): Symbol J_UMB Pin 5 [Pin_5, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1965 mils, 2441 mils): Symbol J_UMB Pin 6 [Pin_6, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1965 mils, 2541 mils): Symbol J_UMB Pin 7 [Pin_7, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1965 mils, 2641 mils): Symbol J_UMB Pin 8 [Pin_8, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(1965 mils, 2741 mils): Symbol J_UMB Pin 9 [Pin_9, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(2065 mils, 15057 mils): Symbol LS1 Pin 1 [+, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(2065 mils, 15257 mils): Symbol LS1 Pin 2 [-, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(2881 mils, 12835 mils): Symbol R_D_CONT Pin 1 [Passive, Line]
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(3031 mils, 12685 mils): Vertical Wire, length 118 mils
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(3031 mils, 12985 mils): Wire, length 732 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(3031 mils, 13551 mils): Symbol D_CONT Pin 2 [A, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(3031 mils, 13851 mils): Symbol D_CONT Pin 1 [K, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(3181 mils, 12835 mils): Symbol R_D_CONT Pin 2 [Passive, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(3517 mils, 15276 mils): Label 'ARM_LINE'
+[pin_not_connected]: Pin not connected
+    ; error
+    @(3737 mils, 15276 mils): Symbol Q_BUZZ Pin G [G, Input, Line]
+[pin_not_driven]: Input pin not driven by any Output pins
+    ; error
+    @(3737 mils, 15276 mils): Symbol Q_BUZZ Pin G [G, Input, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(4008 mils, 3740 mils): Label '+5V_BENCH'
+[pin_not_connected]: Pin not connected
+    ; error
+    @(4037 mils, 15076 mils): Symbol Q_BUZZ Pin D [D, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(4228 mils, 3740 mils): Symbol U_5VB Pin 3 [VI, Power input, Line]
+[power_pin_not_driven]: Input Power pin not driven by any Output Power pins
+    ; error
+    @(4228 mils, 3740 mils): Symbol U_5VB Pin 3 [VI, Power input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(4528 mils, 4040 mils): Symbol U_5VB Pin 1 [GND, Power input, Line]
+[power_pin_not_driven]: Input Power pin not driven by any Output Power pins
+    ; error
+    @(4528 mils, 4040 mils): Symbol U_5VB Pin 1 [GND, Power input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(4535 mils, 12835 mils): Symbol R_D_PWR Pin 1 [Passive, Line]
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(4685 mils, 12685 mils): Vertical Wire, length 118 mils
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(4685 mils, 12985 mils): Wire, length 732 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(4685 mils, 13551 mils): Symbol D_PWR Pin 2 [A, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(4685 mils, 13851 mils): Symbol D_PWR Pin 1 [K, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(4835 mils, 12835 mils): Symbol R_D_PWR Pin 2 [Passive, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(5027 mils, 15079 mils): Label 'BUZZ_DRV'
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(5165 mils, 15079 mils): Horizontal Wire, length 118 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(5312 mils, 2165 mils): Symbol J_12V Pin 1 [Pin_1, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(5315 mils, 14929 mils): Symbol D_BUZZ Pin 2 [A, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(5315 mils, 15229 mils): Symbol D_BUZZ Pin 1 [K, Passive, Line]
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(5465 mils, 15079 mils): Horizontal Wire, length 118 mils
+[label_dangling]: Label not connected
+    ; error
+    @(5603 mils, 15079 mils): Label '+12V_STN'
+[pin_not_connected]: Pin not connected
+    ; error
+    @(5999 mils, 3740 mils): Symbol U_3V3B Pin 3 [VI, Power input, Line]
+[power_pin_not_driven]: Input Power pin not driven by any Output Power pins
+    ; error
+    @(5999 mils, 3740 mils): Symbol U_3V3B Pin 3 [VI, Power input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(6149 mils, 12835 mils): Symbol R_CONT_PU Pin 1 [Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(6149 mils, 13858 mils): Symbol R_CONT_L Pin 1 [Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(6299 mils, 4040 mils): Symbol U_3V3B Pin 1 [GND, Power input, Line]
+[power_pin_not_driven]: Input Power pin not driven by any Output Power pins
+    ; error
+    @(6299 mils, 4040 mils): Symbol U_3V3B Pin 1 [GND, Power input, Line]
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(6299 mils, 12685 mils): Vertical Wire, length 118 mils
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(6299 mils, 12985 mils): Vertical Wire, length 118 mils
+[label_dangling]: Label not connected
+    ; error
+    @(6299 mils, 13570 mils): Label 'PYRO_CONT_SENSE'
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(6299 mils, 13708 mils): Vertical Wire, length 118 mils
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(6299 mils, 14008 mils): Vertical Wire, length 118 mils
+[label_dangling]: Label not connected
+    ; error
+    @(6299 mils, 14146 mils): Label 'CONT_LAMP'
+[pin_not_connected]: Pin not connected
+    ; error
+    @(6449 mils, 12835 mils): Symbol R_CONT_PU Pin 2 [Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(6449 mils, 13858 mils): Symbol R_CONT_L Pin 2 [Passive, Line]
+[pin_to_pin]: Pins of type Power output and Power output are connected
+    ; error
+    @(6599 mils, 3740 mils): Symbol U_3V3B Pin 2 [VO, Power output, Line]
+    @(4828 mils, 3740 mils): Symbol U_5VB Pin 2 [VO, Power output, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(8000 mils, 3622 mils): Symbol R_TERM Pin 1 [Passive, Line]
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(8150 mils, 3472 mils): Vertical Wire, length 118 mils
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(8150 mils, 3772 mils): Vertical Wire, length 118 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(8300 mils, 3622 mils): Symbol R_TERM Pin 2 [Passive, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(8829 mils, 2950 mils): Label 'RO_BENCH'
+[label_dangling]: Label not connected
+    ; error
+    @(8829 mils, 3050 mils): Label 'RS485_RE'
+[label_dangling]: Label not connected
+    ; error
+    @(8829 mils, 3350 mils): Label 'DI_BENCH'
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9049 mils, 2950 mils): Symbol U_485 Pin 1 [RO, Output, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9049 mils, 3050 mils): Symbol U_485 Pin 2 [~{RE}, Input, Line]
+[pin_not_driven]: Input pin not driven by any Output pins
+    ; error
+    @(9049 mils, 3050 mils): Symbol U_485 Pin 2 [~{RE}, Input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9049 mils, 3150 mils): Symbol U_485 Pin 3 [DE, Input, Line]
+[pin_not_driven]: Input pin not driven by any Output pins
+    ; error
+    @(9049 mils, 3150 mils): Symbol U_485 Pin 3 [DE, Input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9049 mils, 3350 mils): Symbol U_485 Pin 4 [DI, Input, Line]
+[pin_not_driven]: Input pin not driven by any Output pins
+    ; error
+    @(9049 mils, 3350 mils): Symbol U_485 Pin 4 [DI, Input, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(9423 mils, 12498 mils): Label 'THRUST_DIFF_P'
+[label_dangling]: Label not connected
+    ; error
+    @(9423 mils, 12598 mils): Label 'THRUST_DIFF_N'
+[label_dangling]: Label not connected
+    ; error
+    @(9423 mils, 14370 mils): Label 'VBAT_SENSE'
+[label_dangling]: Label not connected
+    ; error
+    @(9449 mils, 2330 mils): Label '+3V3_BENCH'
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9449 mils, 2550 mils): Symbol U_485 Pin 8 [VCC, Power input, Line]
+[power_pin_not_driven]: Input Power pin not driven by any Output Power pins
+    ; error
+    @(9449 mils, 2550 mils): Symbol U_485 Pin 8 [VCC, Power input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9643 mils, 12498 mils): Symbol J_DAQ Pin 1 [Pin_1, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9643 mils, 12598 mils): Symbol J_DAQ Pin 2 [Pin_2, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9643 mils, 14370 mils): Symbol J_VM Pin 1 [Pin_1, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9693 mils, 5512 mils): Symbol R_ISO1 Pin 1 [Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9693 mils, 8465 mils): Symbol R_ISO2 Pin 1 [Passive, Line]
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(9843 mils, 5362 mils): Vertical Wire, length 118 mils
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(9843 mils, 5662 mils): Vertical Wire, length 118 mils
+[label_dangling]: Label not connected
+    ; error
+    @(9843 mils, 5800 mils): Label 'ISO1_A'
+[label_dangling]: Label not connected
+    ; error
+    @(9843 mils, 8177 mils): Label 'UART_TX_USB'
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(9843 mils, 8315 mils): Vertical Wire, length 118 mils
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(9843 mils, 8615 mils): Vertical Wire, length 118 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9849 mils, 2850 mils): Symbol U_485 Pin 6 [A, Bidirectional, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9849 mils, 3050 mils): Symbol U_485 Pin 7 [B, Bidirectional, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9993 mils, 5512 mils): Symbol R_ISO1 Pin 2 [Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(9993 mils, 8465 mils): Symbol R_ISO2 Pin 2 [Passive, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(10069 mils, 2850 mils): Label 'RS485_A'
+[label_dangling]: Label not connected
+    ; error
+    @(10069 mils, 3050 mils): Label 'RS485_B'
+[pin_not_connected]: Pin not connected
+    ; error
+    @(11070 mils, 2165 mils): Symbol R_RE Pin 1 [Passive, Line]
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(11220 mils, 2015 mils): Vertical Wire, length 118 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(11370 mils, 2165 mils): Symbol R_RE Pin 2 [Passive, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(11685 mils, 8758 mils): Label 'ISO2_A'
+[pin_not_connected]: Pin not connected
+    ; error
+    @(11905 mils, 5706 mils): Symbol U_ISO1 Pin 1 [NC, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(11905 mils, 5806 mils): Symbol U_ISO1 Pin 2 [A, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(11905 mils, 6106 mils): Symbol U_ISO1 Pin 4 [NC, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(11905 mils, 8658 mils): Symbol U_ISO2 Pin 1 [NC, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(11905 mils, 8758 mils): Symbol U_ISO2 Pin 2 [A, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(11905 mils, 9058 mils): Symbol U_ISO2 Pin 4 [NC, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(12055 mils, 2165 mils): Symbol R_DE Pin 1 [Passive, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(12205 mils, 1878 mils): Label 'RS485_DE'
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(12205 mils, 2015 mils): Vertical Wire, length 118 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(12205 mils, 5506 mils): Symbol U_ISO1 Pin 8 [VCC, Power input, Line]
+[power_pin_not_driven]: Input Power pin not driven by any Output Power pins
+    ; error
+    @(12205 mils, 5506 mils): Symbol U_ISO1 Pin 8 [VCC, Power input, Line]
+[power_pin_not_driven]: Input Power pin not driven by any Output Power pins
+    ; error
+    @(12205 mils, 6506 mils): Symbol #PWR17 Pin 1 [Power input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(12205 mils, 8458 mils): Symbol U_ISO2 Pin 8 [VCC, Power input, Line]
+[power_pin_not_driven]: Input Power pin not driven by any Output Power pins
+    ; error
+    @(12205 mils, 8458 mils): Symbol U_ISO2 Pin 8 [VCC, Power input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(12355 mils, 2165 mils): Symbol R_DE Pin 2 [Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(12505 mils, 5806 mils): Symbol U_ISO1 Pin 7 [EN, Input, Line]
+[pin_not_driven]: Input pin not driven by any Output pins
+    ; error
+    @(12505 mils, 5806 mils): Symbol U_ISO1 Pin 7 [EN, Input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(12505 mils, 5906 mils): Symbol U_ISO1 Pin 6 [VO, Open collector, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(12505 mils, 8758 mils): Symbol U_ISO2 Pin 7 [EN, Input, Line]
+[pin_not_driven]: Input pin not driven by any Output pins
+    ; error
+    @(12505 mils, 8758 mils): Symbol U_ISO2 Pin 7 [EN, Input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(12505 mils, 8858 mils): Symbol U_ISO2 Pin 6 [VO, Open collector, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(14220 mils, 5512 mils): Symbol R_ISO1_PU Pin 1 [Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(14220 mils, 8465 mils): Symbol R_ISO2_PU Pin 1 [Passive, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(14370 mils, 5224 mils): Label '+5V_USB'
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(14370 mils, 5362 mils): Vertical Wire, length 118 mils
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(14370 mils, 5662 mils): Vertical Wire, length 118 mils
+[label_dangling]: Label not connected
+    ; error
+    @(14370 mils, 5800 mils): Label 'UART_RX_USB'
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(14370 mils, 8315 mils): Vertical Wire, length 118 mils
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(14370 mils, 8615 mils): Vertical Wire, length 118 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(14520 mils, 5512 mils): Symbol R_ISO1_PU Pin 2 [Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(14520 mils, 8465 mils): Symbol R_ISO2_PU Pin 2 [Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(16385 mils, 5118 mils): Symbol R_DP Pin 1 [Passive, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(16535 mils, 4830 mils): Label 'USB_DP'
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(16535 mils, 4968 mils): Vertical Wire, length 118 mils
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(16535 mils, 5268 mils): Vertical Wire, length 118 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(16535 mils, 8905 mils): Symbol D_ESD1 Pin 2 [A, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(16535 mils, 9205 mils): Symbol D_ESD1 Pin 1 [K, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(16685 mils, 5118 mils): Symbol R_DP Pin 2 [Passive, Line]
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(16685 mils, 9055 mils): Horizontal Wire, length 118 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(17252 mils, 5118 mils): Symbol R_DM Pin 1 [Passive, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(17402 mils, 4830 mils): Label 'USB_DM'
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(17402 mils, 4968 mils): Vertical Wire, length 118 mils
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(17402 mils, 5268 mils): Vertical Wire, length 118 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(17402 mils, 8905 mils): Symbol D_ESD2 Pin 2 [A, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(17402 mils, 9205 mils): Symbol D_ESD2 Pin 1 [K, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(17552 mils, 5118 mils): Symbol R_DM Pin 2 [Passive, Line]
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(17552 mils, 9055 mils): Horizontal Wire, length 118 mils
+[label_dangling]: Label not connected
+    ; error
+    @(17689 mils, 9055 mils): Label 'USB_DM_C'
+[label_dangling]: Label not connected
+    ; error
+    @(17691 mils, 14370 mils): Label 'CONT_BTN'
+[pin_not_connected]: Pin not connected
+    ; error
+    @(17910 mils, 14370 mils): Symbol J_CONT_RTN Pin 1 [Pin_1, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(17910 mils, 14470 mils): Symbol J_CONT_RTN Pin 2 [Pin_2, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(18317 mils, 6683 mils): Symbol J_USB Hidden pin A9 [VBUS, Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(18317 mils, 6883 mils): Symbol J_USB Pin A5 [CC1, Bidirectional, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(18317 mils, 6983 mils): Symbol J_USB Pin B5 [CC2, Bidirectional, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(18317 mils, 7183 mils): Symbol J_USB Pin A7 [D-, Bidirectional, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(18317 mils, 7283 mils): Symbol J_USB Pin B7 [D-, Bidirectional, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(18317 mils, 7383 mils): Symbol J_USB Pin A6 [D+, Bidirectional, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(18317 mils, 7483 mils): Symbol J_USB Pin B6 [D+, Bidirectional, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(18498 mils, 2653 mils): Symbol U_USB Pin 15 [R232, Input, Line]
+[pin_not_driven]: Input pin not driven by any Output pins
+    ; error
+    @(18498 mils, 2653 mils): Symbol U_USB Pin 15 [R232, Input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(18498 mils, 2853 mils): Symbol U_USB Pin 5 [UD+, Bidirectional, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(18498 mils, 2953 mils): Symbol U_USB Pin 6 [UD-, Bidirectional, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(18536 mils, 6883 mils): Label 'CC1'
+[label_dangling]: Label not connected
+    ; error
+    @(18536 mils, 6983 mils): Label 'CC2'
+[label_dangling]: Label not connected
+    ; error
+    @(18536 mils, 7383 mils): Label 'USB_DP_C'
+[pin_not_connected]: Pin not connected
+    ; error
+    @(18798 mils, 2353 mils): Symbol U_USB Pin 16 [VCC, Power input, Line]
+[power_pin_not_driven]: Input Power pin not driven by any Output Power pins
+    ; error
+    @(18798 mils, 2353 mils): Symbol U_USB Pin 16 [VCC, Power input, Line]
+[label_dangling]: Label not connected
+    ; error
+    @(18898 mils, 2133 mils): Label 'USB_V3'
+[pin_not_connected]: Pin not connected
+    ; error
+    @(18898 mils, 2353 mils): Symbol U_USB Pin 4 [V3, Power output, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(19298 mils, 2553 mils): Symbol U_USB Pin 2 [TXD, Output, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(19298 mils, 2653 mils): Symbol U_USB Pin 3 [RXD, Input, Line]
+[pin_not_driven]: Input pin not driven by any Output pins
+    ; error
+    @(19298 mils, 2653 mils): Symbol U_USB Pin 3 [RXD, Input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(19298 mils, 2853 mils): Symbol U_USB Pin 9 [~{CTS}, Input, Line]
+[pin_not_driven]: Input pin not driven by any Output pins
+    ; error
+    @(19298 mils, 2853 mils): Symbol U_USB Pin 9 [~{CTS}, Input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(19298 mils, 2953 mils): Symbol U_USB Pin 10 [~{DSR}, Input, Line]
+[pin_not_driven]: Input pin not driven by any Output pins
+    ; error
+    @(19298 mils, 2953 mils): Symbol U_USB Pin 10 [~{DSR}, Input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(19298 mils, 3053 mils): Symbol U_USB Pin 11 [~{RI}, Input, Line]
+[pin_not_driven]: Input pin not driven by any Output pins
+    ; error
+    @(19298 mils, 3053 mils): Symbol U_USB Pin 11 [~{RI}, Input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(19298 mils, 3153 mils): Symbol U_USB Pin 12 [~{DCD}, Input, Line]
+[pin_not_driven]: Input pin not driven by any Output pins
+    ; error
+    @(19298 mils, 3153 mils): Symbol U_USB Pin 12 [~{DCD}, Input, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(19298 mils, 3253 mils): Symbol U_USB Pin 13 [~{DTR}, Output, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(19298 mils, 3353 mils): Symbol U_USB Pin 14 [~{RTS}, Output, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(21260 mils, 2212 mils): Symbol C_V3 Pin 1 [Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(21307 mils, 5906 mils): Symbol R_CC1 Pin 1 [Passive, Line]
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(21457 mils, 5756 mils): Vertical Wire, length 118 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(21607 mils, 5906 mils): Symbol R_CC1 Pin 2 [Passive, Line]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(22047 mils, 2212 mils): Symbol C_USB Pin 1 [Passive, Line]
+[unannotated]: Item not annotated: C_USB?
+    ; error
+    @(22047 mils, 2362 mils): Symbol C_USB [C]
+[pin_not_connected]: Pin not connected
+    ; error
+    @(22094 mils, 5906 mils): Symbol R_CC2 Pin 1 [Passive, Line]
+[wire_dangling]: Wires not connected to anything
+    ; error
+    @(22244 mils, 5756 mils): Vertical Wire, length 118 mils
+[pin_not_connected]: Pin not connected
+    ; error
+    @(22394 mils, 5906 mils): Symbol R_CC2 Pin 2 [Passive, Line]
+
+ ** ERC messages: 200  Errors 200  Warnings 0
+
+ ** Ignored checks:
+    - Global label only appears once in the schematic
+    - Four connection points are joined together
+    - SPICE model issue
+    - Assigned footprint doesn't match footprint filters

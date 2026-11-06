@@ -96,21 +96,60 @@ def check(path):
             if abs(a[0]-b[0]) < 1e-9 and abs(a[1]-b[1]) < 1e-9:
                 warns.append("zero-length wire at %.2f,%.2f" % a)
 
+    # 4b. Connectivity, mirroring what KiCad ERC calls dangling. Every wire end
+    #     must land exactly on a pin, a label, or another wire end; every label
+    #     must land exactly on a wire end or a pin. "Near enough" is not a
+    #     connection - an earlier version allowed 1 mm of slop and passed a
+    #     schematic that ERC rejected with 200 dangling errors.
+    pinpts = set()
+    for sym in ksch.kids(root, "symbol"):
+        lid = ksch.val(ksch.kid(sym, "lib_id"))
+        at = ksch.kid(sym, "at")
+        sx, sy = float(ksch.val(at, 1)), float(ksch.val(at, 2))
+        ang = float(ksch.val(at, 3)) if len(at) > 3 else 0.0
+        try:
+            _d, lpins = ksch.get_symbol(lid)
+        except Exception:
+            continue
+        th = math.radians(ang); ct, st = math.cos(th), math.sin(th)
+        for pn in {ksch.val(p) for p in ksch.kids(sym, "pin")}:
+            if pn not in lpins: continue
+            px, py, _pa = lpins[pn]
+            rx = px * ct - py * st
+            ry = px * st + py * ct
+            pinpts.add((round(sx + rx, 2), round(sy - ry, 2)))
+
     nets = collections.Counter()
-    orphan = 0
+    labelpts = set()
     for lb in ksch.kids(root, "label"):
         nm = ksch.val(lb)
         at = ksch.kid(lb, "at")
         x, y = round(float(ksch.val(at, 1)), 2), round(float(ksch.val(at, 2)), 2)
         nets[nm] += 1
-        # label is offset 0.5mm from the wire end; look for an end within 1mm
-        if not any(abs(x-ex) <= 1.01 and abs(y-ey) <= 1.01 for ex, ey in ends):
-            orphan += 1
-    if orphan:
-        warns.append("%d labels not within 1mm of a wire endpoint" % orphan)
+        labelpts.add((x, y))
+        if (x, y) not in ends and (x, y) not in pinpts:
+            errs.append("DANGLING LABEL '%s' at (%.2f, %.2f) - not exactly on a wire end or pin"
+                        % (nm, x, y))
+
+    endcount = collections.Counter()
+    for w in ksch.kids(root, "wire"):
+        for p in ksch.kids(ksch.kid(w, "pts"), "xy"):
+            endcount[(round(float(ksch.val(p, 1)), 2), round(float(ksch.val(p, 2)), 2))] += 1
+    for pt, n in endcount.items():
+        if pt in pinpts or pt in labelpts or n > 1:
+            continue
+        errs.append("DANGLING WIRE END at (%.2f, %.2f) - touches no pin, label or wire" % pt)
+
+    # 4c. KiCad treats a reference with no trailing digit as unannotated
+    for r in refs:
+        if not r[-1:].isdigit():
+            errs.append("reference '%s' has no trailing digit - KiCad reports it as unannotated" % r)
 
     # 5. single-use nets are suspicious (nothing to connect to)
-    singles = sorted(n for n, c in nets.items() if c == 1)
+    powernets = {ksch.val(p, 2) for sym in ksch.kids(root, "symbol")
+                 if (ksch.val(ksch.kid(sym, "lib_id")) or "").startswith("power:")
+                 for p in ksch.kids(sym, "property") if ksch.val(p) == "Value"}
+    singles = sorted(n for n, c in nets.items() if c == 1 and n not in powernets)
     if singles:
         warns.append("nets appearing once (no second connection): %s" % ", ".join(singles))
 

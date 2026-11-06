@@ -186,6 +186,12 @@ class Sch:
               hide_value=False, mirror=None, angle=0, hide_ref=False):
         """Place a symbol. Returns dict pin-number -> (gx, gy, outward_angle)."""
         pins = self._lib(libid)
+        # KiCad treats a reference with no trailing digit as unannotated, which
+        # ERC reports as an error and which breaks BOM and centroid matching.
+        if not hide_ref and not ref[-1:].isdigit():
+            self._refn = getattr(self, "_refn", {})
+            self._refn[ref] = self._refn.get(ref, 0) + 1
+            ref = "%s%d" % (ref, self._refn[ref])
         props = [
             ("Reference", ref, 0, -1.27, hide_ref),
             ("Value", value, 0, 1.27, hide_value),
@@ -208,10 +214,18 @@ class Sch:
             '\t\t(instances\n\t\t\t(project "%s"\n\t\t\t\t(path "/%s"\n\t\t\t\t\t(reference "%s")\n\t\t\t\t\t(unit 1)\n\t\t\t\t)\n\t\t\t)\n\t\t)\n\t)'
             % (esc(libid), x, y, angle, mir, "yes" if dnp else "no", U(),
                "\n".join(pstr), pinstr, esc(self.project), self.uuid, esc(ref)))
+        # Rotate in symbol space (Y-up, counter-clockwise), then flip Y for the
+        # schematic frame. Forgetting this step silently drew every wire on a
+        # rotated symbol to the wrong coordinate.
+        import math
+        th = math.radians(angle)
+        ct, st = math.cos(th), math.sin(th)
         out = {}
         for pn, (px, py, pa) in pins.items():
-            gx, gy = x + px, y - py           # library is Y-up, schematic Y-down
-            out[pn] = (round(gx, 4), round(gy, 4), (pa + 180) % 360)
+            rx = px * ct - py * st
+            ry = px * st + py * ct
+            gx, gy = x + rx, y - ry
+            out[pn] = (round(gx, 4), round(gy, 4), (pa + 180 + angle) % 360)
         return out
 
     def wire(self, p1, p2):
@@ -233,15 +247,26 @@ class Sch:
         dx, dy = math.cos(rad) * length, -math.sin(rad) * length
         ex, ey = round(x + dx, 4), round(y + dy, 4)
         self.wire((x, y), (ex, ey))
-        if a == 0:        # pointing right
-            self.label(name, ex + 0.5, ey, 0, "left")
-        elif a == 180:    # left
-            self.label(name, ex - 0.5, ey, 0, "right")
-        elif a == 90:     # up on screen
-            self.label(name, ex, ey - 0.5, 90, "left")
-        else:             # down
-            self.label(name, ex, ey + 0.5, 90, "right")
+        # The label anchor must sit EXACTLY on the wire end. Offsetting it even
+        # 0.5 mm leaves the label dangling and the net unconnected.
+        if a == 0:
+            self.label(name, ex, ey, 0, "left")
+        elif a == 180:
+            self.label(name, ex, ey, 180, "left")
+        elif a == 90:
+            self.label(name, ex, ey, 90, "left")
+        else:
+            self.label(name, ex, ey, 270, "left")
         return (ex, ey)
+
+    def pwr_flag(self, net, x, y):
+        """Declare a net as driven. Needed where power enters via a connector,
+        and on ground, since power-input pins alone do not count as a source."""
+        self._flgn = getattr(self, "_flgn", 0) + 1
+        p = self.place("power:PWR_FLAG", "#FLG%02d" % self._flgn, net, x, y,
+                       hide_value=True, hide_ref=True)
+        self.stub(p['1'], net, 2.54)
+        return p
 
     def power(self, kind, pin, length=5.08):
         """Attach a power symbol (power:GND / power:+12V ...) to a pin."""

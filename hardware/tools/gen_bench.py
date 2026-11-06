@@ -36,6 +36,8 @@ s.stub(d1['1'], "+12V_FUSED", 3)
 s.stub(d1['2'], "+12V_PROT", 3)
 s.text("reverse-polarity block", 88, 42, 1.3, False)
 
+s.pwr_flag("+12V_RAW", 30, 28)
+s.pwr_flag("GND", 50, 28)
 c1 = s.place(C, "C1", "22uF 25V", 125, 40)
 s.stub(c1['1'], "+12V_PROT", 3)
 s.power("GND", c1['2'])
@@ -88,25 +90,25 @@ d4 = s.place(D, "D_K4", "1N4148W", 75, 150, angle=90)
 s.stub(d4['1'], "ESTOP_LOOP", 3); s.stub(d4['2'], "+12V_PROT", 3)
 
 # K1 arm
-relay("K1", "SRD-12VDC-SL-C", 40, 200, "ARM_LINE", "GND_RTN",
+relay("K1", "SRD-12VDC-SL-C", 40, 200, "ARM_LINE", "GND",
       "+12V_MASTER", "ARM_BUS", None,
       "K1 ARM: energised by the station\nARM key. NO = DISARMED at rest.")
 d5 = s.place(D, "D_K1", "1N4148W", 75, 198, angle=90)
-s.stub(d5['1'], "GND_RTN", 3); s.stub(d5['2'], "ARM_LINE", 3)
+s.stub(d5['1'], "GND", 3); s.stub(d5['2'], "ARM_LINE", 3)
 
 # K2 fire
-relay("K2", "SRD-12VDC-SL-C", 130, 200, "FIRE_LINE", "GND_RTN",
+relay("K2", "SRD-12VDC-SL-C", 130, 200, "FIRE_LINE", "GND",
       "ARM_BUS", "PYRO_FIRE_OUT", None,
       "K2 FIRE: energised only while\nthe FIRE button is held.")
 d6 = s.place(D, "D_K2", "1N4148W", 165, 198, angle=90)
-s.stub(d6['1'], "GND_RTN", 3); s.stub(d6['2'], "FIRE_LINE", 3)
+s.stub(d6['1'], "GND", 3); s.stub(d6['2'], "FIRE_LINE", 3)
 
 # K3 shunt - NC contact across the match
-relay("K3", "SRD-12VDC-SL-C", 40, 250, "ARM_LINE", "GND_RTN",
+relay("K3", "SRD-12VDC-SL-C", 40, 250, "ARM_LINE", "GND",
       "PYRO_MATCH_P", None, "PYRO_MATCH_N",
       "K3 SHUNT: NC contact shorts the\nmatch whenever DISARMED (D-008).\nReleases only when K1 pulls in.")
 d7 = s.place(D, "D_K3", "1N4148W", 75, 248, angle=90)
-s.stub(d7['1'], "GND_RTN", 3); s.stub(d7['2'], "ARM_LINE", 3)
+s.stub(d7['1'], "GND", 3); s.stub(d7['2'], "ARM_LINE", 3)
 
 # arming plug - third series element
 ja = s.place(CONN2, "J_ARM", "ARMING PLUG", 130, 250)
@@ -132,7 +134,7 @@ oc = s.place(OPTO, "U_CONT", "PC817", 150, 315)
 s.stub(oc['1'], "CONT_LED_A")
 s.stub(oc['2'], "PYRO_MATCH_N")
 s.stub(oc['4'], "PYRO_CONT_SENSE")
-s.stub(oc['3'], "GND_RTN")
+s.stub(oc['3'], "GND")
 s.text("Continuity sense, opto-isolated.\nTopology from IGNIS v4 Pyros.SchDoc.\nSENSE ONLY - the IGNIS gate drive is\nNOT reused (D-045).", 128, 332, 1.4, False)
 
 # ========================================================== ANALOG (O-2)
@@ -287,7 +289,7 @@ ju = s.place(CONN12, "J_UMB", "CABLE B  12 cond.", 250, 372)
 for pin, net in [('1', "ARM_LINE"), ('2', "FIRE_LINE"), ('3', "ESTOP_LOOP"),
                  ('4', "PYRO_CONT_SENSE"), ('5', "RS485_A"), ('6', "RS485_B"),
                  ('7', "VBAT_SENSE"), ('8', "THRUST_DIFF_P"), ('9', "THRUST_DIFF_N"),
-                 ('10', "GND_RTN"), ('11', "GND_RTN")]:
+                 ('10', "GND"), ('11', "GND")]:
     s.stub(ju[pin], net)
 s.power("GND", ju['12'])        # cable shield, single-point to bench ground
 for _i, _ln in enumerate([

@@ -32,6 +32,10 @@ for pin, net in [('1', "ARM_LINE"), ('2', "FIRE_LINE"), ('3', "ESTOP_LOOP"),
     s.stub(ju[pin], net)
 s.power("GND", ju['10']); s.power("GND", ju['11']); s.power("GND", ju['12'])
 
+s.pwr_flag("+12V_STN", 150, 34)
+s.pwr_flag("+5V_USB", 172, 34)
+s.pwr_flag("GND", 150, 46)
+s.pwr_flag("GNDREF", 172, 46)
 jp = s.place(CONN2, "J_12V", "+12V tap", 140, 55)
 s.stub(jp['1'], "+12V_STN"); s.power("GND", jp['2'])
 
