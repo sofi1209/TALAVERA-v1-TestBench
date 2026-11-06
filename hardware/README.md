@@ -93,7 +93,7 @@ The logger is an **ESP32-WROOM-32D at 3.3 V** (D-028). That has knock-on effects
 | Domain | Parts | Note |
 |---|---|---|
 | 12 V | Input protection, relay coils, beacon | Battery rail |
-| 5 V | — | May not be needed at all now; confirm at Gate 2 |
+| 5 V | AD620 (path B only), 6N137 bench side on the station | **Needed after all:** the AD620's minimum total supply is 4.6 V, so it cannot run on 3.3 V (D-061). `U_5V` is depopulated while running path A. |
 | 3.3 V | ESP32, converter, microSD | Keep the converter in the same domain so its digital bus needs no level translation |
 
 Two consequences to carry into the schematic:
@@ -117,7 +117,7 @@ sheet by inspection of the file:
 
 | Element | Note |
 |---|---|
-| microSD socket | Part number **TBD** — not recoverable from the Altium binary, open item 14 |
+| microSD socket | **THD2528-11SD-GF** (LCSC C283232) — resolved from the IGNIS v5 / MAGNIS v1 lists (D-041) |
 | Pull-up resistors | Sheet is labelled "Pull UP Resistances"; 10 k values appear in the parameter set |
 | Decoupling | 100 nF and 22 µF appear in the sheet's parameters |
 | `SD_CS` | Chip select |
@@ -130,15 +130,17 @@ sheet by inspection of the file:
 
 ---
 
-## ADC — selection reopened
+## ADC — settled: ADS1220IPWR
 
-The ADS1115 is no longer assumed. The primary criterion is **moving off I²C**, corroborated by
-IGNIS-v5's own documented I²C solder-joint problems and its deliberate choice to keep its data path on
-SPI. Candidates, trade-offs and a recommendation are in
+**`ADS1220IPWR`** (D-046): 24-bit, **SPI**, 2 kSPS, integrated PGA ×1–128, TSSOP-16, stocked at both
+UNIT and LCSC (C48263). It replaces the ADS1115 and removes the I²C bus that both Wirikuta and IGNIS-v5
+had trouble with. Reasoning and the rejected candidates are in
 [../docs/ADC-TRADE-STUDY.md](../docs/ADC-TRADE-STUDY.md).
 
-This matters for layout as well as parts: if an integrated-PGA converter is chosen, the AD620 stage
-disappears from the board entirely.
+The AD620 is **not populated**. Its DIP-8 socket and a four-link network are laid out so either front
+end can be fitted: links `R_BYP1`+`R_BYP2` fitted gives the PGA-only chain (default), while
+`R_BYP3`+`R_BYP4` plus the chip gives the two-stage chain. Never fit all four — that shorts the
+amplifier output to the bridge.
 
 ---
 
