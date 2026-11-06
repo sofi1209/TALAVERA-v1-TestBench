@@ -21,26 +21,27 @@ changing anything here.
 | | |
 |---|---|
 | Logic level | 3.3 V |
-| ADC | **Selection reopened.** ADS1115 under review; the ESP32 internal SAR ADC remains excluded. See [../docs/ADC-TRADE-STUDY.md](../docs/ADC-TRADE-STUDY.md). |
+| ADC | **ADS1220IPWR** over **SPI** — 24-bit, 2 kSPS, integrated PGA (D-046). The ESP32 internal SAR ADC remains excluded. |
 | Storage | **On-board microSD socket** over VSPI, with a card-detect line. 3.3 V native, so no level shifter. |
 | Radios | **Stopped in firmware and not to be enabled.** See below. |
-| Mounting | **TBD** — socketed DevKitC vs. soldered WROOM-32D. Open item. |
+| Mounting | Socketed DevKitC on 2 × `PPTC191LFBN-RC`, plus a hold-down (D-042). |
 
 ### Why not the ESP32's internal ADC
 
 The ESP32's SAR ADCs are nonlinear and noisy. The Wirikuta load-cell chain is *already* noise-limited to
-the point that a 1-grain motor cannot be characterised (manual p. 28), and replacing a 16-bit external
-converter with a worse internal one would move the design backwards on the single measurement the bench
-exists to make. The **ADS1115 is retained** (D-030).
+the point that a 1-grain motor cannot be characterised (manual p. 28), so replacing an external converter
+with a worse internal one would move the design backwards on the single measurement the bench exists to
+make. That half of D-030 still stands.
 
-The ADS1115 also caps the sample rate at 860 SPS. That ceiling, not the ESP32, is what sets the
-acquisition interval — running the processor faster than the converter buys duplicated samples.
+The external part is now the **ADS1220 on SPI** (D-046), not the ADS1115 on I²C. Both Wirikuta and
+IGNIS-v5 had trouble with I²C, and IGNIS-v5's own `DataLogger.h` records that it deliberately kept its
+data path on SPI for the same reason.
 
 ### Why the radios are stopped
 
 The ESP32-WROOM-32D carries Wi-Fi and Bluetooth. TALAVERA exists partly to remove RF from the safety
 path, and a 2.4 GHz transmitter at up to +20 dBm would sit centimetres from the AD620 front end and from
-a 20 m pyrotechnic cable — the two most EMI-sensitive things on the bench.
+the pyrotechnic wiring — the two most EMI-sensitive things on the bench.
 
 The logger still cannot fire anything: it has no outputs and no connection to any safety net, so the
 safety argument is unchanged. The concern is **measurement integrity and pyro-line pickup**, not direct
@@ -63,8 +64,8 @@ hardware and safety question, not a firmware convenience (D-029).
 
 Enforced in hardware. Do not work around them in software.
 
-1. **No electrical connection to any safety net.** The logger sees the buffered output of the
-   instrumentation amplifier and nothing else.
+1. **No electrical connection to any safety net.** The logger sees the analog front end's output and
+   nothing else.
 2. **No outputs.** It reads, and it writes to its own SD card. It drives nothing.
 3. **Its own fused, separately regulated rail.** It cannot brown out a relay coil.
 4. **A layout keep-out** separates it from the firing chain.
