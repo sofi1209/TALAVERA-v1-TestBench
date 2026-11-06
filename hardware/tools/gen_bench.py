@@ -157,10 +157,10 @@ s.power("+3V3", adc['13'])         # DVDD
 s.power("+3V3", adc['12'])         # AVDD
 s.power("GND", adc['4'])           # DGND
 s.power("GND", adc['5'])           # AVSS
-s.stub(adc['1'],  "ADC_SCLK")
+s.stub(adc['1'],  "SPI_SCK")
 s.stub(adc['2'],  "ADC_CS")
-s.stub(adc['16'], "ADC_DIN")
-s.stub(adc['15'], "ADC_DOUT")
+s.stub(adc['16'], "SPI_MOSI")
+s.stub(adc['15'], "SPI_MISO")
 s.stub(adc['14'], "ADC_DRDY")
 s.text("REFP0/REFN0 tied to the excitation for a\nratiometric measurement - confirm at O-2.", 286, 100, 1.4, False)
 
@@ -197,37 +197,57 @@ s.text("A/B LINK NETWORK (D-054).\n"
 
 # ==================================================================== LOGGER
 hdr("5. LOGGER - ESP32-DevKitC V4, zero authority", 205, 175)
-s.box(202, 179, 185, 150)
+s.box(202, 179, 185, 145)
 s.text("No outputs reach any safety net. Radios stopped at boot (D-029).", 206, 183, 1.5, False)
 
-ml = s.place(CONN19, "MCU1A", "DevKitC left", 235, 240)
-mr = s.place(CONN19, "MCU1B", "DevKitC right", 340, 240)
-s.text("Socketed on 2 x PPTC191LFBN-RC (D-042).\nPin numbers are socket positions; GPIO\nassignment per firmware/README.md.", 300, 300, 1.4, False)
+mcu = s.place("RF_Module:ESP32-WROOM-32D", "MCU1", "ESP32-DevKitC V4", 290, 250)
+s.power("+3V3", mcu['2'])          # VDD
+s.power("GND", mcu['1'])           # GND
+# shared VSPI bus: one SCK/MOSI/MISO, a separate chip select per device
+for pn, net in [('30', "SPI_SCK"),    # IO18
+                ('37', "SPI_MOSI"),   # IO23
+                ('31', "SPI_MISO"),   # IO19
+                ('28', "ADC_CS"),     # IO17
+                ('27', "ADC_DRDY"),   # IO16
+                ('26', "SD_CS"),      # IO4
+                ('12', "SD_DETECT"),  # IO27
+                ('6',  "RECORD"),     # IO34 - input only, no internal pull-up
+                ('16', "LOGGER_LED"), # IO13
+                ('10', "RS485_DI"),   # IO25  UART2 TX
+                ('11', "RS485_RO"),   # IO26  UART2 RX
+                ('13', "RS485_DE")]:  # IO14
+    s.stub(mcu[pn], net)
+ren = s.place(R, "R_EN", "10k", 240, 215, angle=90)
+s.stub(ren['1'], "+3V3_LOGGER", 3); s.stub(ren['2'], "ESP_EN", 3)
+s.stub(mcu['3'], "ESP_EN")         # EN
+cen = s.place(C, "C_EN", "100nF", 215, 230)
+s.stub(cen['1'], "ESP_EN", 3); s.power("GND", cen['2'])
+c9 = s.place(C, "C9", "100nF", 360, 215); s.stub(c9['1'], "+3V3_LOGGER", 3); s.power("GND", c9['2'])
+c10 = s.place(C, "C10", "10uF", 380, 215); s.stub(c10['1'], "+3V3_LOGGER", 3); s.power("GND", c10['2'])
 
-for pin, net in [('1', "+3V3_LOGGER"), ('2', "GND_RTN"), ('5', "RECORD"),
-                 ('7', "SD_CS"), ('9', "ADC_CS"), ('11', "ADC_SCLK"),
-                 ('13', "ADC_DIN"), ('15', "ADC_DOUT"), ('17', "ADC_DRDY")]:
-    s.stub(ml[pin], net)
-for pin, net in [('1', "SD_SCK"), ('2', "SD_MOSI"), ('3', "SD_MISO"),
-                 ('4', "SD_DETECT"), ('5', "RS485_RO"), ('6', "RS485_DI"),
-                 ('7', "RS485_DE"), ('8', "LOGGER_LED"), ('19', "GND_RTN")]:
-    s.stub(mr[pin], net)
+for _i, _ln in enumerate([
+        "MCU1 is drawn as the ESP32-WROOM-32D module so the GPIO names are readable.",
+        "The PHYSICAL part is a socketed ESP32-DevKitC V4 on 2 x PPTC191LFBN-RC (D-042),",
+        "so the symbol-to-socket pin mapping is set when the DevKitC footprint is made (O-16).",
+        "Pins avoid GPIO6-11 (SPI flash) and all strapping pins 0, 2, 5, 12, 15 (D-031).",
+        "RECORD sits on IO34 because 34-39 are INPUT-ONLY and cannot become outputs."]):
+    s.text(_ln, 205, 300 + _i * 4, 1.4, False)
 
 # =================================================================== STORAGE
 hdr("6. STORAGE - on-board microSD", 400, 18)
 s.box(397, 22, 180, 110)
 sd = s.place("Connector:Micro_SD_Card_Det2", "CARD1", "THD2528-11SD-GF", 470, 60)
 s.stub(sd['2'], "SD_CS")      # DAT3/CD
-s.stub(sd['3'], "SD_MOSI")    # CMD
-s.stub(sd['5'], "SD_SCK")     # CLK
-s.stub(sd['7'], "SD_MISO")    # DAT0
+s.stub(sd['3'], "SPI_MOSI")    # CMD
+s.stub(sd['5'], "SPI_SCK")     # CLK
+s.stub(sd['7'], "SPI_MISO")    # DAT0
 s.power("+3V3", sd['4'])
 s.power("GND", sd['6'])
 s.stub(sd['10'], "SD_DETECT")
 s.power("GND", sd['9'])
 s.power("GND", sd['SH'])
-for i, (ref, net) in enumerate([("R_SDCS", "SD_CS"), ("R_SDDI", "SD_MOSI"),
-                                ("R_SDDO", "SD_MISO"), ("R_SDDET", "SD_DETECT")]):
+for i, (ref, net) in enumerate([("R_SDCS", "SD_CS"), ("R_SDDI", "SPI_MOSI"),
+                                ("R_SDDO", "SPI_MISO"), ("R_SDDET", "SD_DETECT")]):
     r = s.place(R, ref, "10k", 415 + i * 20, 105, angle=90)
     s.stub(r['1'], "+3V3_LOGGER", 3); s.stub(r['2'], net, 3)
 s.text("Pull-ups per IGNIS v5 Storage.SchDoc.\nSD_DETECT on pin 9 CD with a 10k pull-up,\nshell to GND, pegs drilled 1.3 mm.", 400, 118, 1.4, False)

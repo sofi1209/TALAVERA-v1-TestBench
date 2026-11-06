@@ -77,15 +77,22 @@ wrong. Raise it as a hardware question instead.
 
 ## Pin map
 
-Chosen to avoid the ESP32's traps rather than for convenience.
+Matches `MCU1` on the bench schematic. Chosen to avoid the ESP32's traps rather than for convenience.
 
-| Signal | GPIO | Note |
-|---|---|---|
-| SD CS | 4 | — |
-| SD SCK / MISO / MOSI | 18 / 19 / 23 | VSPI defaults |
-| I²C SDA / SCL | 21 / 22 | ADS1115 |
-| Logger LED | 13 | Logger-local only. **Not** the bench beacon. |
-| RECORD input | 34 | **Input-only pin**, external pull-up required |
+| Signal | GPIO | Module pin | Note |
+|---|---|---|---|
+| SPI SCK | 18 | 30 | Shared VSPI bus |
+| SPI MISO | 19 | 31 | Shared |
+| SPI MOSI | 23 | 37 | Shared |
+| ADC CS | 17 | 28 | ADS1220 chip select |
+| ADC DRDY | 16 | 27 | Active low, paces the log |
+| SD CS | 4 | 26 | — |
+| SD DETECT | 27 | 12 | Card present, active low |
+| RECORD | 34 | 6 | **Input-only pin**, external pull-up required |
+| Logger LED | 13 | 16 | Logger-local only. **Not** the bench beacon. |
+| RS-485 TX | 25 | 10 | UART2 |
+| RS-485 RX | 26 | 11 | UART2 |
+| RS-485 DE/RE | 14 | 13 | — |
 
 Three rules behind that table:
 
@@ -96,9 +103,28 @@ Three rules behind that table:
   an output through a coding mistake. GPIO34 also has no internal pull-up, so the pull-up is external;
   a broken RECORD line reads as "not recording", which loses data and changes nothing about safety.
 
+The SD card and the converter **share one VSPI bus** with separate chip selects — the same arrangement
+IGNIS-v5 uses for its SD card and radio.
+
 Wirikuta's firmware defined `SERVO_PIN 5` and `BUTTON_PIN 5` on the same microcontroller, so the servo
 gating the igniter line shared a pin with an unrelated input. A short, single-purpose, commented pin map
 is how that class of mistake is avoided — not by being more careful.
+
+---
+
+## The ADS1220 is driven at register level, not through a library
+
+`logger.ino` talks to the converter with raw SPI commands — `RESET`, `WREG`, `START`, `RDATA` — rather
+than depending on a third-party ADS1220 library. That is deliberate: it is about forty lines, it can be
+read and checked against the datasheet here, and it removes a dependency whose quality nobody on the
+team has verified.
+
+**All four configuration registers are placeholders.** Gain, data rate and reference source depend on the
+load cell datasheet (O-2) and must be confirmed against the ADS1220 datasheet before use.
+
+The log is paced by the **DRDY pin**, not by a timer. DRDY falls when a new conversion exists, so the
+recorded rate is whatever the converter is actually configured for, and no sample is duplicated or
+missed — which a fixed `millis()` interval would eventually do.
 
 ---
 
@@ -133,9 +159,10 @@ This is why RECORD exists as a separate input rather than simply switching the l
 
 | Library | Purpose |
 |---|---|
-| `Adafruit_ADS1X15` | ADS1115 driver |
-| `SD`, `SPI`, `Wire` | ESP32 Arduino core |
+| `SD`, `SPI` | ESP32 Arduino core |
 | `WiFi`, `esp_bt` | Only to switch the radios **off** |
+
+No ADC library: the ADS1220 is driven at register level (see above). `Wire` is gone with I²C.
 
 Build with the ESP32 Arduino core, board target **ESP32 Dev Module**. Not verified against hardware —
 no board exists yet.

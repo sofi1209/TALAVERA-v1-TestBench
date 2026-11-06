@@ -1,6 +1,7 @@
 /*
  * TALAVERA v1 - Thrust Logger
  * Target: ESP32-DevKitC V4  (ESP32-WROOM-32D module)
+ * Converter: ADS1220, 24-bit, over SPI
  * Ignitia Rocket Lab - Tecnologico de Monterrey, Campus Guadalajara
  *
  * ---------------------------------------------------------------------------
@@ -21,115 +22,100 @@
  *
  * THE RADIO IS DELIBERATELY STOPPED. DO NOT ENABLE IT.
  *
- * The ESP32 carries Wi-Fi and Bluetooth. TALAVERA exists partly to remove RF
- * from the safety path, and a 2.4 GHz transmitter at up to +20 dBm sitting
- * centimetres from the AD620 front end and from a 20 m pyrotechnic cable is
- * an EMI source next to the two most sensitive things on the bench.
- *
- * killRadios() below is called first in setup() and must stay there. Enabling
- * Wi-Fi or BT is a hardware and safety question, not a firmware convenience -
- * see decision D-029 in docs/DECISION-LOG.md.
+ * A 2.4 GHz transmitter at up to +20 dBm would sit centimetres from the
+ * analog front end and from the pyrotechnic wiring - the two most
+ * EMI-sensitive things on the bench. killRadios() runs first in setup() and
+ * must stay there. See decision D-029.
  * ---------------------------------------------------------------------------
  *
- * BEHAVIOUR: it records while RECORD is closed.
- *
- * No state machine. No commands. No radio. No diagnostics routine. The file
- * opens when RECORD closes and is closed cleanly when RECORD opens, so the
- * data file survives the E-STOP press that follows in the post-test procedure.
- *
- * This is deliberate. Wirikuta 1.1 ran a nine-state machine with six remote
- * commands, and two defects in it are documented in docs/REQUIREMENTS.md.
- * A logger with one behaviour has nowhere to hide a defect of that kind.
- *
- * Side benefit: the CSV contains thrust data only, so the manual cell
- * deletion that the Kalman script used to require is no longer necessary.
+ * BEHAVIOUR: it records while RECORD is closed. No state machine, no
+ * commands, no radio, no diagnostics routine. The file opens when RECORD
+ * closes and is closed cleanly when RECORD opens, so the data file survives
+ * the E-STOP press that follows in the post-test procedure.
  *
  * ---------------------------------------------------------------------------
- * STATUS: PRELIMINARY SKELETON. NOT VERIFIED AGAINST HARDWARE.
+ * STATUS: PRELIMINARY SKELETON. NOT COMPILED, NOT VERIFIED AGAINST HARDWARE.
  *
- * THE ADC IS UNDER REVIEW. The ADS1115 code below is a placeholder. Its
- * selection has been reopened (D-036) because the reported field problems
- * point at I2C rather than at conversion quality, and IGNIS-v5 documented
- * the same I2C trouble independently. If an SPI part is chosen - AD7190,
- * ADS1256 or MCP3561 are the candidates - this file's acquisition calls and
- * the I2C pin definitions are replaced wholesale. See
- * docs/ADC-TRADE-STUDY.md before investing effort here.
- *
- * The calibration constants below are placeholders. They cannot be filled in
- * until the load cell datasheet is available - see open item 4 in
- * docs/REQUIREMENTS.md. Do not trust any thrust figure this produces until
- * CAL_N_PER_COUNT has been derived from the datasheet and verified against a
- * known calibration mass in Stage 4 of test/BRINGUP-PLAN.md.
+ * The ADS1220 register values below are PLACEHOLDERS. Gain, data rate and
+ * reference source all depend on the load cell datasheet (open item O-2) and
+ * must be confirmed against the ADS1220 datasheet before use. Register-level
+ * SPI is used deliberately rather than a third-party library, so there is no
+ * dependency that cannot be read and checked here.
  * ---------------------------------------------------------------------------
  */
 
 #include <SPI.h>
 #include <SD.h>
-#include <Wire.h>
-#include <Adafruit_ADS1X15.h>
 #include <WiFi.h>
 #include <esp_bt.h>
 
 // ---------------------------------------------------------------------------
-// Pin map - ESP32-DevKitC V4. Every pin here belongs to the logger only.
+// Pin map - ESP32-WROOM-32D. Matches MCU1 on the bench schematic.
 //
-// Pins were chosen to avoid the ESP32 traps rather than for convenience:
-//   - GPIO6..11  are wired to the SPI flash. Never usable.
-//   - GPIO0,2,5,12,15 are strapping pins and are avoided entirely, so a
-//     cable left connected cannot stop the module from booting.
-//   - GPIO34..39 are input-only, which is why RECORD sits on 34: that pin
-//     is physically incapable of becoming an output by a coding mistake.
+// Avoids GPIO6-11 (SPI flash) and every strapping pin (0, 2, 5, 12, 15), so a
+// cable left connected cannot stop the module booting. RECORD is on GPIO34
+// because 34-39 are INPUT-ONLY and so physically cannot become outputs
+// through a coding mistake - they also have no internal pull-up, hence the
+// external one on the schematic.
 //
-// Note on Wirikuta: its firmware defined SERVO_PIN 5 and BUTTON_PIN 5 on the
-// same microcontroller, so the servo gating the igniter line shared a pin
-// with an unrelated input. Keeping this map short, single-purpose and
-// commented is how that class of mistake is avoided, not by being careful.
+// SD card and ADC share one VSPI bus with separate chip selects, the same
+// arrangement IGNIS-v5 uses for its SD card and radio.
 // ---------------------------------------------------------------------------
-static const uint8_t PIN_SD_CS    = 4;   // microSD chip select
-static const uint8_t PIN_SD_SCK   = 18;  // VSPI default
-static const uint8_t PIN_SD_MISO  = 19;  // VSPI default
-static const uint8_t PIN_SD_MOSI  = 23;  // VSPI default
-static const uint8_t PIN_I2C_SDA  = 21;  // ADS1115
-static const uint8_t PIN_I2C_SCL  = 22;  // ADS1115
-static const uint8_t PIN_LED_OK   = 13;  // Logger-local LED. NOT the bench beacon.
-static const uint8_t PIN_RECORD   = 34;  // INPUT-ONLY. Closed to GND = record.
+static const uint8_t PIN_SPI_SCK  = 18;
+static const uint8_t PIN_SPI_MISO = 19;
+static const uint8_t PIN_SPI_MOSI = 23;
+static const uint8_t PIN_ADC_CS   = 17;
+static const uint8_t PIN_ADC_DRDY = 16;   // active low, data ready
+static const uint8_t PIN_SD_CS    =  4;
+static const uint8_t PIN_SD_DETECT= 27;   // card present, active low
+static const uint8_t PIN_RECORD   = 34;   // INPUT-ONLY, external pull-up
+static const uint8_t PIN_LED_OK   = 13;   // logger-local only. NOT the bench beacon.
 
 // ---------------------------------------------------------------------------
-// Acquisition settings
-//
-// The ADS1115 caps the sample rate at 860 SPS, not the ESP32. Running the
-// ESP32 faster than the converter buys nothing but duplicated samples, so
-// the interval below is set from the converter's limit with margin.
-// Confirm against the motor thrust rise time before Gate 4.
+// ADS1220 command set
 // ---------------------------------------------------------------------------
-static const uint16_t SAMPLE_INTERVAL_MS = 3;     // ~333 Hz, inside the ADS1115 860 SPS ceiling
-static const uint16_t FLUSH_INTERVAL_MS  = 500;   // Bound data loss if power is cut unexpectedly
+static const uint8_t CMD_RESET  = 0x06;
+static const uint8_t CMD_START  = 0x08;
+static const uint8_t CMD_RDATA  = 0x10;
+static const uint8_t CMD_WREG   = 0x40;   // | (reg << 2) | (len - 1)
 
 // ---------------------------------------------------------------------------
-// Calibration - PLACEHOLDER VALUES, NOT VERIFIED
+// ADS1220 configuration - ALL FOUR BYTES ARE PLACEHOLDERS (O-2)
 //
-// CAL_N_PER_COUNT must be derived from:
-//   - load cell rated output (mV/V)        <- TBD, needs datasheet
-//   - excitation voltage                   <- TBD, set by hardware
-//   - AD620 gain                           <- TBD, set by Rg at Gate 2
-//   - ADS1115 full-scale range and PGA     <- set below
-// then verified with a known mass in Stage 4 of the bring-up plan.
+//   REG0  MUX[7:4] GAIN[3:1] PGA_BYPASS[0]
+//   REG1  DR[7:5] MODE[4:3] CM[2] TS[1] BCS[0]
+//   REG2  VREF[7:6] FIR[5:4] PSW[3] IDAC[2:0]
+//   REG3  I1MUX[7:5] I2MUX[4:2] DRDYM[1] -
 //
-// Wirikuta used CALIBRATION_PARAM 0.23734177 (manual Annex C). That value
-// belongs to Wirikuta's gain chain and does NOT carry over to this board.
+// Intent, to be confirmed against the datasheet and the load cell:
+//   - differential AIN0-AIN1, PGA enabled, gain set from the cell's mV/V
+//   - continuous conversion so the burn is captured without re-triggering
+//   - EXTERNAL reference on REFP0/REFN0, tied to the bridge excitation, so
+//     the measurement is ratiometric and excitation drift cancels
 // ---------------------------------------------------------------------------
-static const float CAL_N_PER_COUNT = 1.0f;   // TBD - placeholder. Logs raw counts as newtons until set.
-static const bool  CAL_VERIFIED    = false;  // Set true only after Stage 4 sign-off.
+static const uint8_t ADS_REG0 = 0x00;   // TBD - gain depends on O-2
+static const uint8_t ADS_REG1 = 0x04;   // TBD - data rate and continuous mode
+static const uint8_t ADS_REG2 = 0x40;   // TBD - external reference
+static const uint8_t ADS_REG3 = 0x00;   // TBD
 
-Adafruit_ADS1115 ads;
+static const uint16_t FLUSH_INTERVAL_MS = 500;
+
+// ---------------------------------------------------------------------------
+// Calibration - PLACEHOLDER, NOT VERIFIED
+//
+// Derive from the load cell rated output (mV/V), the excitation voltage, the
+// configured PGA gain and the reference, then verify against a known mass in
+// Stage 4 of test/BRINGUP-PLAN.md. Wirikuta's CALIBRATION_PARAM belongs to a
+// different gain chain and does NOT carry over.
+// ---------------------------------------------------------------------------
+static const float CAL_N_PER_COUNT = 1.0f;
+static const bool  CAL_VERIFIED    = false;
+
+SPISettings adcSpi(1000000, MSBFIRST, SPI_MODE1);   // ADS1220 is CPOL=0, CPHA=1
 File logFile;
+static uint32_t lastFlush = 0;
+static bool recording = false, hwReady = false;
 
-static uint32_t lastSample = 0;
-static uint32_t lastFlush  = 0;
-static bool     recording  = false;
-static bool     hwReady    = false;
-
-// Stop both radios before anything else runs. See the header block.
 static void killRadios() {
   WiFi.persistent(false);
   WiFi.disconnect(true, true);
@@ -137,16 +123,53 @@ static void killRadios() {
   btStop();
 }
 
+static void adcCmd(uint8_t c) {
+  SPI.beginTransaction(adcSpi);
+  digitalWrite(PIN_ADC_CS, LOW);
+  SPI.transfer(c);
+  digitalWrite(PIN_ADC_CS, HIGH);
+  SPI.endTransaction();
+}
+
+static void adcConfigure() {
+  adcCmd(CMD_RESET);
+  delay(1);
+  SPI.beginTransaction(adcSpi);
+  digitalWrite(PIN_ADC_CS, LOW);
+  SPI.transfer(CMD_WREG | (0 << 2) | 3);   // write 4 registers starting at 0
+  SPI.transfer(ADS_REG0);
+  SPI.transfer(ADS_REG1);
+  SPI.transfer(ADS_REG2);
+  SPI.transfer(ADS_REG3);
+  digitalWrite(PIN_ADC_CS, HIGH);
+  SPI.endTransaction();
+  adcCmd(CMD_START);                        // continuous conversion
+}
+
+// Returns the latest 24-bit signed sample, sign-extended to 32 bits.
+static int32_t adcRead() {
+  SPI.beginTransaction(adcSpi);
+  digitalWrite(PIN_ADC_CS, LOW);
+  SPI.transfer(CMD_RDATA);
+  uint32_t v = ((uint32_t)SPI.transfer(0xFF) << 16) |
+               ((uint32_t)SPI.transfer(0xFF) << 8) |
+                (uint32_t)SPI.transfer(0xFF);
+  digitalWrite(PIN_ADC_CS, HIGH);
+  SPI.endTransaction();
+  if (v & 0x800000UL) v |= 0xFF000000UL;    // sign-extend
+  return (int32_t)v;
+}
+
 static bool recordRequested() {
-  // Active low. The pin is input-only and needs an EXTERNAL pull-up:
-  // GPIO34..39 have no internal pull-ups. An open or broken RECORD line
-  // therefore reads as "not recording", which loses data but changes
-  // nothing about bench safety.
+  // Active low. An open or broken RECORD line reads as "not recording",
+  // which loses data and changes nothing about bench safety (D-032).
   return digitalRead(PIN_RECORD) == LOW;
 }
 
-// Pick the next unused filename: LOG000.CSV, LOG001.CSV, ...
-// Highest number is always the most recent test, matching Wirikuta convention.
+static bool cardPresent() {
+  return digitalRead(PIN_SD_DETECT) == LOW;
+}
+
 static bool openNextFile() {
   char name[16];
   for (uint16_t i = 0; i < 1000; i++) {
@@ -156,66 +179,52 @@ static bool openNextFile() {
       return (bool)logFile;
     }
   }
-  return false;  // 1000 files on the card. Archive them.
+  return false;
 }
 
 static void startRecording() {
-  if (!openNextFile()) {
-    Serial.println(F("could not open a log file"));
-    return;
-  }
-  // Header. Thrust data only - no diagnostic rows, so the analysis script
-  // can parse this file with nothing deleted by hand.
+  if (!openNextFile()) { Serial.println(F("could not open a log file")); return; }
   logFile.println(F("# TALAVERA v1 thrust log"));
   logFile.println(F("# logger: ESP32-WROOM-32D, radios stopped"));
+  logFile.println(F("# adc: ADS1220, SPI, differential AIN0-AIN1"));
   logFile.print(F("# cal_n_per_count="));
   logFile.print(CAL_N_PER_COUNT, 8);
   logFile.print(F(" cal_verified="));
   logFile.println(CAL_VERIFIED ? F("true") : F("false"));
   logFile.println(F("millis,raw_counts,thrust_N"));
   logFile.flush();
-
   recording = true;
-  digitalWrite(PIN_LED_OK, HIGH);   // Lit = recording.
+  digitalWrite(PIN_LED_OK, HIGH);
   Serial.println(F("recording"));
 }
 
 static void stopRecording() {
-  if (logFile) {
-    logFile.flush();
-    logFile.close();                // Clean close - this is the whole point of RECORD.
-  }
+  if (logFile) { logFile.flush(); logFile.close(); }
   recording = false;
   digitalWrite(PIN_LED_OK, LOW);
   Serial.println(F("stopped, file closed"));
 }
 
 void setup() {
-  killRadios();                     // First. Always.
+  killRadios();                    // first, always
 
   pinMode(PIN_LED_OK, OUTPUT);
   digitalWrite(PIN_LED_OK, LOW);
-  pinMode(PIN_RECORD, INPUT);       // GPIO34: input-only, external pull-up required.
+  pinMode(PIN_RECORD, INPUT);      // GPIO34: input-only, external pull-up
+  pinMode(PIN_SD_DETECT, INPUT_PULLUP);
+  pinMode(PIN_ADC_CS, OUTPUT);
+  digitalWrite(PIN_ADC_CS, HIGH);
+  pinMode(PIN_ADC_DRDY, INPUT);
 
   Serial.begin(115200);
   Serial.println(F("TALAVERA logger - no safety authority - radios stopped"));
 
-  Wire.begin(PIN_I2C_SDA, PIN_I2C_SCL);
-  if (!ads.begin()) {
-    Serial.println(F("ADC not found"));
-    return;                         // Stays dark. A dark logger LED means no data, not an unsafe bench.
-  }
-  // +/- 4.096 V full scale, fastest conversion. Revisit the PGA once the
-  // AD620 gain is fixed at Gate 2 - note the ADS1115 runs on 3.3 V here, so
-  // its input must stay within 3.3 V + 0.3 V regardless of this setting.
-  ads.setGain(GAIN_ONE);
-  ads.setDataRate(RATE_ADS1115_860SPS);
+  SPI.begin(PIN_SPI_SCK, PIN_SPI_MISO, PIN_SPI_MOSI);
 
-  SPI.begin(PIN_SD_SCK, PIN_SD_MISO, PIN_SD_MOSI, PIN_SD_CS);
-  if (!SD.begin(PIN_SD_CS)) {
-    Serial.println(F("SD not found"));
-    return;
-  }
+  adcConfigure();
+
+  if (!cardPresent()) Serial.println(F("warning: SD_DETECT reports no card"));
+  if (!SD.begin(PIN_SD_CS)) { Serial.println(F("SD not found")); return; }
 
   hwReady = true;
   Serial.println(F("ready - waiting for RECORD"));
@@ -225,25 +234,16 @@ void loop() {
   if (!hwReady) return;
 
   const bool want = recordRequested();
-
-  if (want && !recording) {
-    startRecording();
-  } else if (!want && recording) {
-    stopRecording();                // File closed before the operator presses E-STOP.
-  }
-
+  if (want && !recording)       startRecording();
+  else if (!want && recording)  stopRecording();
   if (!recording) return;
 
-  const uint32_t now = millis();
-
-  if (now - lastSample >= SAMPLE_INTERVAL_MS) {
-    lastSample = now;
-
-    // Differential across AIN0/AIN1 - the buffered instrumentation amp output.
-    const int16_t raw = ads.readADC_Differential_0_1();
-
-    // Raw counts are written alongside the scaled value so a log taken before
-    // calibration is still usable afterwards.
+  // Pace from the converter, not from a timer: DRDY falls when a new sample
+  // exists, so the log rate is whatever the ADS1220 is actually configured
+  // for and no sample is duplicated or missed.
+  if (digitalRead(PIN_ADC_DRDY) == LOW) {
+    const int32_t raw = adcRead();
+    const uint32_t now = millis();
     logFile.print(now);
     logFile.print(',');
     logFile.print(raw);
@@ -251,8 +251,9 @@ void loop() {
     logFile.println(raw * CAL_N_PER_COUNT, 4);
   }
 
+  const uint32_t now = millis();
   if (now - lastFlush >= FLUSH_INTERVAL_MS) {
     lastFlush = now;
-    logFile.flush();                // Bounds loss to FLUSH_INTERVAL_MS if power is cut.
+    logFile.flush();             // bounds loss if power is cut unexpectedly
   }
 }
