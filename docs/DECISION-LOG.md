@@ -18,7 +18,6 @@ Signs off pyrotechnic, actuator, motor, high-current, battery and mains circuits
 
 | ID | Decision | Reason | Date | Approved by |
 |----|----------|--------|------|-------------|
-
 | D-001 | Source of truth is the Wirikuta operations manual, Aug 2025, extracted text layer | Only machine-readable record available | 2026-11-06 | pending |
 | D-002 | Annex A and B treated as unavailable; KiCad sources requested | Raster images, no text layer | 2026-11-06 | pending |
 | D-003 | Nothing energized; no circuit approved at any gate by the design assistant | Project safety rule | 2026-11-06 | standing |
