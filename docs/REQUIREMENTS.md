@@ -162,6 +162,8 @@ Both are data only Ignitia can supply. Neither will be guessed.
 | O-7 | **ADS1220 input common-mode range with PGA enabled at 3.3 V**, checked against the real load cell | Narrowed from the old gain-range item. The PGA can be bypassed for rail-to-rail input at the cost of gain. Depends on O-2. |
 | O-8 | Board size target for each board | Outlines are placeholders (D-023). Layer count settled at 2; rev A is a bare board, hand-assembled (D-051). |
 | O-9 | Copper weight | The `PYRO` 2.00 mm track width assumes 1 oz. Confirm before trusting it. |
+| O-16 | **Three footprints to create or import**: `SRD-12VDC-SL-C` relay, `THD2528-11SD-GF` microSD, `TYPE-C-31-M-12` USB-C | Gate 4, not Gate 2 — KiCad assigns footprints after the schematic. All three already exist in the Altium IGNIS library; SnapMagic also exports KiCad. All symbols are already in KiCad 10 stock libraries. See [SCHEMATIC-PLAN.md](SCHEMATIC-PLAN.md). |
+| O-17 | Current budget for the 12 V input fuse | Four relay coils at ~30 mA each plus the logger are known; the **beacon LED current is not**, and it dominates. Design choice, not missing data. |
 | O-15 | **ADS1220 TSSOP-16 is the hardest part to hand-solder** on the board (0.65 mm pitch) | Manageable with flux and a fine tip, but it is the one part where a breakout module is a fallback if hand assembly proves painful. Decide at Gate 4. |
 | O-10 | Which ADS1115 symptom was actually seen — lockup, noise, drift, clipping or speed | Informational now that D-046 is decided, but it would confirm the diagnosis or point at a layout problem the new part will not fix. |
 | O-11 | Largest motor class intended (total impulse) | Standoff planning and connector sizing. |

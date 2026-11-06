@@ -224,6 +224,7 @@ TALAVERA-v1-TestBench/
 │   ├── OPERATIONS-MANUAL.md      Preliminary field manual
 │   ├── SAFETY.md                 Safe states, hazard table, prohibited actions
 │   ├── REQUIREMENTS.md           Gate 0 output: functions, scope, open items
+│   ├── SCHEMATIC-PLAN.md         Gate 2 readiness: sheets, symbols, footprints
 │   ├── ADC-TRADE-STUDY.md        Replacing the ADS1115: options and recommendation
 │   ├── UMBILICAL-AND-TELEMETRY.md  Three data paths; why direct USB fails at 20 m
 │   └── DECISION-LOG.md           Every decision, reason, date, approver
