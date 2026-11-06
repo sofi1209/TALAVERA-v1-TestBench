@@ -93,6 +93,34 @@
   (D-039)
 - The IGNIS-v5 Python ground-station app may cover most of the live-readout work for the secondary path.
 
+### Parts list, and four decisions closed
+
+**Added**
+- `fabrication/PARTS-LIST.md` plus two CSVs, in the IGNIS v5 / MAGNIS v1 column format.
+  **35 lines confirmed against existing lab stock, 18 still open.** Explicitly not a BOM — no netlist
+  exists to reconcile designators against.
+- `fabrication/generate_parts_list.py` — regenerates all three files from one source.
+
+**Decided**
+- **ADC: `ADS1220IPWR`** (D-046). 24-bit, SPI, 2 kSPS, integrated PGA ×1–128, stocked at **both** UNIT
+  and LCSC (C48263). The AD620 footprint is laid out with 0 Ω bypass links and hand-populated, because
+  the SOIC `AD620ARZ` is on pre-order at LCSC and JLCPCB very likely cannot place it. Both front ends
+  can now be A/B tested on one board.
+- **Logger power sits upstream of the master kill relay** (D-047), own fuse and switch, so an E-STOP
+  cannot corrupt a data file. Closes the Gate 0 question.
+- **RS-485 / USB secondary path built into rev A** (D-048).
+- **Fabrication: JLCPCB, 2-layer, assembled** (D-049). Consequence: every populated part must be
+  LCSC-stocked.
+
+**Resolved from the supplied BOMs**
+- microSD socket is `THD2528-11SD-GF` (C283232) — open item 14 closed (D-041).
+- Logger mounting is a socketed DevKitC on `PPTC191LFBN-RC`, per MAGNIS v1 — open item 10 closed (D-042).
+
+**Changed**
+- `WS2812B` excluded from the safety beacon; plain LEDs wired to the real ARM/FIRE lines (D-043).
+- `SKRPABE010` excluded from the FIRE control; a guarded panel button is required (D-044).
+- IGNIS v4/2v2 continuity-sense topology adopted, **gate-drive half explicitly rejected** (D-045).
+
 ### Outstanding before Gate 2
 
 - Review owner must be named.

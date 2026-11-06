@@ -44,7 +44,7 @@ path is wire and discretes.
 | Thrust measurement | Improve on current noise floor (1-grain motors unresolvable today) | Manual p. 28 |
 | Max motor class | **TBD** — total impulse, not peak thrust | Open item |
 | Operating temperature | 0 to +55 °C ambient *(assumed)* | Open item |
-| Fabrication | **TBD** — house, layers, assembly, size | Open item |
+| Fabrication | **JLCPCB, 2-layer, assembled.** Every populated part must therefore be LCSC-stocked. | D-049 |
 
 > **Standoff deviation, logged:** a 20 m umbilical yields roughly 15–17 m of real standoff after cable
 > routing. NAR/TRA minimum personnel distance for even an H-class motor is 30 m, or 22.5 m with the
@@ -86,12 +86,14 @@ Every row is labelled **V** (verified from a datasheet or the Wirikuta manual, w
 | Instrumentation amp | AD620 (carried over) | **V** — manual p. 19 |
 | Regulation | Linear, LM78xx family | **A** — kept deliberately; a switcher injects noise into the strain front end |
 | Logger processor | **ESP32-DevKitC V4 (ESP32-WROOM-32D)**, 3.3 V | Decision D-028 |
-| Logger ADC | **Under review.** ADS1115 reopened — the goal is to get off I²C. See [ADC trade study](docs/ADC-TRADE-STUDY.md). | D-036 |
+| Logger ADC | **ADS1220IPWR** — 24-bit, **SPI**, 2 kSPS, integrated PGA ×1–128. Stocked at **both** UNIT and LCSC (C48263). Replaces the ADS1115 and its I²C bus. | D-046 |
+| Analog front end | ADS1220 internal PGA is primary. **AD620 footprint laid out with 0 Ω bypass links**, hand-populated, so both chains can be A/B tested. | D-046 |
+| Logger power | **Upstream of the master kill relay**, own fuse and switch, so an E-STOP cannot corrupt the data file | D-047 |
 | | *ESP32 internal SAR ADC remains excluded* — too nonlinear for a noise-limited strain measurement | D-030 |
 | Logger radios | **Wi-Fi and Bluetooth stopped at boot, never enabled** | D-029 |
 | Logger mounting | Socketed DevKitC vs. soldered WROOM-32D | **TBD** — vibration decision, open item |
 | Storage | **Embedded microSD socket on-board**, porting the IGNIS-v5 `Storage.SchDoc` topology with an `SD_DETECT` line | D-037 |
-| Secondary telemetry | Isolated **RS-485** over the umbilical, **USB-C on the station board**. Direct USB rejected — 5 m spec vs. 20 m run. | D-038 |
+| Secondary telemetry | Isolated **RS-485** over the umbilical, **USB-C on the station board**, **built in rev A**. Direct USB rejected — 5 m spec vs. 20 m run. | D-038, D-048 |
 | Igniter drive | 1 channel, low-side, with NC shunt | **A** — pending e-match spec |
 | E-match no-fire / all-fire current | — | **TBD** — blocks every margin claim |
 | Firing pair | 2 × 16 AWG shielded, own cable | **V** — computed, see below |

@@ -94,9 +94,19 @@ conductor pair running to a bridgewire. Neither wants a transmitter next to it.
 This is a **measurement-integrity and pickup** concern, not a command-injection one. It is listed as a
 safety constraint because the pyro cable is involved.
 
-### Open question — logger power domain
+### Resolved — logger power domain
 
-Not yet decided. The choice has a real consequence:
+**Decided (D-047): the logger sits upstream of the master kill relay, with its own fuse and its own
+switch.** The E-STOP kills the pyro circuit and the beacon; the logger keeps running until stopped
+deliberately via RECORD, so the data file always closes cleanly. The E-STOP's job is to make the bench
+safe, and a logger with no outputs is not a hazard.
+
+One operational consequence to carry into the manual: **a dark beacon no longer means the whole board is
+dead.** The logger may still be powered. That does not affect safety — the logger cannot energise
+anything — but operators must be told that beacon-dark confirms the *pyro circuit* is de-energised, not
+that every component is unpowered.
+
+The reasoning behind the choice:
 
 The Wirikuta protocol presses the e-stop to cut power after the burn, then retrieves the SD card
 (manual p. 13, step 4b). **If the logger shares the killed rail, the e-stop yanks power mid-write and can

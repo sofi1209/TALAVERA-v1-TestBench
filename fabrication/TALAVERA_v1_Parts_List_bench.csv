@@ -7,12 +7,11 @@ In lab,"Dev board ESP32-DevKitC V4 (WROOM-32D, PCB antenna)",ESP32-DevKitC-32D,M
 In lab,"Female header 1x19, 2.54 mm",PPTC191LFBN-RC,- (MCU1),2,--,UNIT,Mouser,DigiKey,Sockets for the DevKit. Cut from a 1x40 strip. Same approach as MAGNIS v1.
 STORAGE
 In lab,MicroSD socket push-push,THD2528-11SD-GF,CARD1,1,C283232,UNIT,Mouser,DigiKey,Pin 9 CD -> SD_DETECT with a 10 k pull-UP (as IGNIS v5 R28). Locating pegs drilled 1.3 mm (MAGNIS v1). Shell pads MP1-4 to GND.
-ANALOG FRONT END  (selection reopened - D-036)
-Pending decision,"24-bit bridge ADC, SPI, integrated PGA",AD7190BRUZ  [CANDIDATE],U_ADC,1,--,--,Mouser,DigiKey,RECOMMENDED. Replaces AD620 + ADS1115 together. All figures UNVERIFIED - confirm against datasheet before ordering.
-Pending decision,"24-bit ADC, SPI - second source",ADS1256IDBT  [CANDIDATE],U_ADC alt,1,--,--,Mouser,DigiKey,Fallback if AD7190 lead time is bad. Easier to buy.
-Pending decision,"24-bit ADC, SPI - minimum-change option",MCP3561 / MCP3564  [CANDIDATE],U_ADC alt,1,--,--,Mouser,DigiKey,"Use ONLY with the AD620 retained. Fixes the interface, keeps the two-stage chain."
-Deleted if AD7190,Instrumentation amplifier,AD620ANZ,U_AMP,0 or 1,--,--,Mouser,DigiKey,Carried over from Wirikuta (manual p. 19). DELETED if an integrated-PGA converter is chosen.
-TBD,Load cell excitation reference,TBD,U_REF,1,--,--,--,--,Cannot be specified until the load cell datasheet is available (open item 4). Ratiometric preferred.
+ANALOG FRONT END  (D-046)
+New (approved),"24-bit ADC, SPI, 2 kSPS, integrated PGA x1-128, TSSOP-16",ADS1220IPWR,U_ADC,1,C48263,UNIT,Mouser,DigiKey,"SELECTED. Replaces the ADS1115 and its I2C bus. Stocked at BOTH UNIT and LCSC (C48263, ~15.9k, ~$1.71 @100) - stock checked 6 Nov 2026, re-verify before ordering. Internal PGA is the PRIMARY front end. Verify input common-mode range with PGA enabled at 3.3 V against the load cell (open item 4)."
+Optional / bypassable,Instrumentation amplifier (hand-populated),"AD620ARZ (SOIC) or AD620AN (DIP, UNIT)",U_AMP,0,C578332,UNIT,Mouser,DigiKey,"Footprint laid out with 0 ohm BYPASS LINKS, NOT populated at assembly. AD620ARZ is listed under LCSC 'Pre-ordered Products' so JLCPCB very likely cannot place it. Hand-populate to A/B the two front ends in bring-up Stage 4."
+New (approved),Resistor 0 ohm 0805 - AD620 bypass links,Generic 0 R jumper,"R_BYP1, R_BYP2",2,--,UNIT,Mouser,DigiKey,Fitted = PGA-only chain. Removed + AD620 populated = two-stage chain. Lets both be measured on identical hardware.
+TBD,Load cell excitation reference,TBD,U_REF,1,--,--,--,--,"Cannot be specified until the load cell datasheet is available (open item 4). Check whether the excitation can serve as the ADS1220 external reference for a ratiometric measurement, which would cancel excitation drift."
 SAFETY CHAIN  (hardware only - no MCU)
 TBD,"Relay, 12 V coil, contact NORMALLY OPEN - ARM",TBD,K1,1,--,--,Mouser,DigiKey,Energised by the station ARM key. Must be NO so DISARMED is the de-energised state.
 TBD,"Relay, 12 V coil, contact NORMALLY OPEN - FIRE",TBD,K2,1,--,--,Mouser,DigiKey,Energised only while the station FIRE button is held.
@@ -29,8 +28,8 @@ INDICATORS
 In lab,Red LED 0805,NCD0805R1,D_IND1..6,6,C84256,UNIT,Mouser,DigiKey,Hardware-driven status LEDs.
 TBD,"High-brightness beacon LEDs, long-range",TBD,D_BEACON,TBD,--,--,Mouser,DigiKey,"Must be visible at 20-40 m (manual p. 24). DRIVEN FROM THE REAL ARM/FIRE LINES (D-017), not from the MCU."
 Logger status only,Addressable RGB LED 5050,WS2812B-B/T,LED1,1,C2761795,UNIT,Mouser,DigiKey,"CAUTION: addressable LEDs need an MCU data signal, so they CANNOT serve the safety beacon (D-017). Logger-local status only."
-"TELEMETRY  (secondary path - optional in rev A, D-038)"
-TBD,Isolated RS-485 transceiver,ADM2582E / ADM2587E  [CANDIDATE],U_485,1,--,--,Mouser,DigiKey,Integrated isolation plus isolated supply. Alternative: MAX13487 + ADuM1201 + isolated DC-DC.
+"TELEMETRY  (secondary path - BUILT IN REV A, D-048)"
+Pending part,Isolated RS-485 transceiver,ADM2582E / ADM2587E  [CANDIDATE],U_485,1,--,--,Mouser,DigiKey,Path confirmed for rev A (D-048); exact part still to choose. Integrated isolation plus isolated supply. Must be LCSC-stocked for JLCPCB assembly (D-049). Alternative: MAX13487 + ADuM1201 + isolated DC-DC.
 In lab,Optocoupler SMD-4 (discrete isolation alternative),TLP521GB-S (UMW),U_ISO,2,C364143,UNIT,Mouser,DigiKey,Cheaper discrete isolation if a bidirectional link is not needed.
 POWER & PROTECTION
 In lab,Schottky 40 V / 2 A SMA - reverse polarity,SS24,D_RP,1,C50645,UNIT,Mouser,DigiKey,SMA footprint. Series or blocking configuration per Gate 2.
@@ -52,4 +51,4 @@ In lab,Capacitor 10 uF 25 V X5R 0805,CL21A106KAYNNNE,C*,~6,C15850,UNIT,Mouser,Di
 In lab,Capacitor 22 uF 25 V X5R 0805,CL21A226MAQNNNE,C*,~3,C45783,UNIT,Mouser,DigiKey,Bulk on the logger rail
 
 ,Lines confirmed in lab (IGNIS v5 / MAGNIS v1 lists),,,20
-,Lines still TBD or pending a decision,,,15
+,Lines still TBD or pending a decision,,,11

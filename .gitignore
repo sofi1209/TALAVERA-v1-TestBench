@@ -55,3 +55,4 @@ desktop.ini
 # Preliminary parts lists are source, not generated output
 !fabrication/*.csv
 !fabrication/PARTS-LIST.md
+!fabrication/*.py

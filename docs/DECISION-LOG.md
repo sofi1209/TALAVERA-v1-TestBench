@@ -63,13 +63,21 @@ Reference: *Manual de operaciones: WIRIKUTA 1.1 Banco de Pruebas*, August 2025
 | D-044 | **`SKRPABE010` excluded from the FIRE control.** FIRE requires a substantial panel-mount momentary button, ideally guarded. | A 4.6 × 3.2 mm SMD tactile can be actuated by a dropped tool, a closing lid or a slipped thumb. Retained for the continuity check. | 2026-11-06 | pending |
 | D-045 | Adopt the IGNIS v4 / 2v2 **continuity-sense topology** (optocoupler across the e-match returning `PYRO_CHx_CONT`). **Do not adopt the gate-drive half.** | The sense circuit is proven in-house and is the basis for the station continuity check. The gate drive puts the MCU in the firing path, which is the arrangement TALAVERA exists to remove (D-013). Porting `Pyros.SchDoc` wholesale would silently undo the redesign. | 2026-11-06 | pending |
 
+| D-046 | **ADC: `ADS1220IPWR`** (24-bit, SPI, 2 kSPS, integrated PGA ×1–128, TSSOP-16). Populated, with its internal PGA as the primary front end. **The AD620 footprint is laid out with 0 Ω bypass links** for optional hand population. Supersedes the ADS1115 half of D-030. | Sofia chose the minimum-change logic but required availability at UNIT **or** LCSC, preferably both. ADS1220 is stocked at **both** (UNIT ADS1220IPWR; LCSC C48263, ~15.9 k, ~$1.71 @100) and is TI's own bridge-sensor part. Decisive factor: the **SOIC AD620ARZ is on pre-order at LCSC**, so JLCPCB almost certainly cannot place it — keeping the AD620 populated would have been a schedule risk under D-049. Laying it out bypassable keeps the proven topology available and lets both front ends be A/B tested on one board, which matters because the noise floor is the known unsolved problem (manual p. 28). | 2026-11-06 | Sofia Pacheco Leon |
+| D-047 | **Logger power sits UPSTREAM of the master kill relay**, with its own fuse and its own switch | User decision. E-STOP kills pyro and beacon while the logger keeps running until stopped deliberately via RECORD, so the data file always closes cleanly. The E-STOP's job is to make the bench safe, and a logger is not a hazard. One battery to manage in the field. Closes the Gate 0 question. | 2026-11-06 | Sofia Pacheco Leon |
+| D-048 | **RS-485 / USB secondary telemetry path built into revision A**, not left as footprints | User decision. Live numeric data from the first test, and the IGNIS-v5 ground-station app likely covers most of the software. Isolation remains mandatory. | 2026-11-06 | Sofia Pacheco Leon |
+| D-049 | **Fabrication: JLCPCB, 2 layers, JLCPCB assembly** | User decision, matching the IGNIS v5 route (its BOM notes "JLCPCB places it" and "JLCPCB supplies from LCSC"). Two layers suffice: this is relays, switches and one analog chain, not a dense digital design. **Consequence: every populated part must be LCSC-stocked, which is what ruled out the AD620ARZ in D-046.** | 2026-11-06 | Sofia Pacheco Leon |
+
 ---
 
 ## Pending decisions
 
 | Question | Options | Blocks |
 |---|---|---|
-| Logger power domain | Upstream of master relay (recommended) / downstream shared rail / own battery | Gate 1 completion |
+| ~~Logger power domain~~ | **Resolved: upstream of the master relay** (D-047) | closed |
+| ~~ADC selection~~ | **Resolved: ADS1220IPWR** (D-046) | closed |
+| ~~Secondary telemetry in rev A~~ | **Resolved: build it** (D-048) | closed |
+| ~~Fabrication~~ | **Resolved: JLCPCB, 2-layer, assembled** (D-049) | closed |
 | Logger mounting | Socketed DevKitC V4 (field-replaceable, header vibration risk) / soldered WROOM-32D module (robust, adds USB-UART and regulator to our board) | Gate 2 and Gate 4 |
 | **ADC selection** | AD7190 (recommended, replaces AD620 too) / ADS1256 (second source) / MCP3561 behind the existing AD620 (minimum change) | Gate 2 analog chain, Gate 3 sourcing |
 | **What actually failed on the ADS1115** | Bus lockup / noise / drift / clipping / too slow — see [ADC-TRADE-STUDY.md](ADC-TRADE-STUDY.md) §5 | Confirms or redirects the ADC choice |

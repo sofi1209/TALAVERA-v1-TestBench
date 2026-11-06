@@ -9,6 +9,13 @@
 >
 > Do not order from this document. It exists so lab stock can be checked early.
 
+> ### Assembly constraint (D-049)
+>
+> The board goes to **JLCPCB assembled**, so every *populated* part must be **LCSC-stocked**.
+> This is what ruled out a populated AD620: the SOIC `AD620ARZ` is listed under LCSC
+> “Pre-ordered Products”, which JLCPCB very likely cannot place. Panel controls, the DevKitC
+> and the AD620 bypass option are hand-fitted and exempt.
+
 Formatted to match `IGNIS_V5_Parts_List_rev3.xlsx` and `MAGNIS_v1_Parts_List.xlsx`.
 LCSC codes are reused from those lists where the part is the same.
 
@@ -19,7 +26,7 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 | | Lines |
 |---|---|
 | Confirmed in lab | **35** |
-| Still TBD or pending | **24** |
+| Still TBD or pending | **18** |
 
 ---
 
@@ -38,15 +45,14 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 |---|---|---|---|---|---|---|---|---|---|
 | In lab | MicroSD socket push-push | THD2528-11SD-GF | CARD1 | 1 | C283232 | UNIT | Mouser | DigiKey | Pin 9 CD -> SD_DETECT with a 10 k pull-UP (as IGNIS v5 R28). Locating pegs drilled 1.3 mm (MAGNIS v1). Shell pads MP1-4 to GND. |
 
-### ANALOG FRONT END  (selection reopened - D-036)
+### ANALOG FRONT END  (D-046)
 
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| Pending decision | 24-bit bridge ADC, SPI, integrated PGA | AD7190BRUZ  [CANDIDATE] | U_ADC | 1 | -- | -- | Mouser | DigiKey | RECOMMENDED. Replaces AD620 + ADS1115 together. All figures UNVERIFIED - confirm against datasheet before ordering. |
-| Pending decision | 24-bit ADC, SPI - second source | ADS1256IDBT  [CANDIDATE] | U_ADC alt | 1 | -- | -- | Mouser | DigiKey | Fallback if AD7190 lead time is bad. Easier to buy. |
-| Pending decision | 24-bit ADC, SPI - minimum-change option | MCP3561 / MCP3564  [CANDIDATE] | U_ADC alt | 1 | -- | -- | Mouser | DigiKey | Use ONLY with the AD620 retained. Fixes the interface, keeps the two-stage chain. |
-| Deleted if AD7190 | Instrumentation amplifier | AD620ANZ | U_AMP | 0 or 1 | -- | -- | Mouser | DigiKey | Carried over from Wirikuta (manual p. 19). DELETED if an integrated-PGA converter is chosen. |
-| TBD | Load cell excitation reference | TBD | U_REF | 1 | -- | -- | -- | -- | Cannot be specified until the load cell datasheet is available (open item 4). Ratiometric preferred. |
+| New (approved) | 24-bit ADC, SPI, 2 kSPS, integrated PGA x1-128, TSSOP-16 | ADS1220IPWR | U_ADC | 1 | C48263 | UNIT | Mouser | DigiKey | SELECTED. Replaces the ADS1115 and its I2C bus. Stocked at BOTH UNIT and LCSC (C48263, ~15.9k, ~$1.71 @100) - stock checked 6 Nov 2026, re-verify before ordering. Internal PGA is the PRIMARY front end. Verify input common-mode range with PGA enabled at 3.3 V against the load cell (open item 4). |
+| Optional / bypassable | Instrumentation amplifier (hand-populated) | AD620ARZ (SOIC) or AD620AN (DIP, UNIT) | U_AMP | 0 | C578332 | UNIT | Mouser | DigiKey | Footprint laid out with 0 ohm BYPASS LINKS, NOT populated at assembly. AD620ARZ is listed under LCSC 'Pre-ordered Products' so JLCPCB very likely cannot place it. Hand-populate to A/B the two front ends in bring-up Stage 4. |
+| New (approved) | Resistor 0 ohm 0805 - AD620 bypass links | Generic 0 R jumper | R_BYP1, R_BYP2 | 2 | -- | UNIT | Mouser | DigiKey | Fitted = PGA-only chain. Removed + AD620 populated = two-stage chain. Lets both be measured on identical hardware. |
+| TBD | Load cell excitation reference | TBD | U_REF | 1 | -- | -- | -- | -- | Cannot be specified until the load cell datasheet is available (open item 4). Check whether the excitation can serve as the ADS1220 external reference for a ratiometric measurement, which would cancel excitation drift. |
 
 ### SAFETY CHAIN  (hardware only - no MCU)
 
@@ -76,11 +82,11 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 | TBD | High-brightness beacon LEDs, long-range | TBD | D_BEACON | TBD | -- | -- | Mouser | DigiKey | Must be visible at 20-40 m (manual p. 24). DRIVEN FROM THE REAL ARM/FIRE LINES (D-017), not from the MCU. |
 | Logger status only | Addressable RGB LED 5050 | WS2812B-B/T | LED1 | 1 | C2761795 | UNIT | Mouser | DigiKey | CAUTION: addressable LEDs need an MCU data signal, so they CANNOT serve the safety beacon (D-017). Logger-local status only. |
 
-### TELEMETRY  (secondary path - optional in rev A, D-038)
+### TELEMETRY  (secondary path - BUILT IN REV A, D-048)
 
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| TBD | Isolated RS-485 transceiver | ADM2582E / ADM2587E  [CANDIDATE] | U_485 | 1 | -- | -- | Mouser | DigiKey | Integrated isolation plus isolated supply. Alternative: MAX13487 + ADuM1201 + isolated DC-DC. |
+| Pending part | Isolated RS-485 transceiver | ADM2582E / ADM2587E  [CANDIDATE] | U_485 | 1 | -- | -- | Mouser | DigiKey | Path confirmed for rev A (D-048); exact part still to choose. Integrated isolation plus isolated supply. Must be LCSC-stocked for JLCPCB assembly (D-049). Alternative: MAX13487 + ADuM1201 + isolated DC-DC. |
 | In lab | Optocoupler SMD-4 (discrete isolation alternative) | TLP521GB-S (UMW) | U_ISO | 2 | C364143 | UNIT | Mouser | DigiKey | Cheaper discrete isolation if a bidirectional link is not needed. |
 
 ### POWER & PROTECTION
@@ -132,8 +138,8 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 |---|---|---|---|---|---|---|---|---|---|
 | In lab | USB-C 16-pin (USB 2.0) | TYPE-C-31-M-12 | J_USB | 1 | C165948 | UNIT | Mouser | DigiKey | On the STATION board, not the bench. Direct USB down a 20 m umbilical is out of spec (D-038). |
 | In lab | USB ESD diode, 5 V bidirectional | ESD9B5.0ST5G | D_ESD1, D_ESD2 | 2 | C111566 | UNIT | Mouser | DigiKey | SOD-923, one per data line. Alt: USBLC6-2SC6 (C7519). |
-| TBD | USB-UART bridge | CH340C / FT232RL  [CANDIDATE] | U_USB | 1 | -- | UNIT | Mouser | DigiKey | No MCU needed on the station for safety. A bridge is sufficient. |
-| TBD | Isolated RS-485 transceiver | ADM2582E  [CANDIDATE] | U_485 | 1 | -- | -- | Mouser | DigiKey | Station end of the isolated link. Isolation is MANDATORY so the laptop is never tied to bench ground during a firing. |
+| Pending part | USB-UART bridge | CH340C / FT232RL  [CANDIDATE] | U_USB | 1 | -- | UNIT | Mouser | DigiKey | No MCU needed on the station for safety. A bridge is sufficient. CH340C is LCSC-stocked and cheap. |
+| Pending part | Isolated RS-485 transceiver | ADM2582E  [CANDIDATE] | U_485 | 1 | -- | -- | Mouser | DigiKey | Station end of the isolated link. Isolation is MANDATORY so the laptop is never tied to bench ground during a firing. Must be LCSC-stocked for JLCPCB assembly. |
 
 ### MEASUREMENT OUTPUT
 
