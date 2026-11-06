@@ -148,7 +148,12 @@ Ordered by what they block.
 | 11 | Amplifier gain must keep its output inside the chosen converter's input range at 3.3 V | Gate 2 analog chain. **Disappears if an integrated-PGA converter is chosen** — see item 12. |
 | 12 | **ADC selection** — ADS1115 reopened, primary criterion is moving off I²C | Gate 2 and Gate 3. See [ADC-TRADE-STUDY.md](ADC-TRADE-STUDY.md). |
 | 13 | **Which ADS1115 symptom was actually seen** — lockup, noise, drift, clipping or speed | Confirms or redirects item 12 |
-| 14 | microSD socket part number from IGNIS-v5 `Storage.SchDoc` | Gate 2 schematic. Not recoverable from the Altium binary. |
+| ~~14~~ | ~~microSD socket part number~~ — resolved: **THD2528-11SD-GF** (C283232) | closed |
+| ~~10~~ | ~~Logger mounting~~ — resolved: socketed DevKitC on PPTC191LFBN-RC + hold-down, per MAGNIS v1 (D-042) | closed |
+| 16 | **Relay selection** — 4 relays, 12 V coil; K3 must be normally-closed | Gate 2 and Gate 3. No candidate chosen; contact rating depends on the e-match current. |
+| 17 | **ARM key switch, E-STOP, and FIRE panel button** part selection | Gate 2. All three are panel-mount, not PCB parts. |
+| 18 | Arming plug / removable shorting link part | Gate 2. Must be keyed and obviously absent at a glance. |
+| 19 | Enclosure and panel for the station board | Gate 4. Drives the panel-control footprints. |
 | 15 | Whether the RS-485/USB secondary path is built in rev A or left as footprints | Gate 2 scope |
 
 ---

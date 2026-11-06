@@ -231,6 +231,9 @@ TALAVERA-v1-TestBench/
 ├── firmware/
 │   └── logger/                   Thrust logger. NO safety authority.
 ├── fabrication/
+│   ├── PARTS-LIST.md             Preliminary parts list, IGNIS/MAGNIS format
+│   ├── TALAVERA_v1_Parts_List_bench.csv     Spreadsheet version
+│   ├── TALAVERA_v1_Parts_List_station.csv
 │   ├── bench/                    Gerbers, drill, BOM, centroid (Gate 6 only)
 │   └── station/
 ├── analysis/

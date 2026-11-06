@@ -1,0 +1,37 @@
+﻿TALAVERA v1 - CONTROL STATION BOARD preliminary parts list
+PRELIMINARY. No schematic exists; Gate 2 has not started. Designators are placeholders and quantities are estimates.
+
+Status,Component name,ID # (part number),Designator,Amount,LCSC,UNIT Electronics,Mouser MX,DigiKey MX,Notes
+CONTROLS  (hardware only - no MCU in the safety chain)
+TBD,"ARM key switch, removable key, 2-position",TBD,S_ARM,1,--,--,Mouser,DigiKey,Key must be removable and carried by the ignition officer. Panel mount.
+TBD,"E-STOP, mushroom head, latching, NC contact",TBD,S_ESTOP,1,--,--,Mouser,DigiKey,Panel mount. Breaks the bench master relay coil. NC so a broken wire stops the bench.
+TBD,"FIRE pushbutton, momentary, NO, panel mount",TBD,S_FIRE,1,--,--,Mouser,DigiKey,A substantial panel button. NOT an SMD tactile - see notes.
+In lab,Tactile switch (CONTINUITY test only),SKRPABE010,S_CONT,1,C115360,UNIT,Mouser,DigiKey,Acceptable for the continuity check. NOT acceptable for FIRE: a 4.6 mm SMD tactile is the wrong control for a pyrotechnic command.
+TELEMETRY & USB
+In lab,USB-C 16-pin (USB 2.0),TYPE-C-31-M-12,J_USB,1,C165948,UNIT,Mouser,DigiKey,"On the STATION board, not the bench. Direct USB down a 20 m umbilical is out of spec (D-038)."
+In lab,"USB ESD diode, 5 V bidirectional",ESD9B5.0ST5G,"D_ESD1, D_ESD2",2,C111566,UNIT,Mouser,DigiKey,"SOD-923, one per data line. Alt: USBLC6-2SC6 (C7519)."
+TBD,USB-UART bridge,CH340C / FT232RL  [CANDIDATE],U_USB,1,--,UNIT,Mouser,DigiKey,No MCU needed on the station for safety. A bridge is sufficient.
+TBD,Isolated RS-485 transceiver,ADM2582E  [CANDIDATE],U_485,1,--,--,Mouser,DigiKey,Station end of the isolated link. Isolation is MANDATORY so the laptop is never tied to bench ground during a firing.
+MEASUREMENT OUTPUT
+TBD,Differential receiver for the thrust pair,TBD,U_RX,1,--,--,Mouser,DigiKey,Recovers the thrust signal and presents 0-5 V to a DAQ.
+TBD,DAQ output connector (BNC or terminal),TBD,J_DAQ,1,--,--,Mouser,DigiKey,Path 2 must work with no software at all.
+TBD,Battery voltage display module,TBD,U_VM,1,--,UNIT,--,--,Wirikuta used a digital voltmeter module (manual p. 19). Pre-test check requires at least 12 V read remotely (manual p. 12).
+INDICATORS & AUDIO
+In lab,Red LED 0805,NCD0805R1,"D_ARMED, D_CONT, D_PWR",3+,C84256,UNIT,Mouser,DigiKey,ARMED lamp must be driven from the real arm line.
+In lab,Magnetic buzzer 2.7 kHz (passive),MLT-8530,LS1,1,C94599,--,Mouser,DigiKey,Audible ARMED warning. Recommended addition - the manual relies on visual cues only.
+In lab,N-MOSFET 30 V / 270 mA (SC-70),NTS4001NT1G,Q_BUZZ,1,C116738,--,Mouser,DigiKey,Buzzer drive.
+In lab,Switching diode (buzzer flyback),1N4148W,D_BUZZ,1,C81598,UNIT,Mouser,DigiKey,
+CONNECTORS & TEST
+TBD,"Umbilical connector, keyed + strain relief",TBD,J_UMB,1,--,--,Mouser,DigiKey,Mates cable B.
+In lab,Screw terminal 6-pin 5.08 mm,1729160,P1,1,C457192,--,Mouser,DigiKey,"Pyro pair, cable A."
+In lab,"SMT test point, miniature",Keystone 5015,TP1..TP8,~8,--,--,Mouser,DigiKey,
+PASSIVES  (existing library)
+In lab,Resistor 10 kOhm 0603 1 %,0603WAF1002T5E,R*,~8,C25804,UNIT,Mouser,DigiKey,
+In lab,Resistor 1 kOhm 0603 1 %,0603WAF1001T5E,R*,~6,C21190,UNIT,Mouser,DigiKey,LED series
+In lab,Resistor 5.1 kOhm 0603 1 %,0603WAF5101T5E,R*,2,C23186,UNIT,Mouser,DigiKey,USB-C CC pull-downs
+In lab,Resistor 22 Ohm 0603 1 %,0603WAF220JT5E,R*,2,C23345,UNIT,Mouser,DigiKey,USB data series
+In lab,Capacitor 100 nF 50 V X7R 0805,CC0805KRX7R9BB104,C*,~8,C49678,UNIT,Mouser,DigiKey,
+In lab,Capacitor 10 uF 25 V X5R 0805,CL21A106KAYNNNE,C*,~4,C15850,UNIT,Mouser,DigiKey,
+
+,Lines confirmed in lab (IGNIS v5 / MAGNIS v1 lists),,,15
+,Lines still TBD or pending a decision,,,9

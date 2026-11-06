@@ -51,3 +51,7 @@ desktop.ini
 .DS_Store
 .vscode/
 .idea/
+
+# Preliminary parts lists are source, not generated output
+!fabrication/*.csv
+!fabrication/PARTS-LIST.md
