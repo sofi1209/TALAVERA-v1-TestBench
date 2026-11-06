@@ -123,6 +123,6 @@
 
 ### Outstanding before Gate 2
 
-- Review owner must be named.
+- ~~Review owner must be named.~~ Resolved: **Emilio Guadarrama** (D-050).
 - Logger power domain must be decided.
 - E-match no-fire current and load cell datasheet required.

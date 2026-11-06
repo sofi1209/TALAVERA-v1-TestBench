@@ -5,7 +5,8 @@ Organisation: Ignitia Rocket Lab — Tecnológico de Monterrey, Campus Guadalaja
 Reference: *Manual de operaciones: WIRIKUTA 1.1 Banco de Pruebas*, August 2025
 
 **Author:** Sofia Pacheco Leon · **Co-author:** Claude (Anthropic)
-**Review owner: TBD — must be named before Gate 2.**
+**Review owner: Emilio Guadarrama** — Division Leader & Vice President, Ignitia Rocket Lab.
+Signs off pyrotechnic, actuator, motor, high-current, battery and mains circuits.
 
 > No circuit in this project is approved. No output has been energized.
 > Pyrotechnic, actuator, motor, high-current, battery and mains circuits require written
@@ -67,6 +68,7 @@ Reference: *Manual de operaciones: WIRIKUTA 1.1 Banco de Pruebas*, August 2025
 | D-047 | **Logger power sits UPSTREAM of the master kill relay**, with its own fuse and its own switch | User decision. E-STOP kills pyro and beacon while the logger keeps running until stopped deliberately via RECORD, so the data file always closes cleanly. The E-STOP's job is to make the bench safe, and a logger is not a hazard. One battery to manage in the field. Closes the Gate 0 question. | 2026-11-06 | Sofia Pacheco Leon |
 | D-048 | **RS-485 / USB secondary telemetry path built into revision A**, not left as footprints | User decision. Live numeric data from the first test, and the IGNIS-v5 ground-station app likely covers most of the software. Isolation remains mandatory. | 2026-11-06 | Sofia Pacheco Leon |
 | D-049 | **Fabrication: JLCPCB, 2 layers, JLCPCB assembly** | User decision, matching the IGNIS v5 route (its BOM notes "JLCPCB places it" and "JLCPCB supplies from LCSC"). Two layers suffice: this is relays, switches and one analog chain, not a dense digital design. **Consequence: every populated part must be LCSC-stocked, which is what ruled out the AD620ARZ in D-046.** | 2026-11-06 | Sofia Pacheco Leon |
+| D-050 | **Review owner: Emilio Guadarrama** — Division Leader & Vice President. Signs off pyrotechnic, actuator, motor, high-current, battery and mains circuits, and the separate Stage 5 authorisation. | User decision. Well placed for it: he co-drew `Pyros.SchDoc` in IGNIS v4/2v2, so he is the right person to review the pyro section — including whether declining its MCU gate-drive half (D-045) is correct. Closes open item 1. | 2026-11-06 | Sofia Pacheco Leon |
 
 ---
 

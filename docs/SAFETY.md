@@ -177,12 +177,15 @@ For reference, Wirikuta's existing dead-man rope is specified at 5–10 m (manua
 
 | Item | Reviewer | Date | Signature |
 |---|---|---|---|
-| Architecture (Gate 1) | | | |
-| Schematic (Gate 2) | | | |
-| Pyrotechnic firing circuit | | | |
-| Battery and power input | | | |
-| Layout (Gate 4) | | | |
-| Fabrication package (Gate 6) | | | |
-| Authorisation to connect a live e-match | | | |
+| Architecture (Gate 1) | Emilio Guadarrama | | |
+| Schematic (Gate 2) | Emilio Guadarrama | | |
+| Pyrotechnic firing circuit | Emilio Guadarrama | | |
+| Battery and power input | Emilio Guadarrama | | |
+| Layout (Gate 4) | Emilio Guadarrama | | |
+| Fabrication package (Gate 6) | Emilio Guadarrama | | |
+| Authorisation to connect a live e-match | Emilio Guadarrama | | |
 
-**Review owner: TBD — must be named before Gate 2.**
+**Review owner: Emilio Guadarrama** — Division Leader & Vice President, Ignitia Rocket Lab.
+
+No row above may be signed by anyone else. Stage 5 of the bring-up plan requires a separate written
+authorisation from him naming the safe setup, location, personnel and standoff distance.

@@ -275,7 +275,7 @@ Ignitia Rocket Lab · Avionics & Electronics
 **Division Leader & Vice President:** [Emilio Guadarrama](https://github.com/Emilio-Guadarrama)  
 **Faculty Advisor:** Dr. José Luis Henríquez Mercado
 
-**Design Review Owner:** *TBD — must be named before Gate 2*  
+**Design Review Owner:** [Emilio Guadarrama](https://github.com/Emilio-Guadarrama)  
 Signs off pyrotechnic, actuator, battery and high-current circuits.
 
 Reference design for the storage and USB subsystems:

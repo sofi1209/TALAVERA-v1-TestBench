@@ -35,7 +35,7 @@ from every function the test's safety depends on. Keep only the functions the te
 | Test points on every rail and every safety signal | Gate 2 requirement. |
 | Thrust logger | Local record of the test. **ESP32-DevKitC V4 (ESP32-WROOM-32D)**, constrained to zero authority with its radios stopped — see [SAFETY.md](SAFETY.md) §4. |
 | On-board microSD socket | Primary data record. Embedded socket with card-detect, not a breakout module — one fewer set of headers to vibrate loose. Ports the IGNIS-v5 `Storage.SchDoc` topology. |
-| Isolated RS-485 driver *(secondary, optional)* | Live numeric data to a laptop at the station. Galvanically isolated so a laptop is never tied to bench ground during a firing. **Outward data only, never a command path.** |
+| Isolated RS-485 driver *(secondary path, built in rev A — D-048)* | Live numeric data to a laptop at the station. Galvanically isolated so a laptop is never tied to bench ground during a firing. **Outward data only, never a command path.** |
 
 ### 2.2 Control station board
 
@@ -75,6 +75,13 @@ from every function the test's safety depends on. Keep only the functions the te
 | Igniter safe state | Shorted (normally-closed contact) | D-008 |
 | Thrust signal | Differential off the bench | D-010 |
 | Firing pair | 16 AWG | D-009 |
+| Logger processor | ESP32-DevKitC V4 (WROOM-32D), socketed, radios stopped | D-028, D-029, D-042 |
+| Converter | **ADS1220IPWR** — 24-bit, SPI, 2 kSPS, integrated PGA. AD620 laid out bypassable, hand-populated. | D-046 |
+| Storage | On-board microSD socket `THD2528-11SD-GF`, with `SD_DETECT` | D-037, D-041 |
+| Logger power | Upstream of the master kill relay, own fuse and switch | D-047 |
+| Secondary telemetry | Isolated RS-485 over cable B, USB-C on the station board, built in rev A | D-038, D-048 |
+| Fabrication | JLCPCB, 2-layer, assembled. Every populated part must be LCSC-stocked. | D-049 |
+| Review owner | **Emilio Guadarrama** | D-050 |
 
 ---
 
@@ -135,8 +142,8 @@ Ordered by what they block.
 
 | # | Item | Blocks |
 |---|---|---|
-| 1 | **Review owner's name** | Gate 2 and every sign-off |
-| 2 | Logger power domain: upstream / downstream / own battery | Gate 1 completion |
+| ~~1~~ | ~~Review owner's name~~ — resolved: **Emilio Guadarrama** (D-050) | closed |
+| ~~2~~ | ~~Logger power domain~~ — resolved: **upstream of the master kill relay**, own fuse and switch (D-047) | closed |
 | 3 | E-match make and part, **no-fire current**, all-fire current, resistance | Every safety margin claim, Gate 3 |
 | 4 | Load cell make and model, bridge resistance, mV/V, rated excitation | Analog chain design, Gate 2 |
 | 5 | Largest motor class intended (total impulse) | Standoff planning, connector sizing |
@@ -163,4 +170,4 @@ Ordered by what they block.
 - ERC and DRC clean, with every remaining item listed and justified.
 - Gerbers, drill files, BOM and centroid ready for review.
 - Each value in the design labelled verified or assumed. No invented ratings.
-- Review owner has signed off every row in [SAFETY.md](SAFETY.md) §8.
+- Review owner **Emilio Guadarrama** has signed off every row in [SAFETY.md](SAFETY.md) §8.

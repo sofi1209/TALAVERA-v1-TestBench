@@ -40,7 +40,7 @@
 | Repository | **https://github.com/sofi1209/TALAVERA-v1-TestBench** |
 | Supersedes | Nothing. Wirikuta 1.1 remains the operational bench until TALAVERA is accepted. |
 | Predecessor document | *Manual de operaciones: WIRIKUTA 1.1 Banco de Pruebas*, August 2025 |
-| Review owner | **TBD** |
+| Review owner | **Emilio Guadarrama** — Division Leader & Vice President |
 
 The authoritative version of this manual is the copy in the repository. Printed copies are
 uncontrolled and must carry the revision letter and date.
@@ -310,7 +310,7 @@ reverts to shorted.
 | 3 | No automated pre-flight self-test | Deliberate. Replaced by the §5.3 manual remote check. |
 | 4 | Arming requires an operator to walk to the bench | Deliberate. This is normal pyrotechnic practice. |
 | 5 | No Spanish field edition yet | **Required before live operation.** |
-| 6 | Review owner not named | **Required before Gate 2.** |
+| ~~6~~ | ~~Review owner not named~~ — resolved: **Emilio Guadarrama** | closed |
 | 7 | E-match no-fire current unknown, so the continuity check current is unspecified | Open item 3 in [REQUIREMENTS.md](REQUIREMENTS.md) |
 | 8 | Logger power domain undecided, affecting clean file close in §8 step 4 | Open item 2 |
 
