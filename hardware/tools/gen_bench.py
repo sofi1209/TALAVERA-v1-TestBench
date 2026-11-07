@@ -51,14 +51,14 @@ s.stub(f2['1'], "+12V_PROT", 3)
 s.stub(f2['2'], "+12V_LOGGER", 3)
 
 u3 = s.place("Regulator_Linear:AMS1117-3.3", "U_3V3", "AMS1117-3.3", 108, 80)
-s.stub(u3['1'], "+12V_LOGGER")
-s.power("GND", u3['2'])
-s.stub(u3['3'], "+3V3_LOGGER")
+s.stub(u3['3'], "+12V_LOGGER")     # VI
+s.power("GND", u3['1'])            # GND
+s.stub(u3['2'], "+3V3_LOGGER")     # VO
 
 u5 = s.place("Regulator_Linear:AMS1117-5.0", "U_5V", "AMS1117-5.0  DNP", 108, 100, dnp=True)
-s.stub(u5['1'], "+12V_LOGGER")
-s.power("GND", u5['2'])
-s.stub(u5['3'], "+5V_AMP")
+s.stub(u5['3'], "+12V_LOGGER")     # VI
+s.power("GND", u5['1'])            # GND
+s.stub(u5['2'], "+5V_AMP")         # VO
 s.text("U_5V is only needed for analog path B (the AD620).\nLeave unpopulated while running path A.", 140, 100, 1.4, False)
 
 c2 = s.place(C, "C2", "22uF 25V", 140, 85)

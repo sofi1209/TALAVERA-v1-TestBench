@@ -156,6 +156,12 @@ def get_symbol(libid):
     return defn, pins
 
 # ----------------------------------------------------------------- schematic
+GRID = 1.27   # KiCad schematic connection grid (50 mil)
+
+def snap(v):
+    """Round to the connection grid. Anything off it triggers endpoint_off_grid."""
+    return round(round(v / GRID) * GRID, 4)
+
 def U():
     return str(uuid.uuid4())
 
@@ -185,6 +191,7 @@ class Sch:
     def place(self, libid, ref, value, x, y, footprint="", dnp=False,
               hide_value=False, mirror=None, angle=0, hide_ref=False):
         """Place a symbol. Returns dict pin-number -> (gx, gy, outward_angle)."""
+        x, y = snap(x), snap(y)        # keep every pin on the connection grid
         pins = self._lib(libid)
         # KiCad treats a reference with no trailing digit as unannotated, which
         # ERC reports as an error and which breaks BOM and centroid matching.
@@ -243,6 +250,7 @@ class Sch:
         """Draw a wire outward from a pin and attach a net label."""
         x, y, a = pin
         import math
+        length = max(GRID, snap(length))   # off-grid stub lengths move the end off grid
         rad = math.radians(a)
         dx, dy = math.cos(rad) * length, -math.sin(rad) * length
         ex, ey = round(x + dx, 4), round(y + dy, 4)
@@ -273,6 +281,7 @@ class Sch:
         libid = "power:" + kind
         x, y, a = pin
         import math
+        length = max(GRID, snap(length))
         rad = math.radians(a)
         dx, dy = math.cos(rad) * length, -math.sin(rad) * length
         ex, ey = round(x + dx, 4), round(y + dy, 4)

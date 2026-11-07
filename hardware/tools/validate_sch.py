@@ -145,6 +145,77 @@ def check(path):
         if not r[-1:].isdigit():
             errs.append("reference '%s' has no trailing digit - KiCad reports it as unannotated" % r)
 
+    # 4d. Connection grid. KiCad's schematic grid is 50 mil = 1.27 mm; anything
+    #     off it raises endpoint_off_grid and may silently fail to connect.
+    GRID = 1.27
+    def offgrid(p):
+        return (abs(p[0] / GRID - round(p[0] / GRID)) > 1e-6 or
+                abs(p[1] / GRID - round(p[1] / GRID)) > 1e-6)
+    bad = sorted({p for p in (pinpts | ends) if offgrid(p)})
+    if bad:
+        errs.append("%d pin/wire endpoints OFF the 1.27 mm connection grid, e.g. %s"
+                    % (len(bad), ", ".join("(%.2f,%.2f)" % p for p in bad[:4])))
+
+    # 4e. Resolve nets, then sanity-check named power pins. This is the check
+    #     that would have caught all four AMS1117 regulators being wired with
+    #     GND on the input rail and the output shorted to ground.
+    parent = {}
+    def find(a):
+        parent.setdefault(a, a)
+        while parent[a] != a:
+            parent[a] = parent[parent[a]]; a = parent[a]
+        return a
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra != rb: parent[ra] = rb
+    for w in ksch.kids(root, "wire"):
+        xy = ksch.kids(ksch.kid(w, "pts"), "xy")
+        if len(xy) == 2:
+            union((round(float(ksch.val(xy[0], 1)), 2), round(float(ksch.val(xy[0], 2)), 2)),
+                  (round(float(ksch.val(xy[1], 1)), 2), round(float(ksch.val(xy[1], 2)), 2)))
+    netname = {}
+    for lb in ksch.kids(root, "label"):
+        at = ksch.kid(lb, "at")
+        netname[find((round(float(ksch.val(at, 1)), 2), round(float(ksch.val(at, 2)), 2)))] = ksch.val(lb)
+
+    GROUNDY = ("GND", "VSS", "AGND", "DGND", "AVSS", "GNDREF")
+    SUPPLY = ("VI", "VIN", "VCC", "VDD", "AVDD", "DVDD", "VBUS", "VO", "VOUT")
+    for sym in ksch.kids(root, "symbol"):
+        lid = ksch.val(ksch.kid(sym, "lib_id"))
+        if lid.startswith("power:"): continue
+        at = ksch.kid(sym, "at")
+        sx, sy = float(ksch.val(at, 1)), float(ksch.val(at, 2))
+        ang = float(ksch.val(at, 3)) if len(at) > 3 else 0.0
+        ref = next((ksch.val(p, 2) for p in ksch.kids(sym, "property")
+                    if ksch.val(p) == "Reference"), "?")
+        try:
+            libname, symname = lid.split(":")
+            flat = ksch._flatten(ksch.load_lib(libname), symname)
+        except Exception:
+            continue
+        pinfo = {}
+        def wk(nd):
+            for p in ksch.kids(nd, "pin"):
+                a2 = ksch.kid(p, "at"); nu = ksch.kid(p, "number"); nm = ksch.kid(p, "name")
+                if a2 is None or nu is None: continue
+                pinfo[ksch.val(nu)] = (float(ksch.val(a2, 1)), float(ksch.val(a2, 2)),
+                                       (ksch.val(nm) or "").upper())
+            for sub in ksch.kids(nd, "symbol"): wk(sub)
+        wk(flat)
+        th = math.radians(ang); ct, st = math.cos(th), math.sin(th)
+        for pn, (px, py, pname) in pinfo.items():
+            rx = px * ct - py * st; ry = px * st + py * ct
+            pt = (round(sx + rx, 2), round(sy - ry, 2))
+            net = netname.get(find(pt))
+            if net is None: continue
+            isgnd = any(net.upper() == g or net.upper().endswith("_" + g) for g in GROUNDY)
+            if pname in GROUNDY and not isgnd:
+                errs.append("%s pin %s is named %s but sits on net '%s' - not a ground net"
+                            % (ref, pn, pname, net))
+            if pname in SUPPLY and isgnd:
+                errs.append("%s pin %s is named %s but sits on ground net '%s'"
+                            % (ref, pn, pname, net))
+
     # 5. single-use nets are suspicious (nothing to connect to)
     powernets = {ksch.val(p, 2) for sym in ksch.kids(root, "symbol")
                  if (ksch.val(ksch.kid(sym, "lib_id")) or "").startswith("power:")

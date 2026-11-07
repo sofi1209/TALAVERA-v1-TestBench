@@ -40,9 +40,9 @@ jp = s.place(CONN2, "J_12V", "+12V tap", 140, 55)
 s.stub(jp['1'], "+12V_STN"); s.power("GND", jp['2'])
 
 u5b = s.place("Regulator_Linear:AMS1117-5.0", "U_5VB", "AMS1117-5.0", 115, 95)
-s.stub(u5b['1'], "+12V_STN"); s.power("GND", u5b['2']); s.stub(u5b['3'], "+5V_BENCH")
+s.stub(u5b['3'], "+12V_STN"); s.power("GND", u5b['1']); s.stub(u5b['2'], "+5V_BENCH")
 u3b = s.place("Regulator_Linear:AMS1117-3.3", "U_3V3B", "AMS1117-3.3", 160, 95)
-s.stub(u3b['1'], "+5V_BENCH"); s.power("GND", u3b['2']); s.stub(u3b['3'], "+3V3_BENCH")
+s.stub(u3b['3'], "+5V_BENCH"); s.power("GND", u3b['1']); s.stub(u3b['2'], "+3V3_BENCH")
 s.text("Bench-side rails: 5 V for the 6N137, 3.3 V for the SP3485.", 16, 112, 1.4, False)
 
 # ================================================================= CONTROLS
