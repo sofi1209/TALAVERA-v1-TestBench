@@ -7,10 +7,13 @@ microcontroller from every function the test's safety depends on. Arming, firing
 switches, relay contacts and resistors — no firmware anywhere in the chain. A logger rides along to
 record thrust, with no authority over anything.
 
-> ### ⚠️ Status: PRELIMINARY — NOT APPROVED, NOT BUILT
+> ### 🔴 Status: SCHEMATICS DRAWN — AUDITED — **NOT FIT TO BUILD**
 >
 > No circuit in this repository is approved. No board has been fabricated. Nothing has been energized.
-> The schematics are **empty skeletons** — Gate 2 has not started.
+>
+> Both schematics are drawn, and the [pre-fabrication audit of 6 Nov 2026](docs/AUDIT-2026-11-06.md)
+> found **5 critical, 3 high and 4 medium** findings — including no supply reaching any IC, no load-cell
+> excitation, and five reversed flyback diodes. **Do not progress to layout until these are closed.**
 >
 > Pyrotechnic, actuator, battery, motor and high-current circuits require written sign-off from the
 > named review owner before any bring-up. See **[docs/SAFETY.md](docs/SAFETY.md)**.
