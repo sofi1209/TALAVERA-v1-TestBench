@@ -229,6 +229,7 @@ TALAVERA-v1-TestBench/
 │   ├── REQUIREMENTS.md           Gate 0 output: functions, scope, open items
 │   ├── SCHEMATIC-PLAN.md         Gate 2 readiness: sheets, symbols, footprints
 │   ├── AUDIT-2026-11-06.md       Pre-fabrication audit: 5 critical, 3 high, 4 medium
+│   ├── HANDOFF.md                Session handoff: state, blockers, generator pitfalls
 │   ├── ADC-TRADE-STUDY.md        Replacing the ADS1115: options and recommendation
 │   ├── UMBILICAL-AND-TELEMETRY.md  Three data paths; why direct USB fails at 20 m
 │   └── DECISION-LOG.md           Every decision, reason, date, approver
