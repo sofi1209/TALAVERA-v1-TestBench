@@ -62,36 +62,53 @@ je = s.place(CONN2, "J_ESTOP", "E-STOP  NC", 45, 240)
 s.stub(je['1'], "ESTOP_LOOP"); s.power("GND", je['2'])
 s.text("S_ESTOP: latching mushroom, NORMALLY CLOSED.\nOpening it drops bench master relay K4.\nNC, so a broken wire also stops the bench.", 72, 238, 1.4, False)
 
-jc = s.place(CONN2, "J_CONTSW", "CONTINUITY btn", 45, 272)
-s.stub(jc['1'], "CONT_BTN"); s.power("GND", jc['2'])
-s.text("S_CONT: SKRPABE010 is fine here.\nReads the opto sense line; never fires.", 72, 270, 1.4, False)
+for _i, _ln in enumerate([
+        "H-2 FIX: the CONTINUITY test button is REMOVED.",
+        "As drawn it shorted PYRO_CONT_SENSE to ground, which is the",
+        "lamp-good state, so the test reported a good match whether or not",
+        "one was connected. A test that cannot fail is worse than no test.",
+        "Sensing is continuous and needs no button to initiate it.",
+        "",
+        "OPEN DESIGN QUESTION: because sensing is continuous, current flows",
+        "through the e-match whenever the bench is powered. Gating that",
+        "needs a decision - see the audit, H-2."]):
+    s.text(_ln, 16, 262 + _i * 4, 1.4, False)
 
 # ======================================================= INDICATORS & AUDIO
 hdr("3. INDICATORS & AUDIO", 15, 298)
 s.box(12, 302, 175, 105)
-for i, (ref, net, lbl) in enumerate([("D_ARMED", "ARM_LINE", "ARMED"),
-                                     ("D_CONT", "CONT_LAMP", "CONTINUITY"),
-                                     ("D_PWR", "+12V_STN", "POWER")]):
+for i, (ref, anode_net, cath_net, lbl) in enumerate([
+        ("D_ARMED", "ARM_LINE", None, "ARMED"),
+        ("D_CONT", "+12V_STN", "PYRO_CONT_SENSE", "CONTINUITY OK"),
+        ("D_PWR", "+12V_STN", None, "POWER")]):
     rr = s.place(R, "R_" + ref, "1k", 35 + i * 42, 326, angle=90)
-    s.stub(rr['1'], net, 3)
+    s.stub(rr['1'], anode_net, 3)
     dd = s.place(LED, ref, lbl, 35 + i * 42, 348, angle=90)
     s.wire((rr['2'][0], rr['2'][1]), (dd['2'][0], dd['2'][1]))
-    s.power("GND", dd['1'])
+    if cath_net: s.stub(dd['1'], cath_net)
+    else:        s.power("GND", dd['1'])
 s.text("ARMED lamp driven from the REAL arm line (D-017).", 16, 360, 1.4, False)
 
 rcs = s.place(R, "R_CONT_PU", "4k7", 160, 326, angle=90)
 s.stub(rcs['1'], "+12V_STN", 3); s.stub(rcs['2'], "PYRO_CONT_SENSE", 3)
-rcl = s.place(R, "R_CONT_L", "1k", 160, 352, angle=90)
-s.stub(rcl['1'], "PYRO_CONT_SENSE", 3); s.stub(rcl['2'], "CONT_LAMP", 3)
+for _i, _ln in enumerate([
+        "H-1 FIX: the bench opto pulls PYRO_CONT_SENSE LOW when the match",
+        "conducts, so D_CONT is fed from +12V and sinks into that node.",
+        "LAMP LIT = GOOD MATCH. Before this it read exactly inverted."]):
+    s.text(_ln, 16, 366 + _i * 4, 1.4, False)
 
 bz = s.place("Device:Buzzer", "LS1", "MLT-8530", 55, 385)
 s.stub(bz['1'], "+12V_STN"); s.stub(bz['2'], "BUZZ_DRV")
 q1 = s.place("Device:Q_NMOS", "Q_BUZZ", "NTS4001NT1G", 100, 388)
-s.stub(q1['G'], "ARM_LINE")
+s.stub(q1['G'], "BUZZ_GATE")       # C-5: divided, not raw 12 V
+rbg1 = s.place(R, "R_BG1", "10k", 100, 362, angle=90)
+s.stub(rbg1['1'], "ARM_LINE", 3); s.stub(rbg1['2'], "BUZZ_GATE", 3)
+rbg2 = s.place(R, "R_BG2", "6k8", 128, 362, angle=90)
+s.stub(rbg2['1'], "BUZZ_GATE", 3); s.power("GND", rbg2['2'])
 s.stub(q1['D'], "BUZZ_DRV")
 s.power("GND", q1['S'])
 db = s.place(D, "D_BUZZ", "1N4148W", 135, 383, angle=90)
-s.stub(db['1'], "BUZZ_DRV", 3); s.stub(db['2'], "+12V_STN", 3)
+s.stub(db['1'], "+12V_STN", 3); s.stub(db['2'], "BUZZ_DRV", 3)   # C-4: K to +ve
 s.text("Audible ARMED warning - the manual relies on visual cues only.", 16, 400, 1.4, False)
 
 # ========================================== TELEMETRY + ISOLATION BARRIER
@@ -117,7 +134,7 @@ s.stub(rde['1'], "RS485_DE", 3); s.power("GND", rde['2'])
 s.text("Station is receive-only by default: RE and DE\nboth pulled low. Fitting the TX path is optional\nand still carries no command authority.", 263, 60, 1.3, False)
 
 # ---- RX across the barrier: bench RO -> opto LED -> laptop UART RX
-ri1 = s.place(R, "R_ISO1", "330R", 250, 140, angle=90)
+ri1 = s.place(R, "R_ISO1", "220R", 250, 140, angle=90)
 s.stub(ri1['1'], "RO_BENCH", 3); s.stub(ri1['2'], "ISO1_A", 3)
 i1 = s.place(ISO, "U_ISO1", "6N137  RX", 310, 150)
 s.stub(i1['2'], "ISO1_A")
@@ -129,7 +146,7 @@ rp1 = s.place(R, "R_ISO1_PU", "4k7", 365, 140, angle=90)
 s.stub(rp1['1'], "+5V_USB", 3); s.stub(rp1['2'], "UART_RX_USB", 3)
 
 # ---- TX across the barrier: laptop TX -> opto LED -> bench DI
-ri2 = s.place(R, "R_ISO2", "330R  DNP", 250, 215, angle=90, dnp=True)
+ri2 = s.place(R, "R_ISO2", "220R  DNP", 250, 215, angle=90, dnp=True)
 s.stub(ri2['1'], "UART_TX_USB", 3); s.stub(ri2['2'], "ISO2_A", 3)
 i2 = s.place(ISO, "U_ISO2", "6N137  TX  DNP", 310, 225, dnp=True)
 s.stub(i2['2'], "ISO2_A")
@@ -151,6 +168,8 @@ s.stub(u340['5'], "USB_DP"); s.stub(u340['6'], "USB_DM")
 s.stub(u340['16'], "+5V_USB")
 s.power("GNDREF", u340['1'])
 s.stub(u340['4'], "USB_V3")
+s.nc(*[u340[pn] for pn in ['7','8','9','10','11','12','13','14','15']])
+s.nc(i1['1'], i1['4'], i2['1'], i2['4'])
 c4 = s.place(C, "C_V3", "100nF", 540, 60)
 s.stub(c4['1'], "USB_V3", 3); s.power("GNDREF", c4['2'])
 c8 = s.place(C, "C_USB", "100nF", 560, 60)
@@ -173,7 +192,7 @@ for i, (ref, a, b) in enumerate([("R_DP", "USB_DP", "USB_DP_C"), ("R_DM", "USB_D
     rd = s.place(R, ref, "22R", 420 + i * 22, 130, angle=90)
     s.stub(rd['1'], a, 3); s.stub(rd['2'], b, 3)
 for i, (ref, net) in enumerate([("D_ESD1", "USB_DP_C"), ("D_ESD2", "USB_DM_C")]):
-    de = s.place(D, ref, "ESD9B5.0ST5G", 420 + i * 22, 230, angle=90)
+    de = s.place("Device:D_TVS", ref, "ESD9B5.0ST5G", 420 + i * 22, 230, angle=90)
     s.power("GNDREF", de['1']); s.stub(de['2'], net, 3)
 s.text("CC pull-downs 5k1 mark this as a UFP sink.\nData series 22R, one ESD diode per line.", 406, 250, 1.4, False)
 
@@ -191,8 +210,7 @@ jv = s.place(CONN2, "J_VM", "voltmeter module", 250, 365)
 s.stub(jv['1'], "VBAT_SENSE"); s.power("GND", jv['2'])
 s.text("Battery voltmeter: the pre-test >= 12 V check (manual p. 12),\nread without walking to the bench.", 282, 362, 1.4, False)
 
-jcb = s.place(CONN2, "J_CONT_RTN", "cont. return", 460, 365)
-s.stub(jcb['1'], "CONT_BTN"); s.stub(jcb['2'], "PYRO_CONT_SENSE")
+
 
 s.text("TBD values await O-2 (load cell) and O-6 (isolator part). ARM / FIRE / E-STOP carry no firmware.",
        200, 412, 2.0, True)

@@ -216,6 +216,53 @@ def check(path):
                 errs.append("%s pin %s is named %s but sits on ground net '%s'"
                             % (ref, pn, pname, net))
 
+    # 4f. Floating pins. A pin that reaches nothing at all and carries no
+    #     explicit no-connect flag is almost always an omission - this is what
+    #     a commented-out s.power() call looks like from the outside, and
+    #     neither the dangling checks nor ERC's own pass caught it.
+    ncpts = set()
+    for n in ksch.kids(root, "no_connect"):
+        a = ksch.kid(n, "at")
+        ncpts.add((round(float(ksch.val(a, 1)), 2), round(float(ksch.val(a, 2)), 2)))
+    members = collections.Counter()
+    for sym in ksch.kids(root, "symbol"):
+        lid = ksch.val(ksch.kid(sym, "lib_id"))
+        at = ksch.kid(sym, "at")
+        sx, sy = float(ksch.val(at, 1)), float(ksch.val(at, 2))
+        ang = float(ksch.val(at, 3)) if len(at) > 3 else 0.0
+        try:
+            _d, lp = ksch.get_symbol(lid)
+        except Exception:
+            continue
+        th = math.radians(ang); ct2, st2 = math.cos(th), math.sin(th)
+        for pn in {ksch.val(p) for p in ksch.kids(sym, "pin")}:
+            if pn not in lp: continue
+            px, py, _ = lp[pn]
+            pt = (round(sx + px * ct2 - py * st2, 2), round(sy - (px * st2 + py * ct2), 2))
+            members[find(pt)] += 1
+    for sym in ksch.kids(root, "symbol"):
+        lid = ksch.val(ksch.kid(sym, "lib_id"))
+        if lid.startswith("power:"): continue
+        at = ksch.kid(sym, "at")
+        sx, sy = float(ksch.val(at, 1)), float(ksch.val(at, 2))
+        ang = float(ksch.val(at, 3)) if len(at) > 3 else 0.0
+        ref = next((ksch.val(p, 2) for p in ksch.kids(sym, "property")
+                    if ksch.val(p) == "Reference"), "?")
+        try:
+            _d, lp = ksch.get_symbol(lid)
+        except Exception:
+            continue
+        th = math.radians(ang); ct2, st2 = math.cos(th), math.sin(th)
+        for pn in {ksch.val(p) for p in ksch.kids(sym, "pin")}:
+            if pn not in lp: continue
+            px, py, _ = lp[pn]
+            pt = (round(sx + px * ct2 - py * st2, 2), round(sy - (px * st2 + py * ct2), 2))
+            if pt in ncpts: continue
+            if netname.get(find(pt)) is not None: continue
+            if members[find(pt)] > 1: continue
+            errs.append("FLOATING PIN %s.%s - reaches no net and has no no-connect flag"
+                        % (ref, pn))
+
     # 5. single-use nets are suspicious (nothing to connect to)
     powernets = {ksch.val(p, 2) for sym in ksch.kids(root, "symbol")
                  if (ksch.val(ksch.kid(sym, "lib_id")) or "").startswith("power:")

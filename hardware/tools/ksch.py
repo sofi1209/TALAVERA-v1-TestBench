@@ -267,6 +267,12 @@ class Sch:
             self.label(name, ex, ey, 270, "left")
         return (ex, ey)
 
+    def nc(self, *pins):
+        """Mark pins as deliberately unconnected, so ERC stops re-raising them."""
+        for p in pins:
+            self.items.append(
+                '\t(no_connect\n\t\t(at %.4f %.4f)\n\t\t(uuid "%s")\n\t)' % (p[0], p[1], U()))
+
     def pwr_flag(self, net, x, y):
         """Declare a net as driven. Needed where power enters via a connector,
         and on ground, since power-input pins alone do not count as a source."""

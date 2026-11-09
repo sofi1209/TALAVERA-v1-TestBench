@@ -83,32 +83,34 @@ def relay(ref, value, x, y, coil_hi, coil_lo, com, no, nc, note):
     return k
 
 # K4 master: held in by its coil; E-STOP breaks the coil circuit
-relay("K4", "SRD-12VDC-SL-C", 40, 152, "+12V_PROT", "ESTOP_LOOP",
+_k4 = relay("K4", "SRD-12VDC-SL-C", 40, 152, "+12V_PROT", "ESTOP_LOOP",
       "+12V_PROT", "+12V_MASTER", None,
       "K4 MASTER: coil via E-STOP loop.\nDrops out = BENCH_UNPOWERED.")
 d4 = s.place(D, "D_K4", "1N4148W", 75, 150, angle=90)
-s.stub(d4['1'], "ESTOP_LOOP", 3); s.stub(d4['2'], "+12V_PROT", 3)
+s.stub(d4['1'], "+12V_PROT", 3); s.stub(d4['2'], "ESTOP_LOOP", 3)   # C-3: K to +ve
 
 # K1 arm
-relay("K1", "SRD-12VDC-SL-C", 40, 200, "ARM_LINE", "GND",
+_k1 = relay("K1", "SRD-12VDC-SL-C", 40, 200, "ARM_LINE", "GND",
       "+12V_MASTER", "ARM_BUS", None,
       "K1 ARM: energised by the station\nARM key. NO = DISARMED at rest.")
 d5 = s.place(D, "D_K1", "1N4148W", 75, 198, angle=90)
-s.stub(d5['1'], "GND", 3); s.stub(d5['2'], "ARM_LINE", 3)
+s.stub(d5['1'], "ARM_LINE", 3); s.stub(d5['2'], "GND", 3)           # C-3: K to +ve
 
 # K2 fire
-relay("K2", "SRD-12VDC-SL-C", 130, 200, "FIRE_LINE", "GND",
+_k2 = relay("K2", "SRD-12VDC-SL-C", 130, 200, "FIRE_LINE", "GND",
       "ARM_BUS", "PYRO_FIRE_OUT", None,
       "K2 FIRE: energised only while\nthe FIRE button is held.")
 d6 = s.place(D, "D_K2", "1N4148W", 165, 198, angle=90)
-s.stub(d6['1'], "GND", 3); s.stub(d6['2'], "FIRE_LINE", 3)
+s.stub(d6['1'], "FIRE_LINE", 3); s.stub(d6['2'], "GND", 3)          # C-3: K to +ve
 
 # K3 shunt - NC contact across the match
-relay("K3", "SRD-12VDC-SL-C", 40, 250, "ARM_LINE", "GND",
+_k3 = relay("K3", "SRD-12VDC-SL-C", 40, 250, "ARM_LINE", "GND",
       "PYRO_MATCH_P", None, "PYRO_MATCH_N",
       "K3 SHUNT: NC contact shorts the\nmatch whenever DISARMED (D-008).\nReleases only when K1 pulls in.")
 d7 = s.place(D, "D_K3", "1N4148W", 75, 248, angle=90)
-s.stub(d7['1'], "GND", 3); s.stub(d7['2'], "ARM_LINE", 3)
+s.stub(d7['1'], "ARM_LINE", 3); s.stub(d7['2'], "GND", 3)           # C-3: K to +ve
+
+s.nc(_k2['12'], _k1['12'], _k3['14'], _k4['12'])   # unused relay contacts
 
 # arming plug - third series element
 ja = s.place(CONN2, "J_ARM", "ARMING PLUG", 130, 250)
@@ -143,7 +145,11 @@ s.box(202, 22, 185, 140)
 s.text("BLOCKED: PGA gain, excitation and reference choice need the", 206, 26, 1.5, False)
 s.text("load cell datasheet. ADS1220 PGA is the primary front end (D-046).", 206, 30, 1.5, False)
 
-jlc = s.place(CONN4, "J_LC", "LOAD CELL 5kN", 225, 50)
+rex = s.place(R, "R_EXC_P", "0R", 206, 44, angle=90)
+s.stub(rex['1'], "+3V3_LOGGER", 3); s.stub(rex['2'], "LC_EXC_P", 3)
+rexn = s.place(R, "R_EXC_N", "0R", 206, 62, angle=90)
+s.stub(rexn['1'], "LC_EXC_N", 3); s.power("GND", rexn['2'])
+jlc = s.place(CONN4, "J_LC", "LOAD CELL 5kN", 232, 50)
 s.stub(jlc['1'], "LC_EXC_P"); s.stub(jlc['2'], "LC_SIG_P")
 s.stub(jlc['3'], "LC_SIG_N"); s.stub(jlc['4'], "LC_EXC_N")
 
@@ -155,8 +161,8 @@ s.stub(adc['8'],  "LC_EXC_N")      # REFN0
 s.power("GND", adc['7'])           # AIN2 unused - tied, not floating
 s.power("GND", adc['6'])           # AIN3 unused
 s.power("GND", adc['3'])           # CLK unused -> internal oscillator
-s.power("+3V3", adc['13'])         # DVDD
-s.power("+3V3", adc['12'])         # AVDD
+s.stub(adc['13'], "+3V3_LOGGER")   # DVDD  (C-1)
+s.stub(adc['12'], "+3V3_LOGGER")   # AVDD  (C-1)
 s.power("GND", adc['4'])           # DGND
 s.power("GND", adc['5'])           # AVSS
 s.stub(adc['1'],  "SPI_SCK")
@@ -203,7 +209,7 @@ s.box(202, 179, 185, 145)
 s.text("No outputs reach any safety net. Radios stopped at boot (D-029).", 206, 183, 1.5, False)
 
 mcu = s.place("RF_Module:ESP32-WROOM-32D", "MCU1", "ESP32-DevKitC V4", 290, 250)
-s.power("+3V3", mcu['2'])          # VDD
+s.stub(mcu['2'], "+3V3_LOGGER")    # VDD   (C-1)
 s.power("GND", mcu['1'])           # GND
 # shared VSPI bus: one SCK/MOSI/MISO, a separate chip select per device
 for pn, net in [('30', "SPI_SCK"),    # IO18
@@ -219,6 +225,11 @@ for pn, net in [('30', "SPI_SCK"),    # IO18
                 ('11', "RS485_RO"),   # IO26  UART2 RX
                 ('13', "RS485_DE")]:  # IO14
     s.stub(mcu[pn], net)
+# M-4: pins that are deliberately open get explicit no-connect flags.
+# GPIO6-11 are the module's internal SPI flash and are never usable.
+s.nc(*[mcu[pn] for pn in ['4','5','17','18','19','20','21','22','32',
+                          '24','25','34','35','23','14','8','9',
+                          '33','36','29','7']])
 ren = s.place(R, "R_EN", "10k", 240, 215, angle=90)
 s.stub(ren['1'], "+3V3_LOGGER", 3); s.stub(ren['2'], "ESP_EN", 3)
 s.stub(mcu['3'], "ESP_EN")         # EN
@@ -243,9 +254,10 @@ s.stub(sd['2'], "SD_CS")      # DAT3/CD
 s.stub(sd['3'], "SPI_MOSI")    # CMD
 s.stub(sd['5'], "SPI_SCK")     # CLK
 s.stub(sd['7'], "SPI_MISO")    # DAT0
-s.power("+3V3", sd['4'])
+s.stub(sd['4'], "+3V3_LOGGER")     # VDD   (C-1)
 s.power("GND", sd['6'])
 s.stub(sd['10'], "SD_DETECT")
+s.nc(sd['1'], sd['8'])   # DAT2 / DAT1 unused in SPI mode
 s.power("GND", sd['9'])
 s.power("GND", sd['SH'])
 for i, (ref, net) in enumerate([("R_SDCS", "SD_CS"), ("R_SDDI", "SPI_MOSI"),
@@ -262,7 +274,8 @@ u485 = s.place("Interface_UART:SP3485EN", "U_485", "SP3485EN-L/TR", 470, 190)
 s.stub(u485['1'], "RS485_RO"); s.stub(u485['2'], "RS485_DE")
 s.stub(u485['3'], "RS485_DE"); s.stub(u485['4'], "RS485_DI")
 s.stub(u485['6'], "RS485_A");  s.stub(u485['7'], "RS485_B")
-s.power("+3V3", u485['8']); s.power("GND", u485['5'])
+s.stub(u485['8'], "+3V3_LOGGER")   # VCC (C-1)
+s.power("GND", u485['5'])          # GND - do NOT merge onto the line above
 rt = s.place(R, "R_TERM", "120R", 530, 200, angle=90)
 s.stub(rt['1'], "RS485_A", 3); s.stub(rt['2'], "RS485_B", 3)
 c7 = s.place(C, "C7", "100nF", 420, 200); s.stub(c7['1'], "+3V3_LOGGER", 3); s.power("GND", c7['2'])

@@ -73,7 +73,11 @@ def netlist(path):
         r = find(pt)
         nm = roots_named.get(r)
         if nm is None:
-            nm = "UNNAMED@%.1f,%.1f" % pt
+            # Name an unnamed net after its ROOT, not after this pin's own
+            # point. Using the pin's point gave every member of an unnamed net
+            # a different name, so genuinely connected pairs - every
+            # resistor-to-LED link - were reported as separate single nodes.
+            nm = "UNNAMED@%.1f,%.1f" % r
         tag = "%s.%s%s%s" % (ref, pn, ("(" + pnm + ")") if pnm else "", " [DNP]" if dnp else "")
         nets[nm].append(tag)
     return nets
