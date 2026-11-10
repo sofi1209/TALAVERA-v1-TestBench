@@ -25,8 +25,8 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 
 | | Lines |
 |---|---|
-| Confirmed in lab | **31** |
-| Still TBD or pending | **15** |
+| Confirmed in lab | **30** |
+| Still TBD or pending | **23** |
 
 ---
 
@@ -59,18 +59,20 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| New (approved) | Relay SPDT, 12 V coil, 10 A contacts, through-hole | SRD-12VDC-SL-C | K1, K2, K3, K4 | 4 | C30431 | -- | Mouser | DigiKey | ONE part for all four positions (D-055). SPDT gives both NO and NC: K1/K2/K4 wired NO, K3 wired NC for the shunt. ~$0.23, ~131,800 in LCSC stock, also at Mexican retailers. Coil ~30 mA / 400 ohm. CONTACT RATING still to confirm against e-match current (O-1, O-3). |
+| New (approved) | Relay SPDT, 12 V coil, 10 A contacts, through-hole | SRD-12VDC-SL-C | K1, K2, K3, K4 | 4 | C30431 | -- | Mouser | DigiKey | ONE part for all four positions (D-055). K1/K2/K4 wired NO; K3 uses BOTH contacts of its pole - NC is the shunt, NO the low-side return (D-065) - and its coil follows the FIRE command, not ARM (Batch 2, pending sign-off). K1's NC is the continuity TEST source. ~$0.23, ~131,800 in LCSC stock. The datasheet in hand is Sanyou-branded SRD V3.2 while the part is listed as Songle - provenance OPEN. Per that datasheet: 10 A NO / 6 A NC at 28 VDC, pick-up <= 9 V, release guaranteed only <= 0.6 V. Break-before-make NOT stated (O-3): measure on real units. CONTACT MARGIN still blocked on O-1. |
 | TBD | Arming plug / removable shorting link | TBD | J_ARM | 1 | -- | -- | -- | -- | Withdrawn by hand at the bench, inserted last. Must be keyed and obviously absent at a glance. |
-| In lab | Switching diode - relay coil flyback | 1N4148W | D_K1..D_K4 | 4 | C81598 | UNIT | Mouser | DigiKey | One per relay coil. |
+| In lab | Switching diode - relay coil flyback | 1N4148W | D_K1..D_K4 | 4 | C81598 | UNIT | Mouser | DigiKey | One per relay coil. D_K2 and D_K3 sit across the FLOATING FIRE-loop coils (cathode on A1). |
+| Pending decision | Switching diode - K3 coil OR and TEST blocking | 1N4148W | D_K3F, D_K3T, D_CBLK | 3 | C81598 | UNIT | Mouser | DigiKey | Batch 2, pending sign-off. D_K3F/D_K3T OR the FIRE and TEST commands into the K3 coil (~30 mA); D_CBLK keeps the 12 V on MATCH_P during FIRE off the opto LED. 1N4148W ratings to confirm against its datasheet (not in the repo). |
 
 ### PYRO INTERFACE  (one channel - D-015)
 
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| In lab | Optocoupler SMD-4, CTR 100-600 % | TLP521GB-S (UMW) | U_CONT | 1 | C364143 | UNIT | Mouser | DigiKey | Continuity sense isolation. Topology reused from IGNIS v4/2v2 Pyros.SchDoc (PYRO_CHx_CONT). Sense only - see notes. |
+| In lab | Optocoupler SMD-4, CTR 100-600 % | TLP521GB-S (UMW) | U_CONT | 1 | C364143 | UNIT | Mouser | DigiKey | Continuity TEST current detector (Batch 2): its LED is IN SERIES with the test current and its transistor SOURCES the active-high sense line. The schematic value reads PC817 - reconcile with this line (P-22). CTR at the very low test current O-1 will allow is UNVERIFIED and may force a different detector. |
 | In lab | Screw terminal 6-pin 5.08 mm | 1729160 | P1 | 1 | C457192 | -- | Mouser | DigiKey | E-match pair plus umbilical pyro pair. Not at UNIT (KF301 is 5.0 mm pitch). |
 | Candidate | N-MOSFET 60 V / 5 A (SOT-223) | NCE6005AR | Q_FIRE | 1 | C189606 | UNIT | Mouser | DigiKey | ONLY if a solid-state firing element is chosen downstream of the relays. Relays remain the primary interrupt. |
-| TBD | Continuity sense series resistor | TBD | R_CONT | 1 | -- | -- | Mouser | DigiKey | Value MUST hold sense current below the e-match no-fire rating. Cannot be computed - open item 3. |
+| TBD | Continuity TEST series resistors - TWO in series | TBD | R_TEST1, R_TEST2 | 2 | -- | -- | Mouser | DigiKey | Batch 2. EACH resistor ALONE must hold the test current below the e-match no-fire rating, so one short-failed resistor cannot fire the match. Cannot be computed - O-1. Replaces R_CONT, which sat in parallel with the match with no source. |
+| TBD | Continuity sense source resistor | TBD | R_CS | 1 | -- | -- | Mouser | DigiKey | Sets the sense-line current into the station CONTINUITY lamp. Depends on the detector CTR at the O-1 test current. |
 
 ### INDICATORS
 
@@ -90,7 +92,8 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| In lab | Schottky 40 V / 2 A SMA - reverse polarity | SS24 | D_RP | 1 | C50645 | UNIT | Mouser | DigiKey | SMA footprint. Series or blocking configuration per Gate 2. |
+| TBD | Reverse-polarity CROWBAR diode | TBD | D_XBAR | 1 | -- | -- | Mouser | DigiKey | Batch 2 (P-05), pending sign-off: replaces the series SS24 D_RP, a 2 A-class part that sat in the 6-12 A fire path. Anode GND, cathode +12V_PROT after F1. Must survive F1's clearing I2t at the battery's short-circuit current - both unknown (O-17; SLA maker and Isc not recorded). |
+| TBD | Battery connector, KEYED | TBD | J_PWR | 1 | -- | -- | Mouser | DigiKey | Batch 2: keying makes reversal mechanically unlikely; the crowbar is the backstop, not the plan. |
 | In lab | LDO 3.3 V | AMS1117-3.3 | U_3V3 | 1 | C6186 | UNIT | Mouser | DigiKey | Logger domain. Own fused rail, separate from relay coils (SAFETY.md section 4, constraint 3). |
 | In lab | LDO 5 V | AMS1117-5.0 | U_5V | 1 | C6187 | UNIT | Mouser | DigiKey | Only if a 5 V rail proves necessary. Confirm at Gate 2. |
 | TBD | Fuse and holder, 12 V input | TBD | F1 | 1 | -- | -- | Mouser | DigiKey | Rating pending the current budget. Separate fuse for the logger rail. |
@@ -101,7 +104,7 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|
 | In lab | JST-SH 4-pin right-angle (debug UART) | SM04B-SRSS-TB(LF)(SN) | J_DBG | 1 | C160404 | UNIT | Mouser | DigiKey | Logger debug only. Not a safety interface. |
-| TBD | Umbilical connector, keyed + strain relief | TBD | J_UMB | 1 | -- | -- | Mouser | DigiKey | Cable B, 8-10 conductors. Keyed, strain-relieved, pin 1 marked (Gate 1 requirement). |
+| TBD | Umbilical connector, keyed + strain relief | TBD | J_UMB | 1 | -- | -- | Mouser | DigiKey | Cable B, 12 conductors; pin map in hardware/tools/umbilical.py (Batch 2, pending sign-off). FIRE_P/FIRE_N must be a twisted pair. Adjacency is assumed linear with 12 next to 1 - re-run the short matrix against the real connector rows and cable lay-up. Keyed, strain-relieved, pin 1 marked. |
 | New (approved) | Test point - bare pad / via | Bare pad (no part) | TP1..TP14 | ~14 | -- | -- | -- | -- | Test points on EVERY rail and EVERY safety signal (Gate 2 requirement). Bare pads replace Keystone 5015 (D-057): free, and they work with probe hooks. |
 
 ### PASSIVES  (existing IGNIS library - 0603 R, 0805 C, D-058)
@@ -125,9 +128,13 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| TBD | ARM key switch, removable key, 2-position | TBD | S_ARM | 1 | -- | -- | Mouser | DigiKey | Key must be removable and carried by the ignition officer. Panel mount. |
-| TBD | E-STOP, mushroom head, latching, NC contact | TBD | S_ESTOP | 1 | -- | -- | Mouser | DigiKey | Panel mount. Breaks the bench master relay coil. NC so a broken wire stops the bench. |
-| TBD | FIRE pushbutton, momentary, NO, panel mount | TBD | S_FIRE | 1 | -- | -- | Mouser | DigiKey | A substantial panel button. NOT an SMD tactile - see notes. |
+| TBD | ARM key switch, removable key, 2-position, THREE poles | TBD | S_ARM | 1 | -- | -- | Mouser | DigiKey | Batch 2: pole 1 changeover (ON feeds ARM, OFF feeds TEST); poles 2 and 3 closed in OFF only (FIRE_N to ground for TEST; RESET enable). Key removable, carried by the ignition officer. |
+| TBD | E-STOP, mushroom head, latching, TWO positive-opening NC blocks | TBD | S_ESTOP | 1 | -- | -- | Mouser | DigiKey | Batch 2: block 1 drops bench K4 (channel 1); block 2 kills the ARM permit (channel 2), so the shunt re-closes. Positive (direct) opening action required. |
+| TBD | FIRE pushbutton, guarded momentary, 2 NO + 1 NC auxiliary | TBD | S_FIRE | 1 | -- | -- | Mouser | DigiKey | Batch 2: two NO poles switch both wires of the floating FIRE loop; the NC auxiliary blocks RESET while the actuator is held or stuck. NOT an SMD tactile (D-044). |
+| TBD | TEST pushbutton, momentary, panel mount | TBD | S_TEST | 1 | -- | -- | Mouser | DigiKey | Batch 2 (D-B), pending sign-off. Momentary ONLY, never latching: the shunt is open while it is held (H10). |
+| TBD | RESET pushbutton, momentary, panel mount | TBD | S_RESET | 1 | -- | -- | Mouser | DigiKey | Batch 2: sets the K5 ARM permit, only with E-STOP released, FIRE released and the key OFF. |
+| Pending decision | Relay SPDT 12 V - latched ARM permit | SRD-12VDC-SL-C | K5 | 1 | C30431 | -- | Mouser | DigiKey | Batch 2 (P-04 C), pending sign-off. Same part as the bench relays. Self-holds from E-STOP block 2, so releasing the E-STOP does not re-arm without RESET. A welded K5 loses only that anti-restart property. |
+| Pending decision | Switching diode - K5 flyback | 1N4148W | D_K5 | 1 | C81598 | UNIT | Mouser | DigiKey |  |
 
 ### TELEMETRY & USB
 
@@ -151,7 +158,7 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 
 | Status | Component name | ID # (part number) | Designator | Amount | LCSC | UNIT Electronics | Mouser MX | DigiKey MX | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| In lab | Red LED 0805 | NCD0805R1 | D_ARMED, D_CONT, D_PWR | 3+ | C84256 | UNIT | Mouser | DigiKey | ARMED lamp must be driven from the real arm line. |
+| In lab | Red LED 0805 | NCD0805R1 | D_ARMED, D_CONT, D_PWR | 3+ | C84256 | UNIT | Mouser | DigiKey | ARMED lamp must be driven from the real arm line. D_CONT is ACTIVE-HIGH since Batch 2 (sourced by the bench during TEST), so a sense-line short to ground reads 'no match'. |
 | In lab | Magnetic buzzer 2.7 kHz (passive) | MLT-8530 | LS1 | 1 | C94599 | -- | Mouser | DigiKey | Audible ARMED warning. Recommended addition - the manual relies on visual cues only. |
 | In lab | N-MOSFET 30 V / 270 mA (SC-70) | NTS4001NT1G | Q_BUZZ | 1 | C116738 | -- | Mouser | DigiKey | Buzzer drive. |
 | In lab | Switching diode (buzzer flyback) | 1N4148W | D_BUZZ | 1 | C81598 | UNIT | Mouser | DigiKey |  |
@@ -194,7 +201,8 @@ kept only for logger-local status, where a wrong colour costs nothing.
 The 4.6 x 3.2 mm SMD tactile switch used across both boards is fine for a continuity test. It is not an
 appropriate control for commanding a pyrotechnic event: it can be actuated by a dropped tool, a closing
 lid, or a thumb that slipped. **FIRE needs a substantial panel-mount momentary button**, ideally
-guarded. The tactile switch is retained for the continuity check only.
+guarded. Since Batch 2 the continuity TEST is a panel momentary too (S_TEST), because the shunt is
+open while it is held (H10).
 
 ---
 
@@ -210,6 +218,6 @@ TALAVERA it must not — arming and firing are relay contacts and a hand-inserte
 `Pyros.SchDoc` wholesale would reintroduce exactly the MCU-in-the-firing-path arrangement this redesign
 exists to remove. Take the sense circuit; leave the gate drive.
 
-One constraint carries over regardless: the continuity sense current flows **through the e-match**, so
-`R_CONT` must hold it below the no-fire rating. That value cannot be computed until the e-match part is
-known (open item 3).
+One constraint carries over regardless: the continuity TEST current flows **through the e-match**, so
+`R_TEST1` and `R_TEST2` must each, alone, hold it below the no-fire rating. Those values cannot be
+computed until the e-match part is known (O-1).

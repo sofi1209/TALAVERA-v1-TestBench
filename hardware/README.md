@@ -15,7 +15,7 @@ KiCad projects for the two TALAVERA boards.
 > Both boards now carry a full schematic. **96 components across the two sheets**, zero structural
 > errors. Nothing is approved and no board has been fabricated.
 >
-> The pyro and analog blocks are complete in **topology** but carry `TBD` values, because `R_CONT`,
+> The pyro and analog blocks are complete in **topology** but carry `TBD` values, because `R_TEST1`/`R_TEST2` (Rev A.2),
 > the fuse and relay ratings need the e-match no-fire current (O-1), and the PGA gain, excitation
 > and reference choice need the load cell datasheet (O-2).
 >

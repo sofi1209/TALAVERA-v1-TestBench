@@ -1,5 +1,12 @@
 # Handoff — TALAVERA v1
 
+> **Status update, Batch 2, 10 November 2026.** The schematics are at **Rev A.2**: K3's coil follows
+> FIRE, FIRE is a floating two-wire loop on a new pin map, a pre-arm continuity TEST exists in topology,
+> the E-STOP has two channels and a latched ARM permit, and reverse polarity is a crowbar. All of it is
+> pending Emilio's sign-off (D-074 to D-080). Read `docs/BATCH2-SAFETY-TOPOLOGY-2026-11-10.md` first.
+> `trace_fire_loop.py` now takes **both** netlists and runs seven sections; a release run must pass the
+> station netlist too. The A.1 note below still applies to everything else.
+>
 > **Status update, 10 November 2026.** This handoff was written on 6 November and its status tables are
 > out of date. The project is now at **Rev A.1**: two independent audits of 9 Nov found that the bench
 > could not fire and that `D_RP` was reversed, and both are corrected. The current state is in

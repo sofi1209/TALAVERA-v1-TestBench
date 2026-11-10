@@ -33,21 +33,25 @@ BENCH = [
  ]),
  ("SAFETY CHAIN  (hardware only - no MCU)",[
   R("New (approved)","Relay SPDT, 12 V coil, 10 A contacts, through-hole","SRD-12VDC-SL-C","K1, K2, K3, K4","4","C30431",X,M,D,
-    "ONE part for all four positions (D-055). SPDT gives both NO and NC: K1/K2/K4 wired NO, K3 wired NC for the shunt. ~$0.23, ~131,800 in LCSC stock, also at Mexican retailers. Coil ~30 mA / 400 ohm. CONTACT RATING still to confirm against e-match current (O-1, O-3)."),
+    "ONE part for all four positions (D-055). K1/K2/K4 wired NO; K3 uses BOTH contacts of its pole - NC is the shunt, NO the low-side return (D-065) - and its coil follows the FIRE command, not ARM (Batch 2, pending sign-off). K1's NC is the continuity TEST source. ~$0.23, ~131,800 in LCSC stock. The datasheet in hand is Sanyou-branded SRD V3.2 while the part is listed as Songle - provenance OPEN. Per that datasheet: 10 A NO / 6 A NC at 28 VDC, pick-up <= 9 V, release guaranteed only <= 0.6 V. Break-before-make NOT stated (O-3): measure on real units. CONTACT MARGIN still blocked on O-1."),
   R("TBD","Arming plug / removable shorting link","TBD","J_ARM","1",X,X,X,X,
     "Withdrawn by hand at the bench, inserted last. Must be keyed and obviously absent at a glance."),
   R("In lab","Switching diode - relay coil flyback","1N4148W","D_K1..D_K4","4","C81598",U,M,D,
-    "One per relay coil."),
+    "One per relay coil. D_K2 and D_K3 sit across the FLOATING FIRE-loop coils (cathode on A1)."),
+  R("Pending decision","Switching diode - K3 coil OR and TEST blocking","1N4148W","D_K3F, D_K3T, D_CBLK","3","C81598",U,M,D,
+    "Batch 2, pending sign-off. D_K3F/D_K3T OR the FIRE and TEST commands into the K3 coil (~30 mA); D_CBLK keeps the 12 V on MATCH_P during FIRE off the opto LED. 1N4148W ratings to confirm against its datasheet (not in the repo)."),
  ]),
  ("PYRO INTERFACE  (one channel - D-015)",[
   R("In lab","Optocoupler SMD-4, CTR 100-600 %","TLP521GB-S (UMW)","U_CONT","1","C364143",U,M,D,
-    "Continuity sense isolation. Topology reused from IGNIS v4/2v2 Pyros.SchDoc (PYRO_CHx_CONT). Sense only - see notes."),
+    "Continuity TEST current detector (Batch 2): its LED is IN SERIES with the test current and its transistor SOURCES the active-high sense line. The schematic value reads PC817 - reconcile with this line (P-22). CTR at the very low test current O-1 will allow is UNVERIFIED and may force a different detector."),
   R("In lab","Screw terminal 6-pin 5.08 mm","1729160","P1","1","C457192",X,M,D,
     "E-match pair plus umbilical pyro pair. Not at UNIT (KF301 is 5.0 mm pitch)."),
   R("Candidate","N-MOSFET 60 V / 5 A (SOT-223)","NCE6005AR","Q_FIRE","1","C189606",U,M,D,
     "ONLY if a solid-state firing element is chosen downstream of the relays. Relays remain the primary interrupt."),
-  R("TBD","Continuity sense series resistor","TBD","R_CONT","1",X,X,M,D,
-    "Value MUST hold sense current below the e-match no-fire rating. Cannot be computed - open item 3."),
+  R("TBD","Continuity TEST series resistors - TWO in series","TBD","R_TEST1, R_TEST2","2",X,X,M,D,
+    "Batch 2. EACH resistor ALONE must hold the test current below the e-match no-fire rating, so one short-failed resistor cannot fire the match. Cannot be computed - O-1. Replaces R_CONT, which sat in parallel with the match with no source."),
+  R("TBD","Continuity sense source resistor","TBD","R_CS","1",X,X,M,D,
+    "Sets the sense-line current into the station CONTINUITY lamp. Depends on the detector CTR at the O-1 test current."),
  ]),
  ("INDICATORS",[
   R("In lab","Red LED 0805","NCD0805R1","D_IND1..6","6","C84256",U,M,D,
@@ -62,8 +66,10 @@ BENCH = [
     "Native to the ESP32 3.3 V domain. ~$0.14-0.27, ~190,700 in LCSC stock. Replaces the ~$10 ADM2582E (D-056): isolation moves to the STATION board where USB powers the isolated side, so no isolated DC-DC is needed anywhere."),
  ]),
  ("POWER & PROTECTION",[
-  R("In lab","Schottky 40 V / 2 A SMA - reverse polarity","SS24","D_RP","1","C50645",U,M,D,
-    "SMA footprint. Series or blocking configuration per Gate 2."),
+  R("TBD","Reverse-polarity CROWBAR diode","TBD","D_XBAR","1",X,X,M,D,
+    "Batch 2 (P-05), pending sign-off: replaces the series SS24 D_RP, a 2 A-class part that sat in the 6-12 A fire path. Anode GND, cathode +12V_PROT after F1. Must survive F1's clearing I2t at the battery's short-circuit current - both unknown (O-17; SLA maker and Isc not recorded)."),
+  R("TBD","Battery connector, KEYED","TBD","J_PWR","1",X,X,M,D,
+    "Batch 2: keying makes reversal mechanically unlikely; the crowbar is the backstop, not the plan."),
   R("In lab","LDO 3.3 V","AMS1117-3.3","U_3V3","1","C6186",U,M,D,
     "Logger domain. Own fused rail, separate from relay coils (SAFETY.md section 4, constraint 3)."),
   R("In lab","LDO 5 V","AMS1117-5.0","U_5V","1","C6187",U,M,D,
@@ -77,7 +83,7 @@ BENCH = [
   R("In lab","JST-SH 4-pin right-angle (debug UART)","SM04B-SRSS-TB(LF)(SN)","J_DBG","1","C160404",U,M,D,
     "Logger debug only. Not a safety interface."),
   R("TBD","Umbilical connector, keyed + strain relief","TBD","J_UMB","1",X,X,M,D,
-    "Cable B, 8-10 conductors. Keyed, strain-relieved, pin 1 marked (Gate 1 requirement)."),
+    "Cable B, 12 conductors; pin map in hardware/tools/umbilical.py (Batch 2, pending sign-off). FIRE_P/FIRE_N must be a twisted pair. Adjacency is assumed linear with 12 next to 1 - re-run the short matrix against the real connector rows and cable lay-up. Keyed, strain-relieved, pin 1 marked."),
   R("New (approved)","Test point - bare pad / via","Bare pad (no part)","TP1..TP14","~14",X,X,X,X,
     "Test points on EVERY rail and EVERY safety signal (Gate 2 requirement). Bare pads replace Keystone 5015 (D-057): free, and they work with probe hooks."),
  ]),
@@ -96,18 +102,25 @@ BENCH = [
 
 STATION = [
  ("CONTROLS  (hardware only - no MCU in the safety chain)",[
-  R("TBD","ARM key switch, removable key, 2-position","TBD","S_ARM","1",X,X,M,D,
-    "Key must be removable and carried by the ignition officer. Panel mount."),
-  R("TBD","E-STOP, mushroom head, latching, NC contact","TBD","S_ESTOP","1",X,X,M,D,
-    "Panel mount. Breaks the bench master relay coil. NC so a broken wire stops the bench."),
-  R("TBD","FIRE pushbutton, momentary, NO, panel mount","TBD","S_FIRE","1",X,X,M,D,
-    "A substantial panel button. NOT an SMD tactile - see notes."),
+  R("TBD","ARM key switch, removable key, 2-position, THREE poles","TBD","S_ARM","1",X,X,M,D,
+    "Batch 2: pole 1 changeover (ON feeds ARM, OFF feeds TEST); poles 2 and 3 closed in OFF only (FIRE_N to ground for TEST; RESET enable). Key removable, carried by the ignition officer."),
+  R("TBD","E-STOP, mushroom head, latching, TWO positive-opening NC blocks","TBD","S_ESTOP","1",X,X,M,D,
+    "Batch 2: block 1 drops bench K4 (channel 1); block 2 kills the ARM permit (channel 2), so the shunt re-closes. Positive (direct) opening action required."),
+  R("TBD","FIRE pushbutton, guarded momentary, 2 NO + 1 NC auxiliary","TBD","S_FIRE","1",X,X,M,D,
+    "Batch 2: two NO poles switch both wires of the floating FIRE loop; the NC auxiliary blocks RESET while the actuator is held or stuck. NOT an SMD tactile (D-044)."),
+  R("TBD","TEST pushbutton, momentary, panel mount","TBD","S_TEST","1",X,X,M,D,
+    "Batch 2 (D-B), pending sign-off. Momentary ONLY, never latching: the shunt is open while it is held (H10)."),
+  R("TBD","RESET pushbutton, momentary, panel mount","TBD","S_RESET","1",X,X,M,D,
+    "Batch 2: sets the K5 ARM permit, only with E-STOP released, FIRE released and the key OFF."),
+  R("Pending decision","Relay SPDT 12 V - latched ARM permit","SRD-12VDC-SL-C","K5","1","C30431",X,M,D,
+    "Batch 2 (P-04 C), pending sign-off. Same part as the bench relays. Self-holds from E-STOP block 2, so releasing the E-STOP does not re-arm without RESET. A welded K5 loses only that anti-restart property."),
+  R("Pending decision","Switching diode - K5 flyback","1N4148W","D_K5","1","C81598",U,M,D,""),
   # S_CONT (SKRPABE010 tactile) REMOVED. The continuity test button was deleted
   # from the schematic by audit finding H-2 on 6 November - it shorted the sense
   # line to ground, which was the lamp-good state, so it reported a good match
   # whether or not one was connected. The BOM kept listing it for three days.
-  # A pre-arm continuity control returns only with the reviewed TEST function,
-  # decision D-B, and it will not be an SMD tactile.
+  # The pre-arm continuity control returned in Batch 2 as S_TEST (decision D-B,
+  # pending sign-off) - a panel momentary, not an SMD tactile.
  ]),
  ("TELEMETRY & USB",[
   R("In lab","USB-C 16-pin (USB 2.0)","TYPE-C-31-M-12","J_USB","1","C165948",U,M,D,
@@ -131,7 +144,7 @@ STATION = [
  ]),
  ("INDICATORS & AUDIO",[
   R("In lab","Red LED 0805","NCD0805R1","D_ARMED, D_CONT, D_PWR","3+","C84256",U,M,D,
-    "ARMED lamp must be driven from the real arm line."),
+    "ARMED lamp must be driven from the real arm line. D_CONT is ACTIVE-HIGH since Batch 2 (sourced by the bench during TEST), so a sense-line short to ground reads 'no match'."),
   R("In lab","Magnetic buzzer 2.7 kHz (passive)","MLT-8530","LS1","1","C94599",X,M,D,
     "Audible ARMED warning. Recommended addition - the manual relies on visual cues only."),
   R("In lab","N-MOSFET 30 V / 270 mA (SC-70)","NTS4001NT1G","Q_BUZZ","1","C116738",X,M,D,"Buzzer drive."),
@@ -229,7 +242,8 @@ body = (
 "The 4.6 x 3.2 mm SMD tactile switch used across both boards is fine for a continuity test. It is not an\n"
 "appropriate control for commanding a pyrotechnic event: it can be actuated by a dropped tool, a closing\n"
 "lid, or a thumb that slipped. **FIRE needs a substantial panel-mount momentary button**, ideally\n"
-"guarded. The tactile switch is retained for the continuity check only.\n\n"
+"guarded. Since Batch 2 the continuity TEST is a panel momentary too (S_TEST), because the shunt is\n"
+"open while it is held (H10).\n\n"
 "---\n\n## Reused from IGNIS v4 / 2v2 \u2014 with one important exception\n\n"
 "`Pyros.SchDoc` in IGNIS v4 and 2v2 implements a two-channel pyro stage: `PYRO_CHx_GATE` through an\n"
 "optocoupler to an S8050 NPN driving an NCE6005AR low-side MOSFET, with a second optocoupler across the\n"
@@ -239,8 +253,8 @@ body = (
 "TALAVERA it must not \u2014 arming and firing are relay contacts and a hand-inserted plug (D-013). Porting\n"
 "`Pyros.SchDoc` wholesale would reintroduce exactly the MCU-in-the-firing-path arrangement this redesign\n"
 "exists to remove. Take the sense circuit; leave the gate drive.\n\n"
-"One constraint carries over regardless: the continuity sense current flows **through the e-match**, so\n"
-"`R_CONT` must hold it below the no-fire rating. That value cannot be computed until the e-match part is\n"
-"known (open item 3).\n")
+"One constraint carries over regardless: the continuity TEST current flows **through the e-match**, so\n"
+"`R_TEST1` and `R_TEST2` must each, alone, hold it below the no-fire rating. Those values cannot be\n"
+"computed until the e-match part is known (O-1).\n")
 open(ROOT+"/fabrication/PARTS-LIST.md","w",encoding="utf-8").write(body)
 print("written")

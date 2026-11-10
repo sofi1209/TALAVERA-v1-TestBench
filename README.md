@@ -7,11 +7,16 @@ microcontroller from every function the test's safety depends on. Arming, firing
 switches, relay contacts and resistors — no firmware anywhere in the chain. A logger rides along to
 record thrust, with no authority over anything.
 
-> ### 🔴 Status: SCHEMATICS REV A.1 — AUDITED TWICE — **NOT FIT TO BUILD, LAYOUT NOT STARTED**
+> ### 🔴 Status: SCHEMATICS REV A.2 — SAFETY TOPOLOGY DRAWN, **PENDING SIGN-OFF — NOT FIT TO BUILD, LAYOUT NOT STARTED**
 >
 > No circuit in this repository is approved. No board has been fabricated. Nothing has been energized.
 >
-> Both schematics are drawn at **Rev A.1** (10 Nov 2026). The [6 Nov audit](docs/AUDIT-2026-11-06.md)
+> **Rev A.2 (Batch 2, 10 Nov 2026)** redraws the safety topology — K3 on the FIRE command, a floating
+> two-wire FIRE loop on a new umbilical pin map, a pre-arm continuity TEST, a two-channel E-STOP with a
+> latched ARM permit, and a reverse-polarity crowbar — all **pending the review owner's sign-off**
+> ([Batch 2 record](docs/BATCH2-SAFETY-TOPOLOGY-2026-11-10.md)). The Rev A.1 history follows.
+>
+> Both schematics were drawn at **Rev A.1** (10 Nov 2026). The [6 Nov audit](docs/AUDIT-2026-11-06.md)
 > found 5 critical, 3 high and 4 medium findings; two independent audits of 9 Nov then found that the
 > bench could not fire and that the reverse-polarity diode was backwards. Rev A.1 corrects those
 > ([change record](docs/REV-A1-CHANGES-2026-11-09.md)). KiCad ERC reports 0 violations on both boards and

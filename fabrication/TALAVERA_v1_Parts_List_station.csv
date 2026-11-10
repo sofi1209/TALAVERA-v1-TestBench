@@ -3,9 +3,13 @@ PRELIMINARY. No schematic exists; Gate 2 has not started. Designators are placeh
 
 Status,Component name,ID # (part number),Designator,Amount,LCSC,UNIT Electronics,Mouser MX,DigiKey MX,Notes
 CONTROLS  (hardware only - no MCU in the safety chain)
-TBD,"ARM key switch, removable key, 2-position",TBD,S_ARM,1,--,--,Mouser,DigiKey,Key must be removable and carried by the ignition officer. Panel mount.
-TBD,"E-STOP, mushroom head, latching, NC contact",TBD,S_ESTOP,1,--,--,Mouser,DigiKey,Panel mount. Breaks the bench master relay coil. NC so a broken wire stops the bench.
-TBD,"FIRE pushbutton, momentary, NO, panel mount",TBD,S_FIRE,1,--,--,Mouser,DigiKey,A substantial panel button. NOT an SMD tactile - see notes.
+TBD,"ARM key switch, removable key, 2-position, THREE poles",TBD,S_ARM,1,--,--,Mouser,DigiKey,"Batch 2: pole 1 changeover (ON feeds ARM, OFF feeds TEST); poles 2 and 3 closed in OFF only (FIRE_N to ground for TEST; RESET enable). Key removable, carried by the ignition officer."
+TBD,"E-STOP, mushroom head, latching, TWO positive-opening NC blocks",TBD,S_ESTOP,1,--,--,Mouser,DigiKey,"Batch 2: block 1 drops bench K4 (channel 1); block 2 kills the ARM permit (channel 2), so the shunt re-closes. Positive (direct) opening action required."
+TBD,"FIRE pushbutton, guarded momentary, 2 NO + 1 NC auxiliary",TBD,S_FIRE,1,--,--,Mouser,DigiKey,Batch 2: two NO poles switch both wires of the floating FIRE loop; the NC auxiliary blocks RESET while the actuator is held or stuck. NOT an SMD tactile (D-044).
+TBD,"TEST pushbutton, momentary, panel mount",TBD,S_TEST,1,--,--,Mouser,DigiKey,"Batch 2 (D-B), pending sign-off. Momentary ONLY, never latching: the shunt is open while it is held (H10)."
+TBD,"RESET pushbutton, momentary, panel mount",TBD,S_RESET,1,--,--,Mouser,DigiKey,"Batch 2: sets the K5 ARM permit, only with E-STOP released, FIRE released and the key OFF."
+Pending decision,Relay SPDT 12 V - latched ARM permit,SRD-12VDC-SL-C,K5,1,C30431,--,Mouser,DigiKey,"Batch 2 (P-04 C), pending sign-off. Same part as the bench relays. Self-holds from E-STOP block 2, so releasing the E-STOP does not re-arm without RESET. A welded K5 loses only that anti-restart property."
+Pending decision,Switching diode - K5 flyback,1N4148W,D_K5,1,C81598,UNIT,Mouser,DigiKey,
 TELEMETRY & USB
 In lab,USB-C 16-pin (USB 2.0),TYPE-C-31-M-12,J_USB,1,C165948,UNIT,Mouser,DigiKey,"On the STATION board, not the bench. Direct USB down a 20 m umbilical is out of spec (D-038)."
 In lab,"USB ESD diode, 5 V bidirectional",ESD9B5.0ST5G,"D_ESD1, D_ESD2",2,C111566,UNIT,Mouser,DigiKey,"SOD-923, one per data line. Alt: USBLC6-2SC6 (C7519)."
@@ -17,7 +21,7 @@ TBD,Differential receiver for the thrust pair,TBD,U_RX,1,--,--,Mouser,DigiKey,Re
 TBD,DAQ output connector (BNC or terminal),TBD,J_DAQ,1,--,--,Mouser,DigiKey,Path 2 must work with no software at all.
 TBD,Battery voltage display module,TBD,U_VM,1,--,UNIT,--,--,Wirikuta used a digital voltmeter module (manual p. 19). Pre-test check requires at least 12 V read remotely (manual p. 12).
 INDICATORS & AUDIO
-In lab,Red LED 0805,NCD0805R1,"D_ARMED, D_CONT, D_PWR",3+,C84256,UNIT,Mouser,DigiKey,ARMED lamp must be driven from the real arm line.
+In lab,Red LED 0805,NCD0805R1,"D_ARMED, D_CONT, D_PWR",3+,C84256,UNIT,Mouser,DigiKey,"ARMED lamp must be driven from the real arm line. D_CONT is ACTIVE-HIGH since Batch 2 (sourced by the bench during TEST), so a sense-line short to ground reads 'no match'."
 In lab,Magnetic buzzer 2.7 kHz (passive),MLT-8530,LS1,1,C94599,--,Mouser,DigiKey,Audible ARMED warning. Recommended addition - the manual relies on visual cues only.
 In lab,N-MOSFET 30 V / 270 mA (SC-70),NTS4001NT1G,Q_BUZZ,1,C116738,--,Mouser,DigiKey,Buzzer drive.
 In lab,Switching diode (buzzer flyback),1N4148W,D_BUZZ,1,C81598,UNIT,Mouser,DigiKey,
@@ -36,4 +40,4 @@ Pending datasheet,Capacitor 22 uF 25 V X5R 0805,CL21A226MAQNNNE,"C_STN2, C_STN3"
 TBD,"Fuse and holder, station 12 V entry",TBD,F_STN,1,--,--,Mouser,DigiKey,"Rev A.1: the station feed was UNFUSED while driving 20 m of ARM_LINE and three relay coils. Rating follows the station load budget and O-17. Prefer a field-replaceable blade holder, as for F1/F2."
 
 ,Lines confirmed in lab (IGNIS v5 / MAGNIS v1 lists),,,13
-,Lines still TBD or pending a decision,,,8
+,Lines still TBD or pending a decision,,,12

@@ -150,7 +150,7 @@ Renumbered 6 November 2026. Closed items are listed separately below rather than
 
 | # | Item | Why it blocks |
 |---|---|---|
-| **O-1** | **E-match make and part, no-fire current, all-fire current, resistance** | Sets `R_CONT`, the fuse rating, all four relay contact ratings and the `PYRO` trace width. The entire pyro section stays `TBD` without it, and no safety margin can be claimed. |
+| **O-1** | **E-match make and part, no-fire current, all-fire current, resistance** | Sets `R_TEST1`/`R_TEST2` and `R_CS` (Batch 2), the fuse rating, all four relay contact ratings and the `PYRO` trace width. The entire pyro section stays `TBD` without it, and no safety margin can be claimed. |
 | **O-2** | **Load cell make and model, bridge resistance, mV/V, rated excitation** | Sets the ADS1220 PGA gain, decides whether the PGA common-mode restriction bites, and decides whether a ratiometric reference is possible. The whole analog chain depends on it. |
 
 Both are data only Ignitia can supply. Neither will be guessed.
@@ -159,7 +159,7 @@ Both are data only Ignitia can supply. Neither will be guessed.
 
 | # | Item | Note |
 |---|---|---|
-| O-3 | Relay **contact rating** confirmation for `SRD-12VDC-SL-C` | Part chosen (D-055); only the rating against the e-match current is open. Depends on O-1. |
+| O-3 | Relay **contact rating** confirmation for `SRD-12VDC-SL-C`, and **break-before-make measured on real units** (scope on COM, many cycles, coil diode fitted) - the datasheet does not state it. Under D-074 it sets K3 contact life | Part chosen (D-055); only the rating against the e-match current is open. Depends on O-1. |
 | O-4 | ARM key switch, E-STOP mushroom, FIRE panel button | All three panel-mount, not PCB parts, so exempt from the LCSC constraint. |
 | O-5 | Arming plug / removable shorting link part | Must be keyed and obviously absent at a glance. |
 | O-6 | **Isolator part** for the station ground barrier, plus the USB-UART bridge | RS-485 transceiver chosen (`SP3485EN`, D-056). Candidates for the barrier: 6N137 high-speed optocoupler, or a digital isolator. **Not yet verified for price or stock** — the slow TLP521/PC817 already in stock may not carry 115200 baud reliably. |
@@ -176,6 +176,10 @@ Both are data only Ignitia can supply. Neither will be guessed.
 | O-12 | Environment figures confirmed or overridden | §4 is still entirely assumed. Gate 3 part selection. |
 | O-13 | KiCad sources for the two Wirikuta reference boards | Comparison only. Not blocking. |
 | O-14 | Enclosure and panel for the station board | Gate 4. Drives the panel-control footprints. |
+| O-22 | **Relay must-operate and must-release voltages measured across real units** | The SRD datasheet guarantees ON only at >= 9 V and OFF only at <= 0.6 V. Every "??" residual of the umbilical short matrix (Batch 2 record, section 7) closes only by measurement. |
+| O-23 | **Umbilical connector part, pin rows, cable lay-up and conductor gauge** | The Batch 2 pin map assumes linear adjacency with 12 next to 1. Real adjacency must be re-run through `trace_fire_loop.py`, and the gauge sets whether the bench coils see >= 9 V. |
+| O-24 | **Relay datasheet provenance** | LCSC lists C30431 as Songle, but its linked datasheet is Sanyou SRD V3.2 and does not contain the ordering code. Every relay figure rests on it. |
+| O-25 | **Panel control parts for Batch 2** | E-STOP with two positive-opening NC blocks; three-pole key switch; guarded FIRE with 2 NO + 1 NC auxiliary; TEST and RESET momentaries. Extends O-4. |
 
 ### Closed
 
