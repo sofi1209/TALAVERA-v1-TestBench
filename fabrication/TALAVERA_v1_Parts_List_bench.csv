@@ -46,6 +46,7 @@ In lab,Resistor 100 Ohm 0603 1 %,0603WAF1000T5E,R*,~4,C22775,UNIT,Mouser,DigiKey
 In lab,Capacitor 100 nF 50 V X7R 0805,CC0805KRX7R9BB104,C*,~15,C49678,UNIT,Mouser,DigiKey,Decoupling
 In lab,Capacitor 10 uF 25 V X5R 0805,CL21A106KAYNNNE,C*,~6,C15850,UNIT,Mouser,DigiKey,
 In lab,Capacitor 22 uF 25 V X5R 0805,CL21A226MAQNNNE,C*,~3,C45783,UNIT,Mouser,DigiKey,Bulk on the logger rail
+New (approved),Resistor 0 ohm 0805 - PYRO_RTN star bond,Generic 0 R jumper,R_STAR,1,--,UNIT,Mouser,DigiKey,"Single bond between the firing-current return and board ground, at the J_PWR star point. Rev A.1, audit finding R-1: without a separate PYRO_RTN the fire current (~6-12 A pending O-1) returns through the same net as the load-cell excitation return and the ADS1220 AVSS, during the burn. 0805 is a placeholder - size the link and its copper for the fire current once O-1 lands, and consider a solid wire link or a bolted star post instead."
 
 ,Lines confirmed in lab (IGNIS v5 / MAGNIS v1 lists),,,18
 ,Lines still TBD or pending a decision,,,7

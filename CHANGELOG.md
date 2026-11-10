@@ -1,5 +1,59 @@
 # Changelog
 
+## [Unreleased] — Revision A.1 — corrective, 9 November 2026
+
+Two independent audits of commit `43e9803` found that **the bench could not fire**: `PYRO_MATCH_N`
+reached only K3's NC contact and the opto LED, both of which led back to `PYRO_MATCH_P`, so no current
+could flow in any state. Both also confirmed the reversed `D_RP`, which left nothing downstream of F1
+powered. Reconciled in `docs/AUDIT-RECONCILIATION-2026-11-09.md`; changes recorded in
+`docs/REV-A1-CHANGES-2026-11-09.md`. **No circuit is approved.**
+
+### Fixed — blockers
+- **Firing loop has a return.** K3 now carries the shunt and the low-side return on one Form C pole,
+  using its previously unused NO contact. Provisional: decision **D-A**, and it assumes the Songle
+  changeover is break-before-make (O-3). (D-065)
+- **`D_RP` un-reversed** — anode on `+12V_FUSED`, cathode on `+12V_PROT`. (D-064)
+- **`PYRO_RTN` is a separate net** with a single star bond at `R_STAR`, so the fire current does not
+  return through the load-cell excitation return and the ADS1220 AVSS during the burn. (D-066)
+- **Station supply drawn honestly and fused** at `F_STN`; the umbilical carries no supply conductor.
+  (D-067)
+
+### Fixed — mechanical
+- `PWR_FLAG` on `+12V_LOGGER`, clearing the one real ERC error.
+- FIRING lamp moved to `FIRE_LINE`, removing a sneak path that read "good" with no match fitted. (D-068)
+- `R_ADCCS` pull-up on `ADC_CS`; `R_DE` pull-**down** on the bench `RS485_DE`.
+- Station rail decoupling added — `C_STN1`–`C_STN3`, `C_485` at the SP3485 VCC pin, `C_ISO1`/`C_ISO2` at
+  each 6N137 pins 8–5 as its datasheet requires. 22 µF values **assumed**, O-20.
+- Shield bonds at the bench end only. (D-070)
+- Path 2 deferred: umbilical pins 8/9 reserved, `J_DAQ` not fitted. (D-069)
+- SD-detect sheet note corrected; the wiring was already right.
+- `S_CONT` removed from the parts list — the button was deleted by H-2 on 6 November.
+- Generator and parts-list paths are relative, so regeneration is no longer tied to one machine.
+
+### Fixed — tooling, so a clean result means something
+- `validate_sch.py` returned a **byte-identical "0 errors"** when `SYMDIR` was wrong, because symbol
+  resolution sat in `except Exception: continue`. `SYMDIR` now resolves from the environment or by
+  globbing, a set-but-wrong override is fatal, unresolved symbols are a hard error, the run prints
+  `symdir` and `structural_checks`, and it exits non-zero. (D-071)
+- **Automatic diode polarity checking**, which the handoff recorded as the one class with no guard.
+  Three rules, each self-tested against a deliberately broken board. (D-072)
+- **`hardware/tools/trace_fire_loop.py`** — asks whether current can complete a circuit from the
+  battery through the initiator and back, per relay state. Self-tested against the original netlist,
+  where it correctly reports that the board cannot fire.
+
+### Verification
+`validate_sch.py` 0 errors / 0 warnings on both boards · `kicad-cli sch erc` **0 violations on both**,
+the first time the bench board has been ERC-clean under the native tool · `trace_fire_loop.py` all five
+states as expected, with no fire current in SAFE, ARMED, E-STOP or FIRE-without-ARM.
+
+### Still open — decisions for the review owner
+**D-A** K3 one relay or two · **D-B** pre-arm continuity TEST · **D1** station power · E-STOP second
+channel and latched ARM permit · umbilical ARM/FIRE separation · **M-1** bench thermal · **M-2** DevKitC
+representation · 6N137 RX inversion (O-21) · buzzer part · path B survival.
+Blocked on data: **O-1** e-match, **O-2** load cell, **O-20** AMS1117 capacitors.
+
+**Gate 6 and bring-up Stage 5 keep mandatory written sign-off from Emilio Guadarrama.**
+
 ## [Unreleased] — Revision A
 
 ### Gate 0 — Requirements and reference (complete)

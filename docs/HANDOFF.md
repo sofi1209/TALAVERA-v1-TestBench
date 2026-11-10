@@ -64,9 +64,14 @@ These need a human, not more analysis.
 2. **M-2, representation.** The sheet draws a bare WROOM-32D but the build sockets a DevKitC that
    already has its own regulator, EN network and USB bridge — and whose header does not carry nine of
    the drawn pins. The schematic does not represent what gets built.
-3. **H-2 follow-on.** The continuity test button is gone (it forced a false "good"). That exposed the
-   real issue: **sense current now flows through the e-match continuously**, whenever the bench is
-   powered. Gating it properly needs a decision, and it is a pyrotechnic question — put it to Emilio.
+3. **H-2 follow-on. ~~Sense current now flows through the e-match continuously.~~ WITHDRAWN — that is
+   wrong.** Nothing sources that current: the `R_CONT` + opto branch sits between the two match
+   terminals, no net imposes a potential difference across them, and the current is **zero**. Two
+   independent audits caught the error on 9 November. The real defect is the opposite and worse — there
+   was no working continuity check at all, and the firing loop had no return, so the bench could not
+   fire. See `AUDIT-RECONCILIATION-2026-11-09.md` §1 and `REV-A1-CHANGES-2026-11-09.md`.
+   The firing loop is fixed; **the continuity function is still a decision for Emilio (D-B)**, and any
+   test must open the shunt, so the H2 induced-energy defence is absent while it is held.
 
 ---
 
@@ -79,7 +84,8 @@ on top of `ksch.py`. Regenerating is one command. Hand edits in KiCad will be ov
 cd hardware/tools && python gen_bench.py && python gen_station.py
 ```
 
-Then **always** resync the project UUIDs and validate:
+Then validate. **All four steps, every time** — the first two are not sufficient, and the project has
+the scars to prove it:
 
 ```bash
 python hardware/tools/validate_sch.py hardware/talavera-bench/talavera-bench.kicad_sch hardware/talavera-station/talavera-station.kicad_sch
@@ -88,6 +94,24 @@ python hardware/tools/validate_sch.py hardware/talavera-bench/talavera-bench.kic
 ```bash
 python hardware/tools/netlist.py hardware/talavera-bench/talavera-bench.kicad_sch
 ```
+
+**3. Native KiCad ERC — not optional.** It had never been run on the bench board, and when it finally
+was, the one error it reported led to a blocker: `D_RP` reversed, so nothing downstream of F1 was
+powered. `validate_sch.py` passing is not ERC passing.
+
+```bash
+kicad-cli sch erc --format report --severity-all -o exports/ERC-bench.rpt hardware/talavera-bench/talavera-bench.kicad_sch
+```
+
+**4. The firing loop, as a loop.** ERC and the validator both answer "is this pin on that net". Neither
+answers "can current get back to the battery". The Rev A board passed both while the firing loop had no
+return at all and could not fire in any state.
+
+```bash
+kicad-cli sch export netlist --format kicadsexpr -o exports/bench.net hardware/talavera-bench/talavera-bench.kicad_sch && python hardware/tools/trace_fire_loop.py exports/bench.net
+```
+
+Every one of these exits non-zero on failure, so they can gate a release.
 
 ### Bugs that cost real time. Do not reintroduce them.
 
@@ -99,7 +123,9 @@ python hardware/tools/netlist.py hardware/talavera-bench/talavera-bench.kicad_sc
 | `GND_RTN` label used alongside `power:GND` symbols — two separate nets, relay coils never reached ground | Validator resolves nets and checks named power pins semantically |
 | `+3V3` vs `+3V3_LOGGER` — **the same mistake again**, on the supply rail. No IC had power. | Same check; and `netlist.py` makes rail splits obvious |
 | All four AMS1117 wired as if pin 1 were VI. It is **GND**. (1=GND, 2=VO, 3=VI) | Validator's power-pin semantic check |
-| Five flyback diodes reversed — each a short across its coil | Nothing automatic. **Check every diode by hand.** |
+| Five flyback diodes reversed — each a short across its coil | **Now automatic**: `validate_sch.py` rule 4g matches each diode against the relay coil nets and requires the cathode on A1. A sixth reversed diode, the series `D_RP`, was found on 9 November and is *not* covered — a series pass diode between two same-rank nets still needs `trace_fire_loop.py` or a human |
+| `validate_sch.py` reporting a byte-identical "0 errors" while checking nothing, because `SYMDIR` was hardcoded to one machine inside `except Exception: continue` | `SYMDIR` is now resolved from the environment or by globbing; unresolved symbols are a hard error and print `structural_checks: SKIPPED` |
+| The firing loop having no return, so the bench could not fire — passed by ERC, by this validator, and by a completed hand audit | `trace_fire_loop.py`, which asks the loop question per relay state and self-tests against the broken netlist |
 | A patch comment swallowed the rest of a line holding two statements, leaving the SP3485 with no ground | Validator reports floating pins |
 | Symbols placed off the 1.27 mm grid — 204 ERC warnings | `place()` and `stub()` snap automatically |
 

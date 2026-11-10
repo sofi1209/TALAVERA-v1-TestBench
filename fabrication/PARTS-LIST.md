@@ -25,8 +25,8 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 
 | | Lines |
 |---|---|
-| Confirmed in lab | **32** |
-| Still TBD or pending | **14** |
+| Confirmed in lab | **31** |
+| Still TBD or pending | **15** |
 
 ---
 
@@ -115,6 +115,7 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 | In lab | Capacitor 100 nF 50 V X7R 0805 | CC0805KRX7R9BB104 | C* | ~15 | C49678 | UNIT | Mouser | DigiKey | Decoupling |
 | In lab | Capacitor 10 uF 25 V X5R 0805 | CL21A106KAYNNNE | C* | ~6 | C15850 | UNIT | Mouser | DigiKey |  |
 | In lab | Capacitor 22 uF 25 V X5R 0805 | CL21A226MAQNNNE | C* | ~3 | C45783 | UNIT | Mouser | DigiKey | Bulk on the logger rail |
+| New (approved) | Resistor 0 ohm 0805 - PYRO_RTN star bond | Generic 0 R jumper | R_STAR | 1 | -- | UNIT | Mouser | DigiKey | Single bond between the firing-current return and board ground, at the J_PWR star point. Rev A.1, audit finding R-1: without a separate PYRO_RTN the fire current (~6-12 A pending O-1) returns through the same net as the load-cell excitation return and the ADS1220 AVSS, during the burn. 0805 is a placeholder - size the link and its copper for the fire current once O-1 lands, and consider a solid wire link or a bolted star post instead. |
 
 ---
 
@@ -127,7 +128,6 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 | TBD | ARM key switch, removable key, 2-position | TBD | S_ARM | 1 | -- | -- | Mouser | DigiKey | Key must be removable and carried by the ignition officer. Panel mount. |
 | TBD | E-STOP, mushroom head, latching, NC contact | TBD | S_ESTOP | 1 | -- | -- | Mouser | DigiKey | Panel mount. Breaks the bench master relay coil. NC so a broken wire stops the bench. |
 | TBD | FIRE pushbutton, momentary, NO, panel mount | TBD | S_FIRE | 1 | -- | -- | Mouser | DigiKey | A substantial panel button. NOT an SMD tactile - see notes. |
-| In lab | Tactile switch (CONTINUITY test only) | SKRPABE010 | S_CONT | 1 | C115360 | UNIT | Mouser | DigiKey | Acceptable for the continuity check. NOT acceptable for FIRE: a 4.6 mm SMD tactile is the wrong control for a pyrotechnic command. |
 
 ### TELEMETRY & USB
 
@@ -172,8 +172,10 @@ Spreadsheet versions: [`TALAVERA_v1_Parts_List_bench.csv`](TALAVERA_v1_Parts_Lis
 | In lab | Resistor 1 kOhm 0603 1 % | 0603WAF1001T5E | R* | ~6 | C21190 | UNIT | Mouser | DigiKey | LED series |
 | In lab | Resistor 5.1 kOhm 0603 1 % | 0603WAF5101T5E | R* | 2 | C23186 | UNIT | Mouser | DigiKey | USB-C CC pull-downs |
 | In lab | Resistor 22 Ohm 0603 1 % | 0603WAF220JT5E | R* | 2 | C23345 | UNIT | Mouser | DigiKey | USB data series |
-| In lab | Capacitor 100 nF 50 V X7R 0805 | CC0805KRX7R9BB104 | C* | ~8 | C49678 | UNIT | Mouser | DigiKey |  |
-| In lab | Capacitor 10 uF 25 V X5R 0805 | CL21A106KAYNNNE | C* | ~4 | C15850 | UNIT | Mouser | DigiKey |  |
+| In lab | Capacitor 100 nF 50 V X7R 0805 | CC0805KRX7R9BB104 | C* | ~10 | C49678 | UNIT | Mouser | DigiKey | Now includes C_485 at the SP3485 VCC pin and C_ISO1/C_ISO2 at each 6N137 pins 8-5. The 6N137 datasheet REQUIRES that bypass and neither device had one; C_USB is shared with the CH340C and is not a local bypass. |
+| In lab | Capacitor 10 uF 25 V X5R 0805 | CL21A106KAYNNNE | C* | ~4 | C15850 | UNIT | Mouser | DigiKey | Includes C_STN1 on the station 12 V entry. |
+| Pending datasheet | Capacitor 22 uF 25 V X5R 0805 | CL21A226MAQNNNE | C_STN2, C_STN3 | 2 | C45783 | UNIT | Mouser | DigiKey | Rev A.1: this board previously had NO capacitor on +12V_STN, +5V_BENCH or +3V3_BENCH, while the AMS1117 uses output capacitance as its compensation - two cascaded LDOs with none are not guaranteed stable. VALUE IS ASSUMED from the datasheet stability note (22 uF solid tantalum); confirm the ceramic equivalent and ESR against the exact AMS1117 part before release - O-20. |
+| TBD | Fuse and holder, station 12 V entry | TBD | F_STN | 1 | -- | -- | Mouser | DigiKey | Rev A.1: the station feed was UNFUSED while driving 20 m of ARM_LINE and three relay coils. Rating follows the station load budget and O-17. Prefer a field-replaceable blade holder, as for F1/F2. |
 
 ---
 

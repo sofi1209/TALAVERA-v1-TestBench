@@ -104,8 +104,36 @@ Signs off pyrotechnic, actuator, motor, high-current, battery and mains circuits
 
 ---
 
+## Rev A.1 corrective decisions — 9 November 2026
+
+Applied under D-053 (Gates 2-5 proceed without a per-gate signature). **None of these approves a
+circuit.** Gate 6 and bring-up Stage 5 keep mandatory written sign-off from Emilio Guadarrama.
+
+| ID | Decision | Reason |
+|---|---|---|
+| D-064 | `D_RP` series Schottky un-reversed: anode on `+12V_FUSED`, cathode on `+12V_PROT` | It was reverse-biased in NORMAL polarity, so nothing downstream of F1 was powered. Single right answer, no trade-off. Sixth reversed diode in the project |
+| D-065 | K3 carries both the shunt and the low-side return on one Form C pole: COM on `PYRO_MATCH_N`, NC to `PYRO_MATCH_P`, NO to `PYRO_RTN` | The firing loop had no return and the bench could not fire. Uses the contact that was already unused, so zero added parts, and the two contacts of one pole are mutually exclusive so the shunt can never sit across a live source. **PROVISIONAL - decision D-A.** Assumes the Songle changeover is break-before-make, which no datasheet in hand confirms (O-3). Audit B's objection is on the record: one mechanism now owns two safety functions |
+| D-066 | The firing return is its own net, `PYRO_RTN`, bonded to `GND` only at `R_STAR` beside `J_PWR` | Routing it to `GND` would put ~6-12 A (pending O-1) through the net carrying the load-cell excitation return and the ADS1220 AVSS, during the burn, and could reset the logger at ignition through the ground - defeating what D-047 bought by placing the logger rail upstream of K4. Audit finding R-1 |
+| D-067 | The station supply is drawn as its own feed at `J_12V`, fused at `F_STN`; the sheet no longer claims the umbilical carries it | The umbilical has no supply conductor - pins 1-9 signal, 10-12 return - and a `PWR_FLAG` hid that from ERC. The feed was also unfused while driving 20 m of `ARM_LINE` and three coils. Whether to reallocate an umbilical conductor instead is **decision D1, open** |
+| D-068 | The FIRING lamp indicates `FIRE_LINE`, not `PYRO_FIRE_OUT` | On the output it was a 1 k path to ground that any continuity source crossing K2 would light with no match fitted - a sneak path reading "good" on an open match. Still hardware-only, so D-017 holds |
+| D-069 | Path 2 (`THRUST_DIFF`) deferred for Rev A; umbilical pins 8/9 reserved, `J_DAQ` not fitted | The pair reached nothing on the bench: present at both connectors with no source, which reads as a working analog backup and is not one. `J_DAQ` pin 3 also exported bench ground to the laptop bench, bridging the isolation barrier. Loss of redundancy accepted in writing |
+| D-070 | The shield bonds to ground at the bench end only | It was grounded at both ends, contradicting the bench sheet's own single-point note and making the shield a second return conductor |
+| D-071 | Tooling may not pass vacuously: `SYMDIR` resolved from the environment or by globbing, unresolved symbols are a hard error, and the validator exits non-zero | It returned a byte-identical "0 errors" with a wrong `SYMDIR` while the pin-coincidence, floating-pin and power-pin checks silently did nothing - the three guards added after the `GND_RTN` split, the AMS1117 pin-1 error and the SP3485 with no ground |
+| D-072 | Diode polarity is checked automatically where intent is structurally knowable, and `trace_fire_loop.py` checks the firing loop as a loop | `HANDOFF.md` recorded diode polarity as the one class with no automated guard. The relay-flyback rule is exact because it matches coil nets rather than inferring rail potential - `ARM_LINE` carries 12 V without saying so, so a rank-based rule would have missed four of the five original reversals |
+
+### Still open after Rev A.1
+
+**D-A** K3 one relay or two (blocked on Songle break-before-make) - **D-B** pre-arm continuity TEST
+(blocked on O-1) - **D1** station power architecture - E-STOP second channel and latched ARM permit
+(M-7/M-8/B05) - umbilical ARM/FIRE separation (M-9/B06) - **M-1** bench thermal - **M-2** DevKitC
+representation - 6N137 inversion (O-21) - buzzer part - path B survival - **O-1** e-match - **O-2** load
+cell - **O-20** AMS1117 capacitor values.
+
+---
+
 ## Revision history
 
 | Rev | Date | Change |
 |---|---|---|
 | A | 2026-11-06 | Gate 0 complete. Repository and KiCad project skeletons created. |
+| A.1 | 2026-11-09 | Corrective revision after two independent audits. Firing loop given a return, `D_RP` un-reversed, `PYRO_RTN` star point, station feed fused and drawn honestly, mechanical corrections, tooling hardened. D-064 to D-072. No circuit approved. |

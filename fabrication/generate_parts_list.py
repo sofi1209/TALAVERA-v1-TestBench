@@ -1,5 +1,6 @@
 import csv, os
-ROOT = r"C:/Users/sofip/Documents/Ignitia/TALAVERA-v1-TestBench"
+# Relative to this file, so the parts list is not tied to one machine.
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir))
 COLS = ["Status","Component name","ID # (part number)","Designator","Amount",
         "LCSC","UNIT Electronics","Mouser MX","DigiKey MX","Notes"]
 U="UNIT"; M="Mouser"; D="DigiKey"; X="--"
@@ -88,6 +89,8 @@ BENCH = [
   R("In lab","Capacitor 100 nF 50 V X7R 0805","CC0805KRX7R9BB104","C*","~15","C49678",U,M,D,"Decoupling"),
   R("In lab","Capacitor 10 uF 25 V X5R 0805","CL21A106KAYNNNE","C*","~6","C15850",U,M,D,""),
   R("In lab","Capacitor 22 uF 25 V X5R 0805","CL21A226MAQNNNE","C*","~3","C45783",U,M,D,"Bulk on the logger rail"),
+  R("New (approved)","Resistor 0 ohm 0805 - PYRO_RTN star bond","Generic 0 R jumper","R_STAR","1",X,U,M,D,
+    "Single bond between the firing-current return and board ground, at the J_PWR star point. Rev A.1, audit finding R-1: without a separate PYRO_RTN the fire current (~6-12 A pending O-1) returns through the same net as the load-cell excitation return and the ADS1220 AVSS, during the burn. 0805 is a placeholder - size the link and its copper for the fire current once O-1 lands, and consider a solid wire link or a bolted star post instead."),
  ]),
 ]
 
@@ -99,8 +102,12 @@ STATION = [
     "Panel mount. Breaks the bench master relay coil. NC so a broken wire stops the bench."),
   R("TBD","FIRE pushbutton, momentary, NO, panel mount","TBD","S_FIRE","1",X,X,M,D,
     "A substantial panel button. NOT an SMD tactile - see notes."),
-  R("In lab","Tactile switch (CONTINUITY test only)","SKRPABE010","S_CONT","1","C115360",U,M,D,
-    "Acceptable for the continuity check. NOT acceptable for FIRE: a 4.6 mm SMD tactile is the wrong control for a pyrotechnic command."),
+  # S_CONT (SKRPABE010 tactile) REMOVED. The continuity test button was deleted
+  # from the schematic by audit finding H-2 on 6 November - it shorted the sense
+  # line to ground, which was the lamp-good state, so it reported a good match
+  # whether or not one was connected. The BOM kept listing it for three days.
+  # A pre-arm continuity control returns only with the reviewed TEST function,
+  # decision D-B, and it will not be an SMD tactile.
  ]),
  ("TELEMETRY & USB",[
   R("In lab","USB-C 16-pin (USB 2.0)","TYPE-C-31-M-12","J_USB","1","C165948",U,M,D,
@@ -140,8 +147,13 @@ STATION = [
   R("In lab","Resistor 1 kOhm 0603 1 %","0603WAF1001T5E","R*","~6","C21190",U,M,D,"LED series"),
   R("In lab","Resistor 5.1 kOhm 0603 1 %","0603WAF5101T5E","R*","2","C23186",U,M,D,"USB-C CC pull-downs"),
   R("In lab","Resistor 22 Ohm 0603 1 %","0603WAF220JT5E","R*","2","C23345",U,M,D,"USB data series"),
-  R("In lab","Capacitor 100 nF 50 V X7R 0805","CC0805KRX7R9BB104","C*","~8","C49678",U,M,D,""),
-  R("In lab","Capacitor 10 uF 25 V X5R 0805","CL21A106KAYNNNE","C*","~4","C15850",U,M,D,""),
+  R("In lab","Capacitor 100 nF 50 V X7R 0805","CC0805KRX7R9BB104","C*","~10","C49678",U,M,D,
+    "Now includes C_485 at the SP3485 VCC pin and C_ISO1/C_ISO2 at each 6N137 pins 8-5. The 6N137 datasheet REQUIRES that bypass and neither device had one; C_USB is shared with the CH340C and is not a local bypass."),
+  R("In lab","Capacitor 10 uF 25 V X5R 0805","CL21A106KAYNNNE","C*","~4","C15850",U,M,D,"Includes C_STN1 on the station 12 V entry."),
+  R("Pending datasheet","Capacitor 22 uF 25 V X5R 0805","CL21A226MAQNNNE","C_STN2, C_STN3","2","C45783",U,M,D,
+    "Rev A.1: this board previously had NO capacitor on +12V_STN, +5V_BENCH or +3V3_BENCH, while the AMS1117 uses output capacitance as its compensation - two cascaded LDOs with none are not guaranteed stable. VALUE IS ASSUMED from the datasheet stability note (22 uF solid tantalum); confirm the ceramic equivalent and ESR against the exact AMS1117 part before release - O-20."),
+  R("TBD","Fuse and holder, station 12 V entry","TBD","F_STN","1",X,X,M,D,
+    "Rev A.1: the station feed was UNFUSED while driving 20 m of ARM_LINE and three relay coils. Rating follows the station load budget and O-17. Prefer a field-replaceable blade holder, as for F1/F2."),
  ]),
 ]
 
