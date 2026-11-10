@@ -195,6 +195,43 @@ def _flatten(syms, symname):
     return out
 
 
+def body_extent(libid):
+    """(half_width, half_height) of a symbol's drawn body, in symbol space.
+
+    place() uses this to put the Reference above the body and the Value below
+    it. Both used to be pinned at +/-1.27 mm from the origin, which for almost
+    every part in this design sits ON the body, so the designator printed
+    through the symbol and collided with any net label nearby.
+    """
+    try:
+        _d, _p = get_symbol(libid)
+        syms = load_lib(libid.split(":")[0])
+        flat = _flatten(syms, libid.split(":")[1])
+    except Exception:
+        return 1.27, 1.27
+    xs, ys = [], []
+
+    def walk(nd):
+        for kind in ("rectangle", "polyline", "circle", "arc"):
+            for g in kids(nd, kind):
+                for tag in ("start", "end", "mid", "center"):
+                    for e in kids(g, tag):
+                        xs.append(float(val(e, 1))); ys.append(float(val(e, 2)))
+                for p in kids(g, "pts"):
+                    for e in kids(p, "xy"):
+                        xs.append(float(val(e, 1))); ys.append(float(val(e, 2)))
+        for p in kids(nd, "pin"):
+            a = kid(p, "at")
+            if a is not None:
+                xs.append(float(val(a, 1))); ys.append(float(val(a, 2)))
+        for sub in kids(nd, "symbol"):
+            walk(sub)
+    walk(flat)
+    if not xs:
+        return 1.27, 1.27
+    return max(abs(min(xs)), abs(max(xs))), max(abs(min(ys)), abs(max(ys)))
+
+
 def get_symbol(libid):
     """Return (defn_for_lib_symbols, pins) where pins maps number -> (x, y, angle)."""
     libname, symname = libid.split(":")
@@ -235,7 +272,13 @@ def U():
 
 class Sch:
     def __init__(self, project, title, rev="A", company="Ignitia Rocket Lab",
-                 paper="A2", comments=()):
+                 paper="A2", comments=(), scale=1.0):
+        # `scale` multiplies AUTHORED placement coordinates only - place(),
+        # text() and box(). Symbol bodies and text heights are fixed by KiCad,
+        # so scaling the layout onto a larger sheet buys spacing without
+        # shrinking anything. Pin-derived coordinates (wire, label, stub,
+        # power) are already absolute and must NOT be scaled again.
+        self.scale = scale
         self.project = project
         self.uuid = U()
         self.title = title
@@ -257,9 +300,17 @@ class Sch:
         return self._pins[libid]
 
     def place(self, libid, ref, value, x, y, footprint="", dnp=False,
-              hide_value=False, mirror=None, angle=0, hide_ref=False):
-        """Place a symbol. Returns dict pin-number -> (gx, gy, outward_angle)."""
-        x, y = snap(x), snap(y)        # keep every pin on the connection grid
+              hide_value=False, mirror=None, angle=0, hide_ref=False, raw=False):
+        """Place a symbol. Returns dict pin-number -> (gx, gy, outward_angle).
+
+        `raw` skips the layout scale, for callers that already hold an absolute
+        pin-derived coordinate - power() does. Scaling one of those a second
+        time drops the symbol somewhere else entirely and leaves the wire it
+        was meant to terminate dangling.
+        """
+        if not raw:
+            x, y = x * self.scale, y * self.scale
+        x, y = snap(x), snap(y)
         pins = self._lib(libid)
         # KiCad treats a reference with no trailing digit as unannotated, which
         # ERC reports as an error and which breaks BOM and centroid matching.
@@ -267,19 +318,52 @@ class Sch:
             self._refn = getattr(self, "_refn", {})
             self._refn[ref] = self._refn.get(ref, 0) + 1
             ref = "%s%d" % (ref, self._refn[ref])
+        # Clear the body with the designator and the value.
+        #
+        # Rotating a symbol by 90 deg maps its local Y extent onto the sheet's X
+        # axis, and KiCad renders the property text rotated with the symbol. So
+        # a vertical part needs its text offset SIDEWAYS, not up and down -
+        # offsetting in Y regardless is what printed "TBD  O-17" straight
+        # through the net label next to every rotated fuse and diode.
+        # Where the text goes is decided by where the PINS point, not by the
+        # body's aspect: a part with horizontal pins already has net labels off
+        # its left and right, so its designator belongs above and its value
+        # below. Only a part whose pins all run vertically has free sides.
+        #
+        # Pin angles are local, so add the symbol rotation to get the direction
+        # on the sheet.
+        bw, bh = body_extent(libid)
+        gangles = {int(round(pa + angle)) % 360 for (_px, _py, pa) in pins.values()}
+        horiz_pins = bool(gangles & {0, 180})
+        gx = bw if angle in (0, 180) else bh      # half-extent along sheet X
+        gy = bh if angle in (0, 180) else bw      # half-extent along sheet Y
+        # KiCad's stroke font advances about 0.9 x the text size per character.
+        CW = 1.27 * 0.95
+        if horiz_pins:                             # text above and below
+            off = snap(max(gy, 1.27) + 2.6)
+            dref, dval = (0, -off), (0, off)
+        else:                                      # text to the sides
+            dref = (-snap(max(gx, 1.27) + 1.6 + len(ref or "") * CW / 2.0), 0)
+            dval = (snap(max(gx, 1.27) + 1.6 + len(value or "") * CW / 2.0), 0)
         props = [
-            ("Reference", ref, 0, -1.27, hide_ref),
-            ("Value", value, 0, 1.27, hide_value),
+            ("Reference", ref, dref[0], dref[1], hide_ref),
+            ("Value", value, dval[0], dval[1], hide_value),
             ("Footprint", footprint, 0, 0, True),
             ("Datasheet", "~", 0, 0, True),
             ("Description", "", 0, 0, True),
         ]
         pstr = []
+        # KiCad treats a property's angle as RELATIVE to its symbol, so a
+        # literal 0 on a part placed at 90 deg prints the text sideways - which
+        # is how "TBD  O-17" ended up running vertically across the horizontal
+        # net labels on every rotated fuse, diode and resistor. Counter-rotate
+        # so designators and values always read level.
+        pang = (-angle) % 360
         for name, v, dx, dy, hide in props:
             h = "\n\t\t\t\t(hide yes)" if hide else ""
             pstr.append(
-                '\t\t(property "%s" "%s"\n\t\t\t(at %.4f %.4f 0)\n\t\t\t(effects\n\t\t\t\t(font\n\t\t\t\t\t(size 1.27 1.27)\n\t\t\t\t)%s\n\t\t\t)\n\t\t)'
-                % (name, esc(v), x + dx, y + dy, h))
+                '\t\t(property "%s" "%s"\n\t\t\t(at %.4f %.4f %d)\n\t\t\t(effects\n\t\t\t\t(font\n\t\t\t\t\t(size 1.27 1.27)\n\t\t\t\t)%s\n\t\t\t)\n\t\t)'
+                % (name, esc(v), x + dx, y + dy, pang, h))
         pinstr = "".join('\t\t(pin "%s"\n\t\t\t(uuid "%s")\n\t\t)\n' % (esc(pn), U()) for pn in pins)
         mir = '\n\t\t(mirror %s)' % mirror if mirror else ""
         self.items.append(
@@ -309,6 +393,23 @@ class Sch:
             '\t\t(stroke\n\t\t\t(width 0)\n\t\t\t(type default)\n\t\t)\n\t\t(uuid "%s")\n\t)'
             % (p1[0], p1[1], p2[0], p2[1], U()))
 
+    def lwire(self, p1, p2, first="v"):
+        """Route p1 to p2 with horizontal and vertical segments only.
+
+        A sloped line reads as "these are roughly connected" rather than as a
+        signal path, and KiCad will happily draw one. Every LED chain on these
+        sheets was a single diagonal because the resistor and the LED did not
+        line up. `first` picks which leg leaves p1.
+        """
+        x1, y1 = p1[0], p1[1]
+        x2, y2 = p2[0], p2[1]
+        if abs(x1 - x2) < 0.01 or abs(y1 - y2) < 0.01:
+            self.wire((x1, y1), (x2, y2))
+            return
+        corner = (x1, y2) if first == "v" else (x2, y1)
+        self.wire((x1, y1), corner)
+        self.wire(corner, (x2, y2))
+
     def label(self, name, x, y, angle=0, justify="left"):
         self.items.append(
             '\t(label "%s"\n\t\t(at %.4f %.4f %d)\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size 1.27 1.27)\n\t\t\t)\n'
@@ -325,14 +426,19 @@ class Sch:
         self.wire((x, y), (ex, ey))
         # The label anchor must sit EXACTLY on the wire end. Offsetting it even
         # 0.5 mm leaves the label dangling and the net unconnected.
+        # KiCad never draws text upside down: it renders a 180 deg label as 0 deg
+        # and a 270 deg label as 90 deg, swapping the justification to match.
+        # Keeping "left" for those two therefore ran the label BACK INTO the
+        # symbol it belongs to - that is why +12V_LOGGER printed across the
+        # AMS1117 body. Justify away from the pin instead.
         if a == 0:
             self.label(name, ex, ey, 0, "left")
         elif a == 180:
-            self.label(name, ex, ey, 180, "left")
+            self.label(name, ex, ey, 180, "right")
         elif a == 90:
             self.label(name, ex, ey, 90, "left")
         else:
-            self.label(name, ex, ey, 270, "left")
+            self.label(name, ex, ey, 270, "right")
         return (ex, ey)
 
     def nc(self, *pins):
@@ -368,15 +474,17 @@ class Sch:
             ang = 0 if a == 90 else (180 if a == 270 else (270 if a == 180 else 90))
         self._pwrn = getattr(self, "_pwrn", 0) + 1
         self.place(libid, "#PWR%02d" % self._pwrn, kind, ex, ey,
-                   hide_value=True, hide_ref=True, angle=ang)
+                   hide_value=True, hide_ref=True, angle=ang, raw=True)
         return (ex, ey)
 
     def text(self, s, x, y, size=2.0, bold=True):
+        x, y = x * self.scale, y * self.scale
         self.items.append(
             '\t(text "%s"\n\t\t(exclude_from_sim no)\n\t\t(at %.4f %.4f 0)\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size %.2f %.2f)\n\t\t\t\t(thickness %.2f)\n\t\t\t\t(bold %s)\n\t\t\t)\n\t\t\t(justify left top)\n\t\t)\n\t\t(uuid "%s")\n\t)'
             % (esc(s), x, y, size, size, size * 0.15, "yes" if bold else "no", U()))
 
     def box(self, x, y, w, h):
+        x, y, w, h = x * self.scale, y * self.scale, w * self.scale, h * self.scale
         self.items.append(
             '\t(rectangle\n\t\t(start %.4f %.4f)\n\t\t(end %.4f %.4f)\n'
             '\t\t(stroke\n\t\t\t(width 0.2)\n\t\t\t(type dash)\n\t\t)\n'

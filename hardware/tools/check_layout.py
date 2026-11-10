@@ -21,9 +21,11 @@ import sys
 
 import ksch
 
-# Stroke-font metrics, approximate. KiCad's default font is about 0.6 em wide
-# per glyph with roughly 1.4 em line pitch.
-CHAR_W = 0.60
+# Stroke-font metrics, measured off a rendered sheet rather than guessed:
+# KiCad's default stroke font advances about 0.9 x the text size per character,
+# with roughly 1.45 em line pitch. The first version of this file used 0.6,
+# which under-measured every text box by a third and quietly missed collisions.
+CHAR_W = 0.90
 LINE_H = 1.45
 PAD = 0.3            # ignore grazes smaller than this
 MIN_AREA = 1.0       # ignore slivers
@@ -128,12 +130,19 @@ def main(path):
         rot = float(ksch.val(at, 3)) if len(at) > 3 else 0.0
         w = len(nm) * 1.27 * CHAR_W
         h = 1.27 * LINE_H
-        if rot in (90.0, 270.0):
-            box = (x - h, y - w, x + h, y)
+        # Reading direction, justify left, in KiCad's Y-down sheet space:
+        #   0 deg -> +x     90 deg -> -y     180 deg -> -x     270 deg -> +y
+        # Treating 90 and 270 the same made every downward stub's label appear
+        # to run back up through its own component, which reported collisions
+        # that are not on the sheet.
+        if rot == 90.0:
+            box = (x - h / 2, y - w, x + h / 2, y)
+        elif rot == 270.0:
+            box = (x - h / 2, y, x + h / 2, y + w)
         elif rot == 180.0:
-            box = (x - w, y - h, x, y)
+            box = (x - w, y - h / 2, x, y + h / 2)
         else:
-            box = (x, y - h, x + w, y)
+            box = (x, y - h / 2, x + w, y + h / 2)
         labels.append((box, nm))
 
     props = []
@@ -227,12 +236,12 @@ def main(path):
     # escaped its section box: an item that overlaps a box but is not inside
     # it. A section header legitimately sits just above its box and grazes the
     # top edge, so only report when a real part of the item is outside.
+    def area(r):
+        return max(0.0, r[2] - r[0]) * max(0.0, r[3] - r[1])
+
     def inside(inner, outer):
         return (inner[0] >= outer[0] - 0.5 and inner[1] >= outer[1] - 0.5 and
                 inner[2] <= outer[2] + 0.5 and inner[3] <= outer[3] + 0.5)
-
-    def area(r):
-        return max(0.0, r[2] - r[0]) * max(0.0, r[3] - r[1])
 
     for tb, lab in texts + [(b, r) for b, r in symbols]:
         touching = [bx for bx in boxes if rects_overlap(tb, bx) > MIN_AREA]
@@ -243,6 +252,46 @@ def main(path):
         if own > 0 and best / own < 0.40:
             continue      # only grazing an edge, e.g. a section header
         problems.append(("ESCAPES BOX", best, tb, "'%s'" % lab))
+
+    # Diagonal wires. A schematic is read by following lines, and a sloped line
+    # reads as "these two things are roughly connected" rather than as a signal
+    # path. Every segment must be horizontal or vertical; use an L of two
+    # segments where the endpoints do not line up.
+    for w in ksch.kids(root, "wire"):
+        xy = ksch.kids(ksch.kid(w, "pts"), "xy")
+        if len(xy) != 2:
+            continue
+        x1, y1 = float(ksch.val(xy[0], 1)), float(ksch.val(xy[0], 2))
+        x2, y2 = float(ksch.val(xy[1], 1)), float(ksch.val(xy[1], 2))
+        if abs(x1 - x2) > 0.01 and abs(y1 - y2) > 0.01:
+            problems.append(("DIAGONAL", math.hypot(x2 - x1, y2 - y1),
+                             (min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)),
+                             "wire (%.1f,%.1f)-(%.1f,%.1f)" % (x1, y1, x2, y2)))
+
+    # Outside every section box. The boxes are the sheet's visual structure; a
+    # part or a note floating outside all of them has no home and reads as
+    # unrelated to anything.
+    def is_header_of_a_box(tb):
+        """A section title sitting just above its box, horizontally over it.
+
+        Titles above boxes are ordinary schematic convention, so this is a real
+        exemption rather than a way to silence the check: the title must sit
+        within 12 mm above a box top and overlap it horizontally.
+        """
+        for bx in boxes:
+            gap = bx[1] - tb[3]
+            if -1.0 <= gap <= 12.0 and tb[0] < bx[2] and tb[2] > bx[0]:
+                return True
+        return False
+
+    for tb, lab in [(b, l) for b, l in texts] + [(b, r) for b, r in symbols]:
+        if not boxes:
+            break
+        if any(rects_overlap(tb, bx) > MIN_AREA for bx in boxes):
+            continue
+        if is_header_of_a_box(tb):
+            continue
+        problems.append(("OUTSIDE ALL", area(tb), tb, "'%s'" % lab))
 
     problems.sort(key=lambda p: -p[1])
     name = path.replace("\\", "/").split("/")[-1]

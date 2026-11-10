@@ -1,7 +1,8 @@
 import sys, collections, math, re
 import ksch
 
-PAPER = {"A2": (594.0, 420.0), "A3": (420.0, 297.0), "A4": (297.0, 210.0)}
+PAPER = {"A0": (1189.0, 841.0), "A1": (841.0, 594.0), "A2": (594.0, 420.0),
+         "A3": (420.0, 297.0), "A4": (297.0, 210.0)}
 
 def check(path):
     txt = open(path, encoding="utf-8").read()
