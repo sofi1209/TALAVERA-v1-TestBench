@@ -112,7 +112,7 @@ produce the same result.
 
 | Output | Safe state | What you observe |
 |---|---|---|
-| Igniter | `PYRO_SHUNTED` | Continuity lamp reads the match through the shunt; ARMED lamp dark |
+| Igniter | `PYRO_SHUNTED` | ARMED lamp dark. **The continuity lamp tells you nothing** — it cannot light in any state (hazard H11). Shunt state is confirmed with a meter across the match terminals, plug withdrawn |
 | Arm path | `DISARMED` | ARMED lamp dark, key removed, plug withdrawn |
 | Fire path | `FIRE_OPEN` | Button released |
 | Bench power | `BENCH_UNPOWERED` | Beacon dark |
@@ -219,9 +219,25 @@ the bench.
 3. Connect the e-match to the bench board. The shunt holds it shorted; this is the condition in which
    it is safe to handle.
 4. Insert the **arming plug**. Withdraw to the station. This is the last action taken at the bench.
-5. From the station, press **CONTINUITY**. Confirm the continuity lamp indicates a connected match.
-   This passes a current well below the match's no-fire rating. If it does not indicate, **do not
-   arm** — return to step 2 after confirming the key is removed.
+5. **SUSPENDED — DO NOT PERFORM, AND DO NOT RELY ON THE CONTINUITY LAMP.**
+
+   > This step told you to press **CONTINUITY** and confirm the lamp indicated a connected match.
+   > **There is no such button and there is no working check.** The button was removed on 6 November
+   > because it shorted the sense line to ground and reported a good match whether or not one was
+   > connected — a test that could not fail. The audits of 9 November then found that the sense circuit
+   > has no source at all: `R_CONT` and the optocoupler sit in *parallel* with the match, nothing drives
+   > them before arming, and the lamp can never light.
+   >
+   > The lamp therefore reads **"no match" permanently**. That is the safe direction, but it is not a
+   > check, and this procedure must not pretend otherwise.
+   >
+   > **Until the reviewed pre-arm TEST function exists (decision D-B, blocked on open item O-1),
+   > continuity is confirmed with a meter at the bench, with the arming plug WITHDRAWN**, by a method
+   > the review owner specifies. Note that any continuity test must open the shunt, so the induced-energy
+   > defence (hazard H2) is absent while the test is held: see hazard H10 in
+   > [SAFETY.md](SAFETY.md).
+
+   Proceed to step 6 only after confirming the arming plug is inserted and the key is removed.
 6. Confirm the area is clear and that everyone is at or beyond the standoff distance from §4.
 7. Confirm the logger is running.
 8. Verbal countdown. Announce ignition.

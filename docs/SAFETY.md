@@ -24,7 +24,7 @@ state is a claim about physics.
 
 | Output | Safe state name | Mechanism | Holds without firmware? |
 |---|---|---|---|
-| Igniter | `PYRO_SHUNTED` | Normally-closed relay contact shorts the two match conductors together. De-energized = shorted. | Yes |
+| Igniter | `PYRO_SHUNTED` | Normally-closed relay contact shorts the two match conductors together, **and isolates them from the supply return**. De-energized = shorted and floating. | Yes |
 | Arm path | `DISARMED` | Normally-open arm relay, key removed from station switch, arming plug withdrawn at bench | Yes |
 | Fire path | `FIRE_OPEN` | Momentary normally-open button. Never latching, never software-held. | Yes |
 | Bench power | `BENCH_UNPOWERED` | Master relay is normally-open and must be held in by its coil. E-stop breaks the coil circuit, so the relay drops out. | Yes |
@@ -125,8 +125,10 @@ corrupt the file** — losing data from a test that cannot be repeated.
 | # | Hazard | Cause | Mitigation | Residual |
 |---|---|---|---|---|
 | H1 | Unintended ignition with personnel near the bench | Any energization of the match | Arming plug must be inserted by hand; shunt shorts the match while disarmed | Operator inserts plug then lingers — procedural |
-| H2 | Unintended ignition from induced energy on the umbilical | 20 m loop, RF or static | NC shunt across match pair; shielded dedicated pyro cable | Not eliminated, strongly reduced |
-| H3 | Ignition on power-up or brown-out | Relay chatter, inrush | All safety relays normally-open; match shorted until arm relay pulls in | Needs Gate 2 verification |
+| H2 | Unintended ignition from induced energy on the umbilical | 20 m loop, RF or static | NC shunt across match pair; shielded dedicated pyro cable. Rev A.1: the shunted pair is also **isolated from the supply return**, so the shunt is a closed loop rather than a path to ground | Not eliminated, strongly reduced |
+| H10 | Unintended ignition **during a continuity test** | Any continuity test must open the shunt, so the H2 defence is absent while it is held | **Not yet designed** - the continuity function is decision D-B, blocked on O-1. When designed: the test control must be **momentary only, never latching**, the firing path must be positively inhibited throughout, and personnel must already be clear | **Open.** Rev A.1 ships with no working continuity check at all (see H11) |
+| H11 | Operator trusts a continuity check that cannot work | `R_CONT` and the opto sit in **parallel** with the match with no pre-arm source, so the lamp can never light | Fails to the *no match* reading, which is the safe direction. **The procedure step that relies on it is suspended** - see OPERATIONS-MANUAL.md | Reduced to a nuisance, not eliminated as a procedural trap until D-B closes |
+| H3 | Ignition on power-up or brown-out | Relay chatter, inrush | All safety relays normally-open; match shorted until arm relay pulls in | Rev A.1: **verified by connectivity** - `trace_fire_loop.py` reports no fire current in SAFE, ARMED, E-STOP or FIRE-without-ARM. Contact timing and chatter still unverified |
 | H4 | Loss of ability to stop | Umbilical damage | E-stop drops the master relay. A cut cable de-energizes the coil, which is the safe direction. | Cut cable also ends telemetry — expected |
 | H5 | Reversed battery | Hand-wired field hookup | Fuse plus reverse-polarity protection on input | — |
 | H6 | Operator approaches an armed bench | Misread state | Beacon driven from real ARM/FIRE signals, not a software report | Procedural |
