@@ -122,7 +122,7 @@ for i, (ref, anode_net, cath_net, lbl) in enumerate([
     s.stub(rr['1'], anode_net, 3)
     dd = s.place(LED, ref, lbl, 35 + i * 42, 348, angle=90)
     s.wire((rr['2'][0], rr['2'][1]), (dd['2'][0], dd['2'][1]))
-    if cath_net: s.stub(dd['1'], cath_net)
+    if cath_net: s.stub(dd['1'], cath_net, 10.16)
     else:        s.power("GND", dd['1'])
 s.text("ARMED lamp driven from the REAL arm line (D-017).", 16, 360, 1.4, False)
 
@@ -145,7 +145,7 @@ s.stub(rbg2['1'], "BUZZ_GATE", 3); s.power("GND", rbg2['2'])
 s.stub(q1['D'], "BUZZ_DRV")
 s.power("GND", q1['S'])
 db = s.place(D, "D_BUZZ", "1N4148W", 135, 383, angle=90)
-s.stub(db['1'], "+12V_STN", 3); s.stub(db['2'], "BUZZ_DRV", 3)   # C-4: K to +ve
+s.stub(db['1'], "+12V_STN", 6); s.stub(db['2'], "BUZZ_DRV", 6)   # C-4: K to +ve
 s.text("Audible ARMED warning - the manual relies on visual cues only.", 16, 400, 1.4, False)
 
 # ========================================== TELEMETRY + ISOLATION BARRIER
@@ -204,18 +204,13 @@ rp2 = s.place(R, "R_ISO2_PU", "4k7  DNP", 365, 215, angle=90, dnp=True)
 s.stub(rp2['1'], "+5V_BENCH", 3); s.stub(rp2['2'], "DI_BENCH", 3)
 ci2 = s.place(C, "C_ISO2", "100nF  DNP", 340, 203, dnp=True)
 s.stub(ci2['1'], "+5V_BENCH", 3); s.power("GND", ci2['2'])
-s.text("6N137 is fast enough for 115200 baud. The TLP521 /\n"
-       "PC817 already in stock are NOT - do not substitute\n"
-       "them without measuring first (O-6).\n"
-       "\n"
-       "OPEN - NOT FIXED HERE: this RX path INVERTS. The LED\n"
-       "conducts when RO is HIGH, and an enabled 6N137 pulls its\n"
-       "output LOW with the LED on, so an idle mark reaches the\n"
-       "CH340C as a continuous break. Telemetry cannot work as\n"
-       "drawn. The fix is a part change, not a rewire: swapping the\n"
-       "LED round makes RO SINK the current, and the SP3485 RO\n"
-       "drive limits are not in hand. Needs the datasheet or a\n"
-       "digital isolator - O-21, review owner.", 240, 245, 1.35, False)
+s.text("6N137 is fast enough for 115200 baud. The TLP521 / PC817\n"
+       "already in stock are NOT - do not substitute (O-6).", 205, 258, 1.4, False)
+s.text("O-21 OPEN, NOT FIXED HERE: this RX path INVERTS.\n"
+       "LED conducts on RO HIGH and an enabled 6N137 pulls its\n"
+       "output LOW, so an idle mark reaches the CH340C as a\n"
+       "continuous break. Telemetry cannot work as drawn. The fix\n"
+       "is a part change, not a rewire - see REV-A1-CHANGES.", 205, 242, 1.4, False)
 
 # ================================================================== USB-C
 hdr("5. USB-C - laptop side, GNDREF domain", 405, 18)
@@ -223,8 +218,8 @@ s.box(402, 22, 180, 240)
 
 u340 = s.place("Interface_USB:CH340C", "U_USB", "CH340C", 480, 75)
 s.stub(u340['2'], "UART_TX_USB"); s.stub(u340['3'], "UART_RX_USB")
-s.stub(u340['5'], "USB_DP"); s.stub(u340['6'], "USB_DM")
-s.stub(u340['16'], "+5V_USB")
+s.stub(u340['5'], "USB_DP", 5.08); s.stub(u340['6'], "USB_DM", 21.59)
+s.stub(u340['16'], "+5V_USB", 12.7)
 s.power("GNDREF", u340['1'])
 s.stub(u340['4'], "USB_V3")
 s.nc(*[u340[pn] for pn in ['7','8','9','10','11','12','13','14','15']])
@@ -248,7 +243,7 @@ for i, (ref, net) in enumerate([("R_CC1", "CC1"), ("R_CC2", "CC2")]):
     rc = s.place(R, ref, "5k1", 545 + i * 20, 150, angle=90)
     s.stub(rc['1'], net, 3); s.power("GNDREF", rc['2'])
 for i, (ref, a, b) in enumerate([("R_DP", "USB_DP", "USB_DP_C"), ("R_DM", "USB_DM", "USB_DM_C")]):
-    rd = s.place(R, ref, "22R", 420 + i * 22, 130, angle=90)
+    rd = s.place(R, ref, "22R", 420 + i * 22, 125 + i * 11.43, angle=90)
     s.stub(rd['1'], a, 3); s.stub(rd['2'], b, 3)
 for i, (ref, net) in enumerate([("D_ESD1", "USB_DP_C"), ("D_ESD2", "USB_DM_C")]):
     de = s.place("Device:D_TVS", ref, "ESD9B5.0ST5G", 420 + i * 22, 230, angle=90)

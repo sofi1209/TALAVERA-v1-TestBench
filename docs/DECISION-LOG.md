@@ -121,11 +121,13 @@ circuit.** Gate 6 and bring-up Stage 5 keep mandatory written sign-off from Emil
 | D-071 | Tooling may not pass vacuously: `SYMDIR` resolved from the environment or by globbing, unresolved symbols are a hard error, and the validator exits non-zero | It returned a byte-identical "0 errors" with a wrong `SYMDIR` while the pin-coincidence, floating-pin and power-pin checks silently did nothing - the three guards added after the `GND_RTN` split, the AMS1117 pin-1 error and the SP3485 with no ground |
 | D-072 | Diode polarity is checked automatically where intent is structurally knowable, and `trace_fire_loop.py` checks the firing loop as a loop | `HANDOFF.md` recorded diode polarity as the one class with no automated guard. The relay-flyback rule is exact because it matches coil nets rather than inferring rail potential - `ARM_LINE` carries 12 V without saying so, so a rank-based rule would have missed four of the five original reversals |
 
+| D-073 | An **external, off-PCB interrupt** - a dead-man switch or an RBF-style removable link in the firing line - carries the operator-initiated abort. No abort system is designed onto the board for the operator to use | Stated by the project author on 9 November. It is an independent series interrupt that does not depend on K1, K2, K4, the umbilical or any PCB net, so it covers the operator-abort case and the "a cable short asserts FIRE" case (M-9/B06), since a dead-man requires continuous deliberate action and releasing it opens the circuit. **It does NOT re-close the shunt**, which is a different function: the shunt is the H2 defence against induced energy on the 20 m loop, and M-7/B05 - E-STOP leaving the shunt open while ARM is on - stands unaffected. Treat this as narrowing the open E-STOP question to the automatic and fault behaviour, not as closing it. The external device's rating, placement and failure modes are outside this repository and are the review owner's to specify |
+
 ### Still open after Rev A.1
 
 **D-A** K3 one relay or two (blocked on Songle break-before-make) - **D-B** pre-arm continuity TEST
-(blocked on O-1) - **D1** station power architecture - E-STOP second channel and latched ARM permit
-(M-7/M-8/B05) - umbilical ARM/FIRE separation (M-9/B06) - **M-1** bench thermal - **M-2** DevKitC
+(blocked on O-1) - **D1** station power architecture - E-STOP: whether the shunt must re-close automatically (M-7/B05) - narrowed by D-073,
+which covers operator abort but not shunt re-closure - umbilical ARM/FIRE separation (M-9/B06) - **M-1** bench thermal - **M-2** DevKitC
 representation - 6N137 inversion (O-21) - buzzer part - path B survival - **O-1** e-match - **O-2** load
 cell - **O-20** AMS1117 capacitor values.
 

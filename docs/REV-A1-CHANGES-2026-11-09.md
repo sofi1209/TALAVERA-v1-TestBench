@@ -189,7 +189,7 @@ should not do.
 | Item | Why not | Needs |
 |---|---|---|
 | **Continuity function** (B-2 / B04) | `R_CONT` + opto still sit in parallel with the match with no pre-arm source, so the lamp can never light. It **fails to the "no match" reading**, which is the safe direction. A correct pre-arm TEST needs a sense-current limit, and that needs the no-fire current | **O-1**, and decision **D-B** |
-| **E-STOP architecture** (M-7/M-8 / B05) | E-STOP still drops K4 only, so the shunt stays open while ARM is on, and a single `ESTOP_LOOP` short to ground still defeats it. The fix is a second contact block plus a latched ARM permit — new relays, new panel parts, changed restart behaviour | Review-owner decision |
+| **E-STOP architecture** (M-7/M-8 / B05) | **Narrowed by D-073.** An external off-PCB dead-man or RBF interrupt in the firing line carries the operator abort, independent of every board net, so no abort system is designed onto the board. What remains is **automatic** behaviour: E-STOP still drops K4 only, so the shunt stays open while ARM is on, and the external interrupt does not re-close it. The shunt is the H2 defence against induced energy on a 20 m loop | Review-owner decision, now a smaller one |
 | **Umbilical pinout** (M-9 / B06) | ARM and FIRE are still adjacent on pins 1/2. Separating them is coupled to the station-power conductor allocation and to whether the E-STOP loop stays low-side | Decisions **D1** + E-STOP, together |
 | **6N137 inversion** (M-2 / M02) | The RX path inverts, so telemetry cannot work: the LED conducts on `RO` high and an enabled 6N137 pulls its output low, giving the CH340C a continuous break. Swapping the LED round makes `RO` *sink* the current, and the SP3485 drive limits are not in hand. Noted on the sheet as **O-21** | SP3485 datasheet, or a digital isolator |
 | **AMS1117 bench thermal** (M-1 / M-5 / B08) | ~1.3 W in SOT-223, ~133 °C junction against a ~125 °C limit at an assumed 55 °C ambient. The fix is a different power architecture | Decision **M-1** |
@@ -208,10 +208,31 @@ should not do.
    test must open the shunt, so the H2 induced-energy defence on a 20 m loop is absent for the duration.
    TEST must be momentary only, never latching.*
 3. **D1** — station power: separate feed, or a reallocated umbilical conductor?
-4. **E-STOP architecture** — second contact block, latched ARM permit, and high-side or low-side loop.
+4. **Does the shunt have to re-close automatically?** D-073 puts the operator abort on an external dead-man
+   or RBF interrupt, which does not re-close the shunt. So the only question left here is whether an
+   E-STOP must restore the H2 induced-energy defence by itself, or whether a procedural step is enough.
 5. **M-1** thermal, **M-2** DevKitC representation, and whether path B survives Rev A.
 
 Items 1, 3 and 4 are coupled through the harness and the relay count, so they want one review, not four.
 
 **Gate 4 must not start until D-A is closed**, because the relay topology decides the pyro copper, and
 R-1 decides where the fire current is allowed to flow.
+
+---
+
+## 7. Schematic legibility
+
+Both sheets had text sitting on text, net labels landing on reference and value text, and notes running
+outside their section boxes — including two collisions I introduced myself by dropping `R_STAR` on top of
+the D-047 note. `hardware/tools/check_layout.py` is new and measures it: text/text, text/symbol,
+symbol/symbol, label and property collisions, and anything that escapes the dashed box it belongs to.
+
+Bench went from 17 reported collisions to **zero**; station from 12 to **zero**.
+
+One correction is worth recording, because the "fix" was worse than the problem. A USB-C receptacle has
+four VBUS pins carrying one net, and their labels coincide exactly. That draws as a single label and is
+correct. Staggering the stub lengths to separate them put a longer wire through a shorter one's label
+anchor, and **KiCad ERC caught it as `label_multiple_wires` — two violations the project validator
+passed.** The stagger is reverted and the checker now ignores coincident same-net labels. The lesson is
+the project's own, again: a clean validator is not a clean ERC, and a cosmetic change can break
+connectivity.

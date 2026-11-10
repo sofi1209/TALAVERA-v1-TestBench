@@ -44,10 +44,10 @@ s.power("GND", j['2'])
 # LAYOUT REQUIREMENT, not a suggestion: PYRO_RTN is a dedicated copper path from
 # K3 to this link. It may not be poured into the analog or digital ground, and
 # R_STAR is the single bond. See AUDIT-RECONCILIATION-2026-11-09.md R-1.
-rstar = s.place(R, "R_STAR", "0R  star bond", 30, 62, angle=90)
+rstar = s.place(R, "R_STAR", "0R  star bond", 30, 98, angle=90)
 s.stub(rstar['1'], "PYRO_RTN", 3)
 s.power("GND", rstar['2'])
-s.text("R_STAR: single bond, pyro return to\nbattery negative. ONE star point only.", 38, 58, 1.3, False)
+s.text("R_STAR: single bond, pyro return\nto battery negative. ONE star\npoint. Dedicated copper, not\npoured into either ground.", 40, 92, 1.3, False)
 
 f1 = s.place(FUSE, "F1", "TBD  O-17", 60, 35, angle=90)
 s.stub(f1['1'], "+12V_RAW", 3)
@@ -58,9 +58,9 @@ d1 = s.place(SCH, "D_RP", "SS24", 95, 35, angle=90)
 # rail. Pin 1 is K and pin 2 is A on Device:D_Schottky. These two stubs were the
 # other way round, which reverse-biased the diode in NORMAL polarity and left
 # nothing downstream of F1 powered - the sixth reversed diode in this project.
-s.stub(d1['2'], "+12V_FUSED", 3)
-s.stub(d1['1'], "+12V_PROT", 3)
-s.text("reverse-polarity block\nA on input, K on load", 86, 42, 1.3, False)
+s.stub(d1['2'], "+12V_FUSED", 6)
+s.stub(d1['1'], "+12V_PROT", 6)
+s.text("reverse-polarity block\nA on input, K on load", 84, 48, 1.3, False)
 
 s.pwr_flag("+12V_RAW", 30, 28)
 s.pwr_flag("GND", 50, 28)
@@ -99,8 +99,9 @@ s.stub(c3['1'], "+3V3_LOGGER", 3); s.power("GND", c3['2'])
 # ================================================================ SAFETY CHAIN
 hdr("2. SAFETY CHAIN - hardware only, no MCU", 15, 120)
 s.box(12, 124, 175, 150)
-s.text("Relay contacts use IEC numbering: 11 = COM, 12 = NC, 14 = NO.", 16, 128, 1.5, False)
-s.text("Physical SRD-12VDC-SL-C pin mapping is set at footprint assignment (O-3).", 16, 132, 1.5, False)
+s.text("Relay contacts use IEC numbering: 11 = COM, 12 = NC, 14 = NO.\n"
+       "Physical SRD-12VDC-SL-C pin mapping is set at footprint assignment (O-3).",
+       95, 127, 1.5, False)
 
 def relay(ref, value, x, y, coil_hi, coil_lo, com, no, nc, note):
     k = s.place(RLY, ref, value, x, y)
@@ -117,21 +118,21 @@ _k4 = relay("K4", "SRD-12VDC-SL-C", 40, 152, "+12V_PROT", "ESTOP_LOOP",
       "+12V_PROT", "+12V_MASTER", None,
       "K4 MASTER: coil via E-STOP loop.\nDrops out = BENCH_UNPOWERED.")
 d4 = s.place(D, "D_K4", "1N4148W", 75, 150, angle=90)
-s.stub(d4['1'], "+12V_PROT", 3); s.stub(d4['2'], "ESTOP_LOOP", 3)   # C-3: K to +ve
+s.stub(d4['1'], "+12V_PROT", 6); s.stub(d4['2'], "ESTOP_LOOP", 6)   # C-3: K to +ve
 
 # K1 arm
 _k1 = relay("K1", "SRD-12VDC-SL-C", 40, 200, "ARM_LINE", "GND",
       "+12V_MASTER", "ARM_BUS", None,
       "K1 ARM: energised by the station\nARM key. NO = DISARMED at rest.")
 d5 = s.place(D, "D_K1", "1N4148W", 75, 198, angle=90)
-s.stub(d5['1'], "ARM_LINE", 3); s.stub(d5['2'], "GND", 3)           # C-3: K to +ve
+s.stub(d5['1'], "ARM_LINE", 6); s.stub(d5['2'], "GND", 6)           # C-3: K to +ve
 
 # K2 fire
 _k2 = relay("K2", "SRD-12VDC-SL-C", 130, 200, "FIRE_LINE", "GND",
       "ARM_BUS", "PYRO_FIRE_OUT", None,
       "K2 FIRE: energised only while\nthe FIRE button is held.")
 d6 = s.place(D, "D_K2", "1N4148W", 165, 198, angle=90)
-s.stub(d6['1'], "FIRE_LINE", 3); s.stub(d6['2'], "GND", 3)          # C-3: K to +ve
+s.stub(d6['1'], "FIRE_LINE", 6); s.stub(d6['2'], "GND", 6)          # C-3: K to +ve
 
 # K3 shunt AND low-side return, on one Form C pole.
 #
@@ -155,7 +156,7 @@ _k3 = relay("K3", "SRD-12VDC-SL-C", 40, 250, "ARM_LINE", "GND",
       "PYRO_MATCH_N", "PYRO_RTN", "PYRO_MATCH_P",
       "K3 SHUNT + LOW SIDE: NC shorts the match\nwhenever DISARMED (D-008). NO ties the low\nside to PYRO_RTN when armed. Break-before-\nmake REQUIRED - verify per O-3.")
 d7 = s.place(D, "D_K3", "1N4148W", 75, 248, angle=90)
-s.stub(d7['1'], "ARM_LINE", 3); s.stub(d7['2'], "GND", 3)           # C-3: K to +ve
+s.stub(d7['1'], "ARM_LINE", 6); s.stub(d7['2'], "GND", 6)           # C-3: K to +ve
 
 s.nc(_k2['12'], _k1['12'], _k4['12'])   # unused relay contacts (K3.14 now carries the return)
 
@@ -219,8 +220,8 @@ s.stub(adc['8'],  "LC_EXC_N")      # REFN0
 s.power("GND", adc['7'])           # AIN2 unused - tied, not floating
 s.power("GND", adc['6'])           # AIN3 unused
 s.power("GND", adc['3'])           # CLK unused -> internal oscillator
-s.stub(adc['13'], "+3V3_LOGGER")   # DVDD  (C-1)
-s.stub(adc['12'], "+3V3_LOGGER")   # AVDD  (C-1)
+s.stub(adc['13'], "+3V3_LOGGER", 5.08)   # DVDD  (C-1)
+s.stub(adc['12'], "+3V3_LOGGER", 16.51)  # AVDD  (C-1)
 s.power("GND", adc['4'])           # DGND
 s.power("GND", adc['5'])           # AVSS
 s.stub(adc['1'],  "SPI_SCK")
@@ -324,7 +325,7 @@ s.power("GND", sd['SH'])
 for i, (ref, net) in enumerate([("R_SDCS", "SD_CS"), ("R_SDDI", "SPI_MOSI"),
                                 ("R_SDDO", "SPI_MISO"), ("R_SDDET", "SD_DETECT"),
                                 ("R_ADCCS", "ADC_CS")]):
-    r = s.place(R, ref, "10k", 415 + i * 20, 105, angle=90)
+    r = s.place(R, ref, "10k", 412 + i * 27, 100 + (i % 2) * 11.43, angle=90)
     s.stub(r['1'], "+3V3_LOGGER", 3); s.stub(r['2'], net, 3)
 s.text("Pull-ups per IGNIS v5 Storage.SchDoc.\nSD_DETECT on CARD1 pin 10 (DET_A) with a 10k\npull-up; pin 9 (DET_B) to GND. Shell to GND,\npegs drilled 1.3 mm. R_ADCCS added for ADC_CS.", 400, 118, 1.4, False)
 
