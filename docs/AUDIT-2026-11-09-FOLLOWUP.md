@@ -1,5 +1,17 @@
 # TALAVERA v1 — Follow-up audit, 9 November 2026
 
+> ## ⚠ N-3 is WITHDRAWN — see `AUDIT-RECONCILIATION-2026-11-09.md` §1
+>
+> N-3 below claims sense current crosses the e-match permanently. **That is wrong.** Two independent
+> audits flagged it and the netlist confirms them: the `R_CONT` + opto branch sits between the two match
+> terminals, nothing imposes a potential difference across them, and `PYRO_MATCH_N` reaches no ground.
+> The current is **zero**. The real defect is worse — there is no working continuity check at all, and
+> the firing loop has no return, so the bench cannot fire (blockers B-1/B03 and B-2/B04).
+>
+> The error: I verified the branch was *connected* and called it *energised*. Continuity is a loop
+> question, never a path question. The 6 November H-2 "follow-on" and `docs/HANDOFF.md` §4.3 carry the
+> identical error. Everything else in this document was re-verified by both audits and stands.
+
 **Scope:** the committed revision of both schematics (commit `43e9803`, unchanged by this session).
 **Method:** generators re-run to prove they reproduce the committed files, then the design examined from
 **three independent extractions** — the project's own `hardware/tools/netlist.py`, KiCad's own
@@ -158,7 +170,7 @@ rested on `validate_sch.py`, which is a different and narrower check.
 
 ## Note
 
-### N-3 · H-2 confirmed electrically: sense current through the e-match is permanent **V**
+### N-3 · ~~H-2 confirmed electrically: sense current through the e-match is permanent~~ — **WITHDRAWN, see the banner above**
 
 ```
 PYRO_MATCH_P   J_ARM1.2, K3.11, P1.1, R_CONT1.1

@@ -1,5 +1,10 @@
 # Cross-model handoff — independent audit request, TALAVERA v1
 
+> **Spent — and one of its claims was wrong.** Both reviews came back on 9 November; results are
+> reconciled in `AUDIT-RECONCILIATION-2026-11-09.md`. §7 below told the reviewers that "sense current
+> crosses the initiator permanently". **It does not** — nothing sources it. Both reviewers caught the
+> error independently. Kept unedited as the record of what they were actually asked.
+
 *Paste the block below into the reviewing model. It is self-contained: the reviewer has no access to
 the repository, the session or the files. Attach `exports/2026-11-09/talavera-bench-schematic.pdf`,
 `talavera-station-schematic.pdf`, and the two `.net` netlists if the model accepts attachments.*
