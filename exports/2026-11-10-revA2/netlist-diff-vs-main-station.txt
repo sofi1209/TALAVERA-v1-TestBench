@@ -1,0 +1,26 @@
+components: 48 -> 51
+  + D_K5         1N4148W
+  + J_RESET1     RESET  momentary
+  + J_TESTSW1    TEST  momentary
+  + K5           SRD-12VDC-SL-C
+  - R_CONT_PU1   4k7
+  ~ J_ARMSW1     ARM key switch  ->  ARM key  3-pole
+  ~ J_ESTOP1     E-STOP  NC  ->  E-STOP  2x NC
+  ~ J_FIRESW1    FIRE button  ->  FIRE  2NO+1NC
+nets: 34 -> 41
+  + ESTOP_OK           J_ESTOP1.4 J_FIRESW1.5 K5.11
+  + FIRE_N             J_ARMSW1.4 J_FIRESW1.3 J_UMB1.2
+  + FIRE_P             J_FIRESW1.2 J_UMB1.1
+  + FIRE_REL           J_ARMSW1.6 J_FIRESW1.6
+  + PERMIT             D_K5.1 J_ARMSW1.1 J_RESET1.2 K5.14 K5.A1
+  + RESET_EN           J_ARMSW1.7 J_RESET1.1
+  + TEST_FEED          J_ARMSW1.3 J_TESTSW1.1
+  + TEST_LINE          J_TESTSW1.2 J_UMB1.11
+  - FIRE_LINE          J_FIRESW1.2 J_UMB1.2
+  ~ +12V_STN           +J_ESTOP1.3  -J_ARMSW1.1 -R_CONT_PU1.1 -R_D_CONT1.1
+  ~ ARM_LINE           +J_UMB1.3  -J_UMB1.1
+  ~ ESTOP_LOOP         +J_UMB1.10  -J_UMB1.3
+  ~ GND                +D_CONT1.1 +D_K5.2 +J_ARMSW1.5 +J_FIRESW1.4 +J_UMB1.4 +J_UMB1.7 +K5.A2  -J_UMB1.10 -J_UMB1.11
+  ~ PYRO_CONT_SENSE    +J_UMB1.8 +R_D_CONT1.1  -D_CONT1.1 -J_UMB1.4 -R_CONT_PU1.2
+  ~ VBAT_SENSE         +J_UMB1.9  -J_UMB1.7
+nets unchanged: 27

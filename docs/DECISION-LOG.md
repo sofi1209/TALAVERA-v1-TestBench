@@ -133,9 +133,37 @@ cell - **O-20** AMS1117 capacitor values.
 
 ---
 
+## Batch 2 safety-topology decisions — 10 November 2026 (Rev A.2)
+
+Chosen by the project author from the options in `BATCH2-SAFETY-TOPOLOGY-2026-11-10.md` and drawn under
+D-053. **Every row is PROVISIONAL: drawn, connectivity-checked, NOT approved and NOT verified safe.**
+Each needs Emilio Guadarrama's written sign-off; Gate 6 and bring-up Stage 5 keep theirs.
+
+| ID | Decision | Reason | Approved by |
+|---|---|---|---|
+| D-074 | K3 keeps both contacts of one Form C pole (D-065) but its **coil follows the FIRE command**, floating on `K3_COIL`/`FIRE_N`, fed from `FIRE_P` (`D_K3F`) or `TEST_LINE` (`D_K3T`). Settles D-A as "one relay" | Under Rev A.1 a single welded K2 fired the bench on ARM. Now a K2 or K3 weld alone cannot fire, and the shunt stays closed and isolated through ARMED. Break-before-make (O-3) now decides K3 contact life, not ignition safety. A ground-returned coil was rejected: an ARM↔FIRE_N short pulls K3 in while armed | **pending — Emilio** |
+| D-075 | **Floating two-wire FIRE loop** (`FIRE_P`/`FIRE_N`), double-pole FIRE button, `D_FIRE` across the pair. Umbilical pin map in `hardware/tools/umbilical.py`: 1 FIRE_P, 2 FIRE_N, 3 ARM, 4 GND, 5 RS485_A, 6 RS485_B, 7 GND, 8 CONT, 9 VBAT, 10 ESTOP, 11 TEST, 12 shield. Supersedes the D-060 allocation | An ARM/FIRE short on adjacent pins fired on ARM. Pin order chosen from a computed single-short matrix; adjacency ASSUMED linear (O-23). Path 2 cannot return on 12 conductors | **pending — Emilio** |
+| D-076 | **Pre-arm continuity TEST** (D-B): key-OFF momentary TEST energises K3 only; test current from K1's NC through `R_TEST1` + `R_TEST2` + opto LED + `D_CBLK`; sense active-high | The test source cannot exist while armed; one failed resistor cannot exceed no-fire if each alone is sized for it (O-1); a sense short to ground reads "no match". H10 (shunt open while held) is accepted, not solved | **pending — Emilio** |
+| D-077 | **Two-channel E-STOP**: block 1 holds K4 (unchanged), block 2 feeds the ARM permit | Removing ARM drops K1, K2, K3, so the shunt re-closes (M-7/B05). One ESTOP short to ground or shield, which silently defeats channel 1, no longer lets a burn continue | **pending — Emilio** |
+| D-078 | **K5 latched ARM permit** at the station (same SRD part), set by RESET only with E-STOP released, FIRE released and the key OFF | No re-arm on E-STOP release or station power-up. A welded K5 loses only that property | **pending — Emilio** |
+| D-079 | **Crowbar `D_XBAR` after F1**, series `D_RP` removed, keyed `J_PWR`. Settles D-C as option A | No semiconductor in series with the fire current; a degraded series diode risked a hang-fire. Crowbar/fuse coordination open (O-17) | **pending — Emilio** |
+| D-080 | **Station power stays a separate feed** (D-067 confirmed). Settles D1 | A supply conductor in the umbilical would let one short arm the bench silently, and there is no pin for one | **pending — Emilio** |
+
+### Still open after Batch 2
+
+Sign-off of D-074 to D-080 - **O-1** e-match - **O-3** break-before-make measured on real units -
+**O-17** fuse budget, crowbar sizing and battery short-circuit current - **O-22** relay must-operate /
+must-release voltages - **O-23** umbilical connector, pin rows, cable lay-up and gauge - **O-24** relay
+datasheet provenance (Songle vs Sanyou) - **O-25** panel control parts - **M-1** bench thermal - **M-2**
+DevKitC representation - 6N137 inversion (O-21) - buzzer part - path B survival - **O-2** load cell -
+**O-20** AMS1117 capacitor values.
+
+---
+
 ## Revision history
 
 | Rev | Date | Change |
 |---|---|---|
 | A | 2026-11-06 | Gate 0 complete. Repository and KiCad project skeletons created. |
 | A.1 | 2026-11-09 | Corrective revision after two independent audits. Firing loop given a return, `D_RP` un-reversed, `PYRO_RTN` star point, station feed fused and drawn honestly, mechanical corrections, tooling hardened. D-064 to D-072. No circuit approved. |
+| A.2 | 2026-11-10 | Batch 2 safety topology: K3 coil on FIRE, floating FIRE loop and new pin map, continuity TEST, two-channel E-STOP with latched permit, crowbar reverse protection, station feed kept. D-074 to D-080, all pending sign-off. No circuit approved. |

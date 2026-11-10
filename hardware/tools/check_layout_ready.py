@@ -50,14 +50,23 @@ def gate_schematic_clean():
     """The schematic must survive every check before its copper is drawn."""
     ok1, _ = run([os.path.join(HERE, "validate_sch.py")] + [sch(b) for b in BOARDS])
     ok2, _ = run([os.path.join(HERE, "check_layout.py")] + [sch(b) for b in BOARDS])
-    nets = [os.path.join(ROOT, "exports", "2026-11-09-revA1", "talavera-bench.net")]
-    ok3 = True
-    if os.path.isfile(nets[0]):
-        ok3, _ = run([os.path.join(HERE, "trace_fire_loop.py"), nets[0]])
+    # Both netlists, because trace_fire_loop.py section 7 needs the station too.
+    # This used to PASS when the netlist file was missing, which is the same
+    # vacuous-pass class as R-2. A missing netlist, or one older than its
+    # schematic (stale export after a regeneration), is now a FAIL.
+    nets = [os.path.join(ROOT, "exports", "2026-11-10-revA2", b + ".net") for b in BOARDS]
+    fire = "ok"
+    if not all(os.path.isfile(n) for n in nets):
+        ok3, fire = False, "FAIL (netlist export missing)"
+    elif any(os.path.getmtime(n) < os.path.getmtime(sch(b)) for n, b in zip(nets, BOARDS)):
+        ok3, fire = False, "FAIL (netlist older than schematic - re-export)"
+    else:
+        ok3, _ = run([os.path.join(HERE, "trace_fire_loop.py")] + nets)
+        fire = "ok" if ok3 else "FAIL"
     ok4, _ = run([os.path.join(HERE, "sync_project_uuid.py"), "--check"])
     detail = "validator %s, layout %s, fire loop %s, UUIDs %s" % (
         "ok" if ok1 else "FAIL", "ok" if ok2 else "FAIL",
-        "ok" if ok3 else "FAIL", "ok" if ok4 else "FAIL")
+        fire, "ok" if ok4 else "FAIL")
     return (ok1 and ok2 and ok3 and ok4), detail
 
 
@@ -109,17 +118,18 @@ def gate_net_classes():
 # Open items and decisions, read from the repository's own records rather than
 # restated here, so this cannot drift from DECISION-LOG.md and REQUIREMENTS.md.
 TOPOLOGY_GATES = [
-    ("D-A", "K3 carries both shunt and low-side return, or two relays?",
-     "Changes the relay count and the whole pyro copper. Blocked on Songle "
-     "break-before-make evidence (O-3)."),
-    ("D-B", "Pre-arm continuity TEST function",
-     "Adds a control line, series resistors and a blocking diode. Blocked on O-1."),
-    ("D1", "Station power: separate feed or a reallocated umbilical conductor",
-     "Decides the umbilical conductor count and the connector, and is coupled "
-     "to the ARM/FIRE pin separation."),
-    ("E-STOP", "Whether the shunt must re-close automatically",
-     "May add a permit relay and panel contact blocks. Narrowed by D-073, which "
-     "puts operator abort on an external dead-man/RBF, but not closed."),
+    # Batch 2 (Rev A.2) DREW these four. They stay open gates until the review
+    # owner signs them: a drawing is not a decision someone has approved.
+    ("D-A", "K3 one relay, coil on FIRE (D-074) - drawn, awaiting sign-off",
+     "Sets the relay count and the pyro copper. O-3 (break-before-make on real "
+     "units) now decides K3 contact life."),
+    ("D-B", "Pre-arm continuity TEST (D-076) - drawn, awaiting sign-off",
+     "R_TEST1/R_TEST2/R_CS values blocked on O-1; H10 to be accepted in writing."),
+    ("D1", "Station power: separate feed kept (D-080) - awaiting sign-off",
+     "Coupled to the D-075 pin map and the umbilical connector (O-23)."),
+    ("E-STOP", "Two channels + K5 latched permit (D-077/D-078) - awaiting sign-off",
+     "Adds K5 and panel contact blocks (O-25). D-073's external dead-man is "
+     "independent of both."),
     ("M-1", "Bench 3.3 V thermal architecture",
      "~1.3 W in SOT-223 against a ~125 C limit. A cascade or a buck changes the "
      "packages and the board area."),
@@ -146,7 +156,14 @@ SIZING_GATES = [
      "Outlines are placeholders (D-023)."),
     ("O-14", "Station enclosure and panel",
      "Drives the panel-control footprints and the station outline."),
-    ("O-17", "Fuse current budget", "F1, F2 and F_STN ratings."),
+    ("O-17", "Fuse current budget", "F1, F2 and F_STN ratings, and the D_XBAR "
+     "crowbar, which must survive F1's clearing I2t at the battery's Isc."),
+    ("O-22", "Relay must-operate / must-release measured on real units",
+     "Closes every '??' residual of the umbilical short matrix."),
+    ("O-23", "Umbilical connector, pin rows, cable lay-up and gauge",
+     "Real adjacency for the short matrix; the >= 9 V coil budget; J_UMB footprint."),
+    ("O-25", "Panel control parts (2-block E-STOP, 3-pole key, 2NO+1NC FIRE)",
+     "Station panel terminals and harness."),
 ]
 
 

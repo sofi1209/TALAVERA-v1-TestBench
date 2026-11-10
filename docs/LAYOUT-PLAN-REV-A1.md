@@ -16,7 +16,8 @@ python hardware/tools/check_layout_ready.py
 
 ## 1. Verdict: layout must not start
 
-`check_layout_ready.py` reports **2 blocking, 8 topology and 6 sizing gates open**. The schematic itself
+`check_layout_ready.py` reports **2 blocking, 8 topology and 9 sizing gates open** (Rev A.2, 10 Nov:
+the four safety-topology gates are now *drawn* but stay open until signed; O-22, O-23, O-25 added). The schematic itself
 is in good shape — validator, native ERC, layout checker and the firing-loop tracer all pass — but three
 different kinds of thing are missing.
 
@@ -24,8 +25,8 @@ different kinds of thing are missing.
 
 | Gate | State |
 |---|---|
-| Schematic verified | **ok** — validator 0/0, `kicad-cli` ERC 0 violations both boards, fire loop all five states, UUIDs in sync |
-| Footprints assigned | **NO — 110 of 110 components have none** |
+| Schematic verified | **ok** — validator 0/0, `kicad-cli` ERC 0 violations both boards, `trace_fire_loop.py` all seven sections on both netlists, UUIDs in sync |
+| Footprints assigned | **NO — 118 of 118 components have none** (Rev A.2) |
 | PCB files populated | **NO** — both `.kicad_pcb` hold an outline and nothing else |
 | Net classes defined | **ok** — PYRO / SAFETY / POWER / ANALOG with 8 patterns, both boards |
 
@@ -38,10 +39,10 @@ This is the real reason to wait. Placing parts you have not chosen is work you w
 
 | | Decision | What it changes on the board |
 |---|---|---|
-| **D-A** | K3 both shunt and return, or two relays | Relay count, and the entire pyro copper. Blocked on the Songle break-before-make evidence (O-3) |
-| **D-B** | Pre-arm continuity TEST | Adds a control line, two series resistors, a blocking diode. Blocked on O-1 |
-| **D1** | Station power source | Umbilical conductor count and connector; coupled to ARM/FIRE pin separation |
-| **E-STOP** | Must the shunt re-close automatically | May add a permit relay and panel contact blocks. Narrowed by D-073, not closed |
+| **D-A** | K3 both shunt and return, or two relays | **Drawn in Rev A.2 as one relay, coil on FIRE (D-074) - pending sign-off.** O-3 now sets contact life, not topology |
+| **D-B** | Pre-arm continuity TEST | **Drawn in Rev A.2 (D-076) - pending sign-off.** Values blocked on O-1 |
+| **D1** | Station power source | **Separate feed kept (D-080) - pending sign-off.** New pin map D-075; connector part O-23 |
+| **E-STOP** | Must the shunt re-close automatically | **Two channels plus K5 permit drawn (D-077/D-078) - pending sign-off.** Adds K5 and panel contact blocks on the station (O-25) |
 | **M-1** | Bench 3.3 V thermal architecture | SOT-223 vs a TO-220 cascade or a buck module — different packages, different area |
 | **M-2** | DevKitC vs bare WROOM-32D | The sheet draws a 38-pin module; the build sockets a 2×19 header. **The footprint cannot be assigned until the symbol matches the part** |
 | **O-21** | 6N137 RX path inverts | A part change, possibly to a digital isolator: different footprint |
@@ -97,7 +98,7 @@ Three zones that must not interleave, with the pyro zone physically separate.
 ```
    +--------------------------------------------------------------+
    |  A. POWER ENTRY          |  B. PYRO / SAFETY  (keep-out ring) |
-   |  J_PWR  F1  D_RP  C1     |  K4  K1  K2  K3                    |
+   |  J_PWR  F1  D_XBAR C1    |  K4  K1  K2  K3                    |
    |  F2  U_3V3  C2 C3        |  J_ARM   P1                        |
    |  R_STAR  <-- star point  |  fire current 6-12 A (O-1)         |
    |--------------------------+------------------------------------|

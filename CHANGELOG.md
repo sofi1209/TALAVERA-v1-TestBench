@@ -1,5 +1,56 @@
 # Changelog
 
+## [Unreleased] — Revision A.2 — Batch 2, safety topology, 10 November 2026
+
+Six safety-topology problems analysed, options put to the author, and the recommended set drawn.
+Full record, verification and residuals: `docs/BATCH2-SAFETY-TOPOLOGY-2026-11-10.md`.
+**Nothing is approved and nothing is verified safe.** Every item below is PROVISIONAL pending
+Emilio Guadarrama's written sign-off (D-074 to D-080).
+
+### Changed — safety topology
+- **K3's coil follows the FIRE command, not ARM** (P-02). Contacts unchanged: NC is the shunt, NO the
+  low-side return. A welded K2 or a welded K3 alone can no longer fire, and the shunt stays closed and
+  isolated through the whole armed wait. Under Rev A.1 a single welded K2 fired the bench on ARM. (D-074)
+- **FIRE is a floating two-wire loop**, `FIRE_P`/`FIRE_N`, with a double-pole station button (P-03). A
+  single short of either FIRE wire to ARM or ground cannot fire; under Rev A.1 an ARM/FIRE short on
+  adjacent pins 1/2 fired the bench on ARM. **New umbilical pin map**, shared from
+  `hardware/tools/umbilical.py`. All 12 conductors used; path 2 cannot return on this cable. (D-075)
+- **Pre-arm continuity TEST** (P-01, D-B): key-OFF TEST button energises K3 only; test current from
+  K1's NC contact, so none can flow while armed; two series resistors, each alone to hold the current
+  below no-fire (values blocked on O-1); active-high sense. `R_CONT` (parallel, unsourced) and
+  `R_CONT_PU` deleted. H10 remains an accepted hazard to sign. (D-076)
+- **Two-channel E-STOP** (P-04): a second positive-opening block removes the ARM permit, so K1, K2 and
+  K3 drop and the **shunt re-closes** (M-7). **K5 latched ARM permit**: releasing an E-STOP, or restoring
+  station power, does not re-arm without RESET (key OFF, FIRE released). (D-077, D-078)
+- **Reverse polarity by crowbar** (P-05): series `D_RP` (SS24, 2 A class in the fire path) removed;
+  `D_XBAR` after F1; battery connector to be keyed. Crowbar not sized (O-17). (D-079)
+- **Station power stays a separate feed** (P-06, D1): no supply conductor in the umbilical. (D-080)
+- Title blocks read **Rev A.2**.
+
+### Added — tooling
+- `trace_fire_loop.py` sections 2–7: shunt/return per state, TEST path and sneak paths, battery dead
+  short, every single relay contact fault (welded, stuck, bridged) in every state, reverse polarity, and
+  a **DC single-short matrix of the umbilical** solved from both netlists against the SRD datasheet
+  coil limits. Self-tested against two deliberately broken designs.
+- `umbilical.py`: the pin map and the assumed adjacency, one source for both boards and the tracer.
+
+### Verification (connectivity only)
+`validate_sch.py` 0/0 both boards · `kicad-cli sch erc` 10.0.8 **0 violations both** · netlist diff
+against `main` shows only intended changes · `trace_fire_loop.py` all gated checks pass, 11 residuals
+reported · `check_layout.py` clean both. Exports in `exports/2026-11-10-revA2/`.
+
+### Corrected
+- The chat analysis before this batch said a ground-returned K3 fails by putting K2 and K3 in series at
+  ~6 V. It left out the flyback diodes; the real failure is K3 pulling in while armed. Recorded in the
+  Batch 2 record §6.4.
+
+### Still open
+O-1 e-match · O-3 break-before-make measurement · O-17 fuse/crowbar and battery Isc · O-22 relay
+must-operate/must-release · O-23 umbilical connector and cable geometry · O-24 relay datasheet
+provenance · O-25 panel parts · plus Batch 3–5 items (M-1, M-2, O-21, M-13, path B, footprints).
+
+**Gate 6 and bring-up Stage 5 keep mandatory written sign-off from Emilio Guadarrama.**
+
 ## [Unreleased] — Revision A.1 — corrective, 9 November 2026
 
 Two independent audits of commit `43e9803` found that **the bench could not fire**: `PYRO_MATCH_N`

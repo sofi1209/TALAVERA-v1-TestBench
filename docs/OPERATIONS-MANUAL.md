@@ -231,7 +231,11 @@ the bench.
    > The lamp therefore reads **"no match" permanently**. That is the safe direction, but it is not a
    > check, and this procedure must not pretend otherwise.
    >
-   > **Until the reviewed pre-arm TEST function exists (decision D-B, blocked on open item O-1),
+   > **Rev A.2 note:** a pre-arm TEST function is now drawn (D-076): key OFF, press and hold TEST, and
+   > the station CONTINUITY lamp lights only if test current passes through the match. **It is not
+   > approved and its current-limiting values are blocked on O-1**, so this step stays suspended.
+   >
+   > **Until the reviewed pre-arm TEST function is approved (decision D-B, blocked on open item O-1),
    > continuity is confirmed with a meter at the bench, with the arming plug WITHDRAWN**, by a method
    > the review owner specifies. Note that any continuity test must open the shunt, so the induced-energy
    > defence (hazard H2) is absent while the test is held: see hazard H10 in

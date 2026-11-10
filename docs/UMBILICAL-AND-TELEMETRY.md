@@ -83,7 +83,7 @@ From the IGNIS-v5 component library, all of which apply directly:
 | `ESD9B5.0ST5G` | USB ESD protection |
 | `TLP521 / PC817` optoisolator | Serial link isolation |
 | `AMS1117-3.3` / `AMS1117-5.0` LDO | 3.3 V and 5 V rails |
-| `SS24` Schottky | Reverse-polarity protection on the 12 V input |
+| ~~`SS24` Schottky~~ | ~~Reverse-polarity protection on the 12 V input~~ - removed in Rev A.2 (D-079): a crowbar after F1 replaces the series diode. Umbilical pin map now in `hardware/tools/umbilical.py` (D-075) |
 | `NCE6005AR` N-MOSFET, 60 V 5 A | Candidate for the igniter drive stage |
 
 This is a strong reuse story: known parts, known footprints, already stocked.

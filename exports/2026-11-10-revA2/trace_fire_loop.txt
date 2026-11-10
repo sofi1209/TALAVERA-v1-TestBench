@@ -1,0 +1,121 @@
+Firing loop trace:  talavera-bench.net
+  plug inserted = True, match fitted = True
+  looking for a closed path /+12V_RAW -> P1 -> GND
+
+  1. STATE TABLE
+  state                      K4    K1    K2    K3     fire   verdict
+  SAFE                       True  False False False  none   ok
+  TEST held                  True  False False True   none   ok
+  ARMED                      True  True  False False  none   ok
+  FIRE held                  True  True  True  True   FLOWS  ok
+  E-STOP, both channels      False False False False  none   ok
+  E-STOP, channel 2 failed   False True  True  True   none   ok
+  E-STOP, channel 1 failed   True  False False False  none   ok
+  FIRE contacts, no ARM      True  False True  True   none   ok
+
+  the firing loop, FIRE held:
+    feed   /+12V_RAW -> /+12V_PROT -> /+12V_MASTER -> /ARM_BUS -> /PYRO_FIRE_OUT -> /PYRO_MATCH_P
+    match  /PYRO_MATCH_P -> /PYRO_MATCH_N
+    return /PYRO_MATCH_N -> /PYRO_RTN -> GND
+
+  2. SHUNT AND RETURN
+  SAFE: initiator shorted by the shunt                      : yes
+  SAFE: shunted pair isolated from the return               : yes
+  ARMED: initiator shorted by the shunt                     : yes
+  ARMED: shunted pair isolated from the return              : yes
+  FIRE held: shunt released                                 : yes
+  FIRE held: low side tied to the supply return             : yes
+  TEST held: shunt released                                 : yes
+  TEST held: low side tied to the supply return             : yes
+
+  3. CONTINUITY TEST PATH
+  ARMED: test source /CONT_SRC dead                         : yes
+  FIRE held: test source /CONT_SRC dead                     : yes
+  TEST held: test source live                               : yes
+  TEST held: test current returns THROUGH the initiator     : yes
+  TEST held, match removed: no sneak path to ground         : yes
+  SAFE (TEST not held): no test current                     : yes
+
+  4. BATTERY DEAD SHORT AROUND THE INITIATOR
+  none in any state
+
+  5. RELAY CONTACT FAULTS (12 single faults x 5 operating states)
+  no single contact fault fires in any state that must not fire
+  note: battery shorted around the initiator (F1 clears, no ignition): K3 bridged (make-before-break), in FIRE held
+  double faults that fire in SAFE / TEST / ARMED (reported, not gated): 8
+    K1 NO welded + K2 NO welded, in TEST held
+    K1 NO welded + K2 bridged (make-before-break), in TEST held
+    K1 bridged (make-before-break) + K2 NO welded, in TEST held
+    K1 bridged (make-before-break) + K2 bridged (make-before-break), in TEST held
+    K2 NO welded + K3 NO welded, in ARMED
+    K2 NO welded + K3 bridged (make-before-break), in ARMED
+    K2 bridged (make-before-break) + K3 NO welded, in ARMED
+    K2 bridged (make-before-break) + K3 bridged (make-before-break), in ARMED
+
+  6. REVERSE POLARITY
+  reversed battery: crowbar path exists                     : GND -> /+12V_PROT -> /+12V_RAW
+  reversed battery: that path passes through F1             : yes
+
+  7. UMBILICAL SINGLE-SHORT MATRIX (DC, both boards)
+  baseline, no fault (coil volts):
+    SAFE         K4=12.00 K1= 0.00 K2= 0.00 K3= 0.00  sense=0.0V ok
+    TEST         K4=12.00 K1= 0.00 K2=-0.00 K3=11.98  sense=0.0V ok
+    ARMED        K4=12.00 K1=11.99 K2= 0.00 K3= 0.00  sense=0.0V ok
+    FIRE         K4=12.00 K1=11.97 K2=11.96 K3=11.96  sense=0.0V ok
+    SAFE+ESTOP   K4= 0.00 K1= 0.00 K2= 0.00 K3= 0.00  sense=0.0V ok
+    ARMED+ESTOP  K4= 0.00 K1= 0.00 K2= 0.00 K3= 0.00  sense=0.0V ok
+    FIRE+ESTOP   K4= 0.00 K1= 0.00 K2= 0.00 K3= 0.00  sense=0.0V ok
+  resistors with no value, left OPEN in the model: B:R_CS1, B:R_G1, B:R_TEST1, B:R_TEST2
+  pair (A = adjacent pins)           result
+  A FIRE_P <-> FIRE_N                no hazard
+    FIRE_P <-> ARM_LINE              no hazard
+  A FIRE_P <-> GND                   no hazard
+    FIRE_P <-> RS485_A               residual: SAFE: SHUNT may open (K3 1.9 V)
+    FIRE_P <-> RS485_B               residual: SAFE: SHUNT may open (K3 0.9 V)
+    FIRE_P <-> PYRO_CONT_SENSE       no hazard
+    FIRE_P <-> VBAT_SENSE            no hazard
+    FIRE_P <-> ESTOP_LOOP            residual: SAFE+ESTOP: channel 1 held (K4 8.5 V), channel 2 stops it; FIRE+ESTOP: burn may continue (??)
+    FIRE_P <-> TEST_LINE             no hazard
+  A FIRE_N <-> ARM_LINE              no hazard
+    FIRE_N <-> GND                   no hazard
+    FIRE_N <-> RS485_A               no hazard
+    FIRE_N <-> RS485_B               no hazard
+    FIRE_N <-> PYRO_CONT_SENSE       no hazard
+    FIRE_N <-> VBAT_SENSE            no hazard
+    FIRE_N <-> ESTOP_LOOP            SAFE+ESTOP: channel 1 held (K4 12.0 V), channel 2 stops it; FIRE+ESTOP: channel 1 held (K4 12.0 V), channel 2 stops it
+    FIRE_N <-> TEST_LINE             no hazard
+  A ARM_LINE <-> GND                 no hazard
+    ARM_LINE <-> RS485_A             residual: SAFE: K1 may arm (2.0 V); TEST: K1 may arm (2.0 V)
+    ARM_LINE <-> RS485_B             residual: SAFE: K1 may arm (0.9 V); TEST: K1 may arm (0.9 V)
+    ARM_LINE <-> PYRO_CONT_SENSE     no hazard
+    ARM_LINE <-> VBAT_SENSE          no hazard
+    ARM_LINE <-> ESTOP_LOOP          residual: SAFE+ESTOP: channel 1 held (K4 7.0 V), channel 2 stops it; ARMED+ESTOP: channel 1 held (K4 8.5 V), channel 2 stops it; FIRE+ESTOP: burn may continue (??)
+    ARM_LINE <-> TEST_LINE           residual: TEST: K1 ARMS (12.0 V)
+  A GND <-> RS485_A                  no hazard
+  A GND <-> RS485_B                  no hazard
+  A GND <-> PYRO_CONT_SENSE          no hazard
+    GND <-> VBAT_SENSE               no hazard
+    GND <-> ESTOP_LOOP               SAFE+ESTOP: channel 1 held (K4 12.0 V), channel 2 stops it; ARMED+ESTOP: channel 1 held (K4 12.0 V), channel 2 stops it; FIRE+ESTOP: channel 1 held (K4 12.0 V), channel 2 stops it
+  A GND <-> TEST_LINE                no hazard
+  A RS485_A <-> RS485_B              no hazard
+    RS485_A <-> PYRO_CONT_SENSE      residual: SAFE: continuity lamp FALSE GOOD; TEST: continuity lamp FALSE GOOD
+    RS485_A <-> VBAT_SENSE           no hazard
+    RS485_A <-> ESTOP_LOOP           SAFE+ESTOP: channel 1 held (K4 9.0 V), channel 2 stops it; ARMED+ESTOP: channel 1 held (K4 9.0 V), channel 2 stops it; FIRE+ESTOP: channel 1 held (K4 9.0 V), channel 2 stops it
+    RS485_A <-> TEST_LINE            residual: SAFE: SHUNT may open (K3 2.1 V)
+    RS485_B <-> PYRO_CONT_SENSE      no hazard
+    RS485_B <-> VBAT_SENSE           no hazard
+    RS485_B <-> ESTOP_LOOP           SAFE+ESTOP: channel 1 held (K4 10.1 V), channel 2 stops it; ARMED+ESTOP: channel 1 held (K4 10.1 V), channel 2 stops it; FIRE+ESTOP: channel 1 held (K4 10.1 V), channel 2 stops it
+    RS485_B <-> TEST_LINE            residual: SAFE: SHUNT may open (K3 0.9 V)
+  A PYRO_CONT_SENSE <-> VBAT_SENSE   no hazard
+    PYRO_CONT_SENSE <-> ESTOP_LOOP   SAFE+ESTOP: channel 1 held (K4 3.4 V), channel 2 stops it; ARMED+ESTOP: channel 1 held (K4 3.4 V), channel 2 stops it; FIRE+ESTOP: channel 1 held (K4 3.4 V), channel 2 stops it
+    PYRO_CONT_SENSE <-> TEST_LINE    residual: TEST: continuity lamp FALSE GOOD
+  A VBAT_SENSE <-> ESTOP_LOOP        no hazard
+    VBAT_SENSE <-> TEST_LINE         no hazard
+  A ESTOP_LOOP <-> TEST_LINE         SAFE+ESTOP: channel 1 held (K4 6.0 V), channel 2 stops it; FIRE+ESTOP: channel 1 held (K4 6.0 V), channel 2 stops it
+  gated failures: 0   residual (non-adjacent or datasheet-undetermined): 11
+  '??' = between 0.6 V and 9 V, where the SRD datasheet guarantees neither
+  state. Closes only by measuring must-operate / must-release on real units.
+
+  ALL CHECKS AS EXPECTED
+  Connectivity and DC only. Contact ratings, timing, arcing, transients,
+  induced energy and anything thermal are NOT covered. Approves nothing.
