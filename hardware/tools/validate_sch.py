@@ -1,4 +1,4 @@
-import sys, collections, math
+import sys, collections, math, re
 import ksch
 
 PAPER = {"A2": (594.0, 420.0), "A3": (420.0, 297.0), "A4": (297.0, 210.0)}
@@ -54,6 +54,29 @@ def check(path):
             for sub in ksch.kids(nd, "symbol"): walk(sub)
         walk(sym)
         libdefs[name] = pins
+
+    # 2b. Resolve every lib_id against the installed symbol libraries BEFORE any
+    #     geometry check runs. Checks 4b, 4e and 4f all need ksch.get_symbol();
+    #     each used to `continue` on failure, so a SYMDIR pointing at a path that
+    #     does not exist produced a byte-identical "0 errors" while the
+    #     pin-coincidence, power-pin and floating-pin checks silently did nothing.
+    #     Those three are the guards added after the GND_RTN split, the AMS1117
+    #     pin-1 error and the SP3485 left with no ground. Fail loudly instead.
+    used_lids = sorted({ksch.val(ksch.kid(sym, "lib_id")) for sym in ksch.kids(root, "symbol")})
+    unresolved = {}
+    for lid in used_lids:
+        try:
+            ksch.get_symbol(lid)
+        except Exception as ex:
+            unresolved[lid] = "%s: %s" % (type(ex).__name__, ex)
+    if unresolved:
+        errs.append(
+            "SYMBOL RESOLUTION FAILED for %d of %d lib_id(s). The pin-coincidence, "
+            "power-pin-semantic and floating-pin checks are NOT RUNNING - this result "
+            "says nothing about whether the schematic is correctly connected. SYMDIR=%s"
+            % (len(unresolved), len(used_lids), ksch.SYMDIR))
+        for lid, why in list(unresolved.items())[:10]:
+            errs.append("   unresolved: %s (%s)" % (lid, why))
 
     # 3. instances
     refs = collections.Counter()
@@ -263,6 +286,120 @@ def check(path):
             errs.append("FLOATING PIN %s.%s - reaches no net and has no no-connect flag"
                         % (ref, pn))
 
+    # 4g. Diode polarity. docs/HANDOFF.md records this as the ONE fault class
+    #     with no automated guard - "Nothing automatic. Check every diode by
+    #     hand." - after five reversed relay flybacks and a reversed buzzer
+    #     diode. This is that guard. Read the limits at the bottom: it does not
+    #     cover every diode, and it does not replace reading the netlist.
+    def rail_rank(net):
+        """Volts for a net whose NAME states its rail, else None. GND-class = 0."""
+        u = (net or "").upper().lstrip("/")
+        if any(u == g or u.endswith("_" + g) for g in GROUNDY):
+            return 0.0
+        m = re.match(r"^\+?(\d+)V(\d+)?", u)
+        if m:
+            return float(m.group(1)) + (float(m.group(2)) / 10.0 if m.group(2) else 0.0)
+        return None
+
+    def pin_nets(sym, lid):
+        """(number, NAME) -> resolved net, for one placed symbol."""
+        at = ksch.kid(sym, "at")
+        sx, sy = float(ksch.val(at, 1)), float(ksch.val(at, 2))
+        ang = float(ksch.val(at, 3)) if len(at) > 3 else 0.0
+        try:
+            libname, symname = lid.split(":")
+            flat = ksch._flatten(ksch.load_lib(libname), symname)
+        except Exception:
+            return {}
+        c2, s2 = math.cos(math.radians(ang)), math.sin(math.radians(ang))
+        out = {}
+        def wk2(nd):
+            for p in ksch.kids(nd, "pin"):
+                a2 = ksch.kid(p, "at"); nu = ksch.kid(p, "number"); nm = ksch.kid(p, "name")
+                if a2 is None or nu is None: continue
+                px, py = float(ksch.val(a2, 1)), float(ksch.val(a2, 2))
+                pt = (round(sx + px * c2 - py * s2, 2),
+                      round(sy - (px * s2 + py * c2), 2))
+                out[(ksch.val(nu), (ksch.val(nm) or "").upper())] = netname.get(find(pt))
+            for sub in ksch.kids(nd, "symbol"): wk2(sub)
+        wk2(flat)
+        return out
+
+    def refof(sym):
+        return next((ksch.val(p, 2) for p in ksch.kids(sym, "property")
+                     if ksch.val(p) == "Reference"), "?")
+
+    # Device:LED is excluded on purpose: an indicator LED is a series LOAD and
+    # its cathode legitimately sits on ground. Device:D_TVS is bidirectional.
+    diodes = {}
+    for sym in ksch.kids(root, "symbol"):
+        lid = ksch.val(ksch.kid(sym, "lib_id")) or ""
+        if not lid.startswith("Device:D") or lid.startswith("Device:D_TVS"):
+            continue
+        pn = pin_nets(sym, lid)
+        a = k = None
+        for (_num, name), net in pn.items():
+            if name.startswith("A"): a = net
+            elif name.startswith("K"): k = net
+        if a is not None and k is not None:
+            diodes[refof(sym)] = (a, k)
+
+    coils = {}
+    for sym in ksch.kids(root, "symbol"):
+        lid = ksch.val(ksch.kid(sym, "lib_id")) or ""
+        if not lid.startswith("Relay:"):
+            continue
+        pn = pin_nets(sym, lid)
+        a1 = a2 = None
+        for (num, _name), net in pn.items():
+            if num == "A1": a1 = net
+            elif num == "A2": a2 = net
+        if a1 and a2:
+            coils[refof(sym)] = (a1, a2)
+
+    # RULE 1, exact and intent-aware. A diode whose two nets are EXACTLY a
+    # relay's two coil nets is that coil's flyback, and its cathode must be on
+    # A1, the positive side. No rail inference, which is the point: ARM_LINE and
+    # FIRE_LINE carry 12 V without saying so in the name, so a rank-based rule
+    # would have missed four of the five original reversals.
+    for dref, (a, k) in diodes.items():
+        for kref, (a1, a2) in coils.items():
+            if {a, k} == {a1, a2}:
+                if k != a1:
+                    errs.append(
+                        "DIODE POLARITY: %s sits across %s's coil the wrong way round - "
+                        "anode on the coil's positive side '%s', so it is forward-biased "
+                        "in normal operation and shorts the coil. Swap it: cathode to "
+                        "'%s' (A1), anode to '%s' (A2)."
+                        % (dref, kref, a, a1, a2))
+                break
+
+    # RULE 2. Between two nets of known and different rail potential, a diode
+    # must not be forward-biased from the higher to the lower.
+    for dref, (a, k) in diodes.items():
+        ra, rc = rail_rank(a), rail_rank(k)
+        if ra is None or rc is None or ra == rc:
+            continue
+        if ra > rc:
+            errs.append("DIODE POLARITY: %s is forward-biased from '%s' to '%s' "
+                        "(anode on the higher rail) - a short across the supply."
+                        % (dref, a, k))
+
+    # RULE 3, warning only. Anode on a positive rail, cathode on an unranked
+    # signal: correct for a series pass diode, REVERSED for a flyback across a
+    # low-side-driven load. That is how the buzzer diode was wrong.
+    for dref, (a, k) in diodes.items():
+        ra, rc = rail_rank(a), rail_rank(k)
+        if ra is not None and ra > 0 and rc is None:
+            warns.append("%s: anode on rail '%s', cathode on signal '%s'. Correct for a "
+                         "series pass diode; REVERSED if it is a flyback across a "
+                         "low-side-driven load. Confirm by hand." % (dref, a, k))
+
+    # NOT COVERED: a series pass diode between two nets of the same rank, which
+    # is exactly where D_RP sat reversed while ERC, this validator and a
+    # completed hand audit all passed it. For that, read the netlist or run
+    # trace_fire_loop.py, which asks whether current can complete a circuit.
+
     # 5. single-use nets are suspicious (nothing to connect to)
     powernets = {ksch.val(p, 2) for sym in ksch.kids(root, "symbol")
                  if (ksch.val(ksch.kid(sym, "lib_id")) or "").startswith("power:")
@@ -283,15 +420,23 @@ def check(path):
     stats = {"paper": paper, "symbols_in_lib": len(libdefs),
              "instances": len(placed), "components": len(refs),
              "wires": len(ksch.kids(root, "wire")),
-             "labels": sum(nets.values()), "nets": len(nets)}
+             "labels": sum(nets.values()), "nets": len(nets),
+             # Printed so a clean run is attributable to a known library set.
+             "symdir": ksch.SYMDIR or "NOT FOUND",
+             "structural_checks": "SKIPPED" if unresolved else "ran"}
     return errs, warns, stats
 
-for path in sys.argv[1:]:
-    print("=" * 70)
-    print(path.split("/")[-1])
-    e, w, st = check(path)
-    for k, v in st.items(): print("   %-16s %s" % (k, v))
-    print("   ERRORS: %d" % len(e))
-    for x in e[:25]: print("      !", x)
-    print("   WARNINGS: %d" % len(w))
-    for x in w[:12]: print("      ~", x)
+if __name__ == "__main__":
+    rc = 0
+    for path in sys.argv[1:]:
+        print("=" * 70)
+        print(path.split("/")[-1])
+        e, w, st = check(path)
+        for k, v in st.items(): print("   %-18s %s" % (k, v))
+        print("   ERRORS: %d" % len(e))
+        for x in e[:25]: print("      !", x)
+        print("   WARNINGS: %d" % len(w))
+        for x in w[:12]: print("      ~", x)
+        if e: rc = 1
+    # Non-zero exit so CI and the regeneration routine cannot ignore a failure.
+    sys.exit(rc)

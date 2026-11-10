@@ -1,7 +1,66 @@
 """Minimal KiCad 10 schematic generator: s-expression parser + symbol extractor + builder."""
-import re, uuid, os
+import re, uuid, os, glob
 
-SYMDIR = r"C:/Program Files/KiCad/10.0/share/kicad/symbols"
+
+class SymbolLibError(RuntimeError):
+    """Raised when a symbol library cannot be found or does not hold the symbol.
+
+    This used to be swallowed. validate_sch.py wrapped every call to get_symbol()
+    in `except Exception: continue`, so a SYMDIR pointing anywhere else made the
+    pin-coincidence, power-pin and floating-pin checks vanish while the validator
+    still reported a byte-identical "0 errors". Those three checks are the guards
+    added after the GND_RTN split, the AMS1117 pin-1 error and the SP3485 left
+    with no ground. Never make this failure quiet again.
+    """
+
+
+_SYMDIR_PATTERNS = (
+    "C:/Program Files/KiCad/*/share/kicad/symbols",
+    "C:/Program Files (x86)/KiCad/*/share/kicad/symbols",
+    "/usr/share/kicad/symbols",
+    "/usr/local/share/kicad/symbols",
+    "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols",
+)
+
+SYMDIR_TRIED = []
+
+
+def find_symdir():
+    """Locate KiCad's stock symbol directory without hardcoding one machine.
+
+    Order: explicit override, then the usual install locations, highest version
+    first. Returns None if nothing is found - callers must treat that as an
+    error, not as "no symbols to check".
+    """
+    # An override that is set but wrong is a configuration mistake, so it is
+    # fatal rather than quietly falling back to whatever else is installed -
+    # silently using a different library set is how a "clean" run stops meaning
+    # anything.
+    for var in ("TALAVERA_SYMDIR", "KICAD_SYMBOL_DIR"):
+        p = os.environ.get(var)
+        if p:
+            SYMDIR_TRIED.append("$%s=%s" % (var, p))
+            if os.path.isdir(p):
+                return p
+            raise SymbolLibError(
+                "$%s is set to '%s', which is not a directory. Unset it or point it "
+                "at the directory holding Device.kicad_sym." % (var, p))
+    found = []
+    for pat in _SYMDIR_PATTERNS:
+        SYMDIR_TRIED.append(pat)
+        found += [p for p in glob.glob(pat) if os.path.isdir(p)]
+    if found:
+        # "10.0" sorts above "9.0" as a string, which is the wrong way round for
+        # single-digit majors, so compare on parsed version tuples.
+        def ver(p):
+            m = re.search(r"KiCad[\\/]([0-9]+)\.([0-9]+)", p)
+            return (int(m.group(1)), int(m.group(2))) if m else (0, 0)
+        found.sort(key=ver, reverse=True)
+        return found[0]
+    return None
+
+
+SYMDIR = find_symdir()
 
 # ---------------------------------------------------------------- sexp parser
 TOK = re.compile(r'\s*(?:(\()|(\))|"((?:[^"\\]|\\.)*)"|([^\s()"]+))')
@@ -93,7 +152,15 @@ _libcache = {}
 def load_lib(libname):
     if libname in _libcache:
         return _libcache[libname]
+    if not SYMDIR:
+        raise SymbolLibError(
+            "KiCad symbol directory not found, so no symbol can be resolved. Set "
+            "TALAVERA_SYMDIR to the directory holding Device.kicad_sym. Tried: %s"
+            % "; ".join(SYMDIR_TRIED))
     path = os.path.join(SYMDIR, libname + ".kicad_sym")
+    if not os.path.isfile(path):
+        raise SymbolLibError("symbol library '%s' not found at %s (SYMDIR=%s)"
+                             % (libname, path, SYMDIR))
     tree = parse(open(path, encoding="utf-8").read())[0]
     syms = {}
     for s in kids(tree, "symbol"):
@@ -133,7 +200,8 @@ def get_symbol(libid):
     libname, symname = libid.split(":")
     syms = load_lib(libname)
     if symname not in syms:
-        raise KeyError("symbol not found: " + libid)
+        raise SymbolLibError("symbol '%s' not found in library '%s' (SYMDIR=%s)"
+                             % (symname, libname, SYMDIR))
     flat = _flatten(syms, symname)
     syms = dict(syms); syms[symname] = flat   # so the pin walk below sees the flattened body
     defn = [x for x in flat]
