@@ -7,13 +7,20 @@ microcontroller from every function the test's safety depends on. Arming, firing
 switches, relay contacts and resistors — no firmware anywhere in the chain. A logger rides along to
 record thrust, with no authority over anything.
 
-> ### 🔴 Status: SCHEMATICS DRAWN — AUDITED — **NOT FIT TO BUILD**
+> ### 🔴 Status: SCHEMATICS REV A.1 — AUDITED TWICE — **NOT FIT TO BUILD, LAYOUT NOT STARTED**
 >
 > No circuit in this repository is approved. No board has been fabricated. Nothing has been energized.
 >
-> Both schematics are drawn, and the [pre-fabrication audit of 6 Nov 2026](docs/AUDIT-2026-11-06.md)
-> found **5 critical, 3 high and 4 medium** findings — including no supply reaching any IC, no load-cell
-> excitation, and five reversed flyback diodes. **Do not progress to layout until these are closed.**
+> Both schematics are drawn at **Rev A.1** (10 Nov 2026). The [6 Nov audit](docs/AUDIT-2026-11-06.md)
+> found 5 critical, 3 high and 4 medium findings; two independent audits of 9 Nov then found that the
+> bench could not fire and that the reverse-polarity diode was backwards. Rev A.1 corrects those
+> ([change record](docs/REV-A1-CHANGES-2026-11-09.md)). KiCad ERC reports 0 violations on both boards and
+> the firing-loop trace passes all five states, but those checks show connectivity, not correctness.
+>
+> **Layout has not started and must not.** No footprints are assigned, and several design decisions
+> (K3 relay, continuity test, station power, E-STOP, ARM/FIRE pinout) and two data gaps (e-match, load
+> cell) are still open. See [docs/LAYOUT-PLAN-REV-A1.md](docs/LAYOUT-PLAN-REV-A1.md) and
+> [docs/AUDIT-RECONCILIATION-2026-11-09.md](docs/AUDIT-RECONCILIATION-2026-11-09.md).
 >
 > Pyrotechnic, actuator, battery, motor and high-current circuits require written sign-off from the
 > named review owner before any bring-up. See **[docs/SAFETY.md](docs/SAFETY.md)**.

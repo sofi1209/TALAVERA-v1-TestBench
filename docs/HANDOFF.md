@@ -1,5 +1,13 @@
 # Handoff — TALAVERA v1
 
+> **Status update, 10 November 2026.** This handoff was written on 6 November and its status tables are
+> out of date. The project is now at **Rev A.1**: two independent audits of 9 Nov found that the bench
+> could not fire and that `D_RP` was reversed, and both are corrected. The current state is in
+> `README.md`, `docs/REV-A1-CHANGES-2026-11-09.md`, `docs/AUDIT-RECONCILIATION-2026-11-09.md` and
+> `docs/LAYOUT-PLAN-REV-A1.md`; the decision log runs to D-073. §4.3 below is withdrawn (see its own
+> note). The verification steps in §5 still apply, with one change: use `kicad-cli` from the installed
+> KiCad (10.0.x) and a real Python 3 install.
+
 Written 6 November 2026, at the end of the session that took this project from nothing to two audited
 schematics. Read this before touching anything.
 

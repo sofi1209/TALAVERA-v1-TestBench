@@ -41,6 +41,18 @@ powered. Reconciled in `docs/AUDIT-RECONCILIATION-2026-11-09.md`; changes record
   battery through the initiator and back, per relay state. Self-tested against the original netlist,
   where it correctly reports that the board cannot fire.
 
+### Fixed — housekeeping, 10 November 2026
+- **ERC is clean on KiCad 10.0.8, not only 10.0.5.** The embedded `Relay_SPDT` copies had drifted from
+  the installed library (pin numbers and geometry were identical; regenerating re-embeds the current
+  symbol), and ground stubs and `PWR_FLAG`s used a local `GND`/`GNDREF` label next to a power symbol,
+  which newer KiCad flags as `same_local_global_label`. `ksch.stub()` and `pwr_flag()` now draw ground as
+  a power symbol. Connectivity is unchanged: every net of both boards compares identical to the previous
+  netlist.
+- Title block reads **Rev A.1, 2026-11-10** (`Sch(rev=, date=)`), and `generator_version` is `9.0`,
+  matching the file format, instead of the non-existent `9.99`.
+- `README.md` status banner and `docs/HANDOFF.md` carry the Rev A.1 state instead of the 6 Nov audit.
+- Exports for this revision are in `exports/2026-11-10-revA1/`.
+
 ### Verification
 `validate_sch.py` 0 errors / 0 warnings on both boards · `kicad-cli sch erc` **0 violations on both**,
 the first time the bench board has been ERC-clean under the native tool · `trace_fire_loop.py` all five
