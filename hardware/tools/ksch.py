@@ -272,13 +272,14 @@ def U():
 
 class Sch:
     def __init__(self, project, title, rev="A", company="Ignitia Rocket Lab",
-                 paper="A2", comments=(), scale=1.0):
+                 paper="A2", comments=(), scale=1.0, date="2026-11-06"):
         # `scale` multiplies AUTHORED placement coordinates only - place(),
         # text() and box(). Symbol bodies and text heights are fixed by KiCad,
         # so scaling the layout onto a larger sheet buys spacing without
         # shrinking anything. Pin-derived coordinates (wire, label, stub,
         # power) are already absolute and must NOT be scaled again.
         self.scale = scale
+        self.date = date
         self.project = project
         self.uuid = U()
         self.title = title
@@ -417,6 +418,11 @@ class Sch:
 
     def stub(self, pin, name, length=5.08):
         """Draw a wire outward from a pin and attach a net label."""
+        if name in ("GND", "GNDREF"):
+            # Ground is drawn as a power symbol everywhere. A local label named
+            # GND beside a power:GND symbol raises same_local_global_label and,
+            # worse, is the pattern that once split GND_RTN into two nets.
+            return self.power(name, pin, length)
         x, y, a = pin
         import math
         length = max(GRID, snap(length))   # off-grid stub lengths move the end off grid
@@ -453,7 +459,13 @@ class Sch:
         self._flgn = getattr(self, "_flgn", 0) + 1
         p = self.place("power:PWR_FLAG", "#FLG%02d" % self._flgn, net, x, y,
                        hide_value=True, hide_ref=True)
-        self.stub(p['1'], net, 2.54)
+        if net in ("GND", "GNDREF"):
+            # A local label next to a power symbol of the same name is ambiguous
+            # (KiCad: same_local_global_label), so ground flags use the power
+            # symbol itself. The net is unchanged.
+            self.power(net, p['1'], 2.54)
+        else:
+            self.stub(p['1'], net, 2.54)
         return p
 
     def power(self, kind, pin, length=5.08):
@@ -494,13 +506,13 @@ class Sch:
         libs = "\n".join(ser(d, 2) for d in self.libs.values())
         com = "".join('\n\t\t(comment %d "%s")' % (i + 1, esc(c)) for i, c in enumerate(self.comments))
         return (
-            '(kicad_sch\n\t(version 20250610)\n\t(generator "eeschema")\n\t(generator_version "9.99")\n'
+            '(kicad_sch\n\t(version 20250610)\n\t(generator "eeschema")\n\t(generator_version "9.0")\n'
             '\t(uuid "%s")\n\t(paper "%s")\n'
-            '\t(title_block\n\t\t(title "%s")\n\t\t(date "2026-11-06")\n\t\t(rev "%s")\n\t\t(company "%s")%s\n\t)\n'
+            '\t(title_block\n\t\t(title "%s")\n\t\t(date "%s")\n\t\t(rev "%s")\n\t\t(company "%s")%s\n\t)\n'
             '\t(lib_symbols\n%s\n\t)\n%s\n'
             '\t(sheet_instances\n\t\t(path "/"\n\t\t\t(page "1")\n\t\t)\n\t)\n'
             '\t(embedded_fonts no)\n)\n'
-            % (self.uuid, self.paper, esc(self.title), esc(self.rev), esc(self.company), com,
+            % (self.uuid, self.paper, esc(self.title), esc(self.date), esc(self.rev), esc(self.company), com,
                libs, "\n".join(self.items)))
 
     def write(self, path):
